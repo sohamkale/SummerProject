@@ -1,20 +1,17 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch, Redirect  } from 'react-router-dom';
-import Home from "./views/Home/Home";
-import NotFound from "./views/NotFound";
-import NavBar from "./components/Header/NavBar";
+import Home from "./Views/Home/Home";
+import NotFound from "./Shared/NotFound";
+import NavBar from "./Shared/NavBar";
 
 const App = () => {
   return (
+  
+    //Imported public NavBar
     <div>
-      <NavBar />
-      <Switch>
-        <Route exact path="/Home" component={Home} />
-        <Route exact path="/">
-          <Redirect to="/Home" />
-        </Route>
-        <Route component={NotFound}/>
-      </Switch>
+      <NavBar/>
+      <Home/>
     </div>
   );
 }
