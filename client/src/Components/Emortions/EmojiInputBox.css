@@ -1,0 +1,6 @@
+.emoji-input-box{
+    width: 100%;
+    height: auto;
+    border: 1px dashed black;
+    pointer-events: none;
+}

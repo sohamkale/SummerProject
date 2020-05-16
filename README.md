@@ -1,3 +1,7 @@
+## Important Emoji Package
+Emoji Mart
+https://www.npmjs.com/package/emoji-mart
+
 ## _**PLEASE READ THIS TO COMPLETION BEFORE ASKING ANY QUESTIONS!**_
 
 ### _**IMPORTANT NOTES**_ - 
