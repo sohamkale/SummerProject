@@ -1,0 +1,107 @@
+.SignupClassFullDiv{
+    width: 100vw;
+    /* height: 100vh; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.SignupClassMainDiv{
+    width: 50vw;
+    margin-top: 2vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.SignupFontSize{
+    font-size: 2vw;
+    margin: 1vw;
+}
+
+.SignupCardBorder{
+    border-radius: 20px;
+}
+
+.SignupButtonMargin{
+    margin-bottom: 1vw;
+}
+
+/* SMARTPHONES PORTRAIT */
+@media only screen and (min-width: 300px) {
+    .SignupClassMainDiv{
+        width: 90vw;
+        margin-top: 2vh;
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+    }
+
+    .SignupCardBorder{
+        border-radius: 10px;
+    }
+
+    .SignupButtonMargin{
+        margin-bottom: 5vw;
+    }
+}
+
+/* SMARTPHONES LANDSCAPE */
+@media only screen and (min-width: 480px) {
+
+    .SignupClassMainDiv{
+        width: 90vw;
+        margin-top: 2vh;
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+    }
+
+    .SignupCardBorder{
+        border-radius: 10px;
+    }
+
+    .SignupButtonMargin{
+        margin-bottom: 5vw;
+    }
+}
+
+/* TABLETS PORTRAIT */
+@media only screen and (min-width: 768px) {
+    .SignupClassMainDiv{
+        width: 70vw;
+        margin-top: 2vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;      
+    }
+
+    .SignupCardBorder{
+        border-radius: 20px;
+    }
+
+    .SignupButtonMargin{
+        margin-bottom: 2vw;
+    }
+
+}
+
+
+/* TABLET LANDSCAPE / DESKTOP */
+@media only screen and (min-width: 1024px) {
+    .SignupClassMainDiv{
+        margin-top: 2vh;
+        width: 50vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;        
+    }
+
+    .SignupCardBorder{
+        border-radius: 20px;
+    }
+
+    .SignupButtonMargin{
+        margin-bottom: 2vw;
+    }
+} 

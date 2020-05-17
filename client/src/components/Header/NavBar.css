@@ -1,0 +1,25 @@
+/* .container{
+    background: black;
+    color: white;
+    display: grid;
+    height: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+} */
+
+.item{
+    color: white;
+}
+
+.item:hover{
+    background: lightyellow;
+    color: blue;
+}
+
+/* @media (max-width: 600px){
+    .container{
+        background: red;
+    }
+  
+
+} */
+
