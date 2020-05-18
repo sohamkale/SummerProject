@@ -10,13 +10,16 @@ router.route('/add').post((req, res) => {
     const name = req.body.name;
     const email = req.body.email;
     const currLevel = Number(req.body.currLevel);
-    console.log(req.body.name);
-    
+    const friendsList = req.body.friends;
+ 
     const newUser = new User({
-        id,
-        name,
-        email
+        'id': id,
+        'name': name,
+        'email': email,
+        'currLevel': currLevel,
+        'friends': friendsList
     })
+    
     newUser.save().then(() => res.json('User Added!')).catch(err => res.status('400').json('Error: ' + err));
 })
 

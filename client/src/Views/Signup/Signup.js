@@ -2,6 +2,7 @@ import './Signup.css'
 import React , { Component, useEffect, useState } from "react";
 import fire from "../../config/Fire";
 import SignupComp from "../../components/Signup/SignupComp";
+import axios from 'axios';
 // import Footer from "../../components/Footer/Footer";
 
 const Signup = (props) => {
@@ -36,40 +37,17 @@ const Signup = (props) => {
         e.preventDefault();
         fire.auth().createUserWithEmailAndPassword(email, password).then((u)=>{
             var user = fire.auth().currentUser;
-            var fireRef = fire.database().ref();
-            fireRef.child(user.uid).set({
-                firstName: firstName,
-                lastName: lastName,
-                phoneNum: phoneNum,
-                email: email.toLowerCase(),
-                Home: {
-                    typeWriterName: firstName + " " + lastName,
-                    homeImage: "null"
-                },
-                Navbar: {
-                    initials: firstName[0] + lastName[0]
-                },
-                About: {
-                    aboutImage: "null",
-                    description: "null",
-                },
-                ProjectsPage: {
-                    resume: "imageLink"
-                },
-                FooterPage: {
-                    firstName: firstName,
-                    lastName: lastName,
-                    address: "1234",
-                    phoneNum: "1234",
-                    email: email,
-                    instaLink: "instaLink",
-                    fbLink: "fbLink",
-                    linkedInLink: "linkedinLink",
-                    twitterLink: "twitterLink"
-                },
-                publish: false
-            }).then((u)=>{
-                window.location.href='/Login';
+            const newUser = {
+                id: user.uid,
+                name: firstName + " " + lastName,
+                email: email,
+                currLevel: "0",
+                friends: []
+            }
+            axios.post('/users/add', newUser)
+            .then((res)=>{
+                console.log(res.data);
+                // window.location.href='/Login';
             });
             console.log(u);
         }).catch((err)=>{

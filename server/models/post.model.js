@@ -1,20 +1,20 @@
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
-
-const postSchema = new Schema ({
-    id: {type: String, unique: true}, 
+const postObjSchema = new mongoose.Schema({
+  /* Your code for a schema here */
+    id: {type: String, unique: true},  
     message: {type: String},
     secretAnswer: {type: String},
-    timeElapsed: {type: Date},
-    maxTime: {type: Date},
+    timeElapsed: {type: Number},
+    maxTime: {type: Number},
     hidden: {type: Boolean},
-    comments: [{
-        id: {type: String, unique: true}, //should be same as the id of the person who posted the comment
-        commentAns: {type: String}
-    }]
-    //Thread objects
-})
+    // comments: [{
+    //     id: {type: String, unique: true}, //should be same as the id of the person who posted the comment
+    //     commentAns: {type: String}
+    // }]
+  //Check out - https://mongoosejs.com/docs/guide.html
+},{
+    timestamps: true,
+});
 
-const postObj = mongoose.model('postObj', 'postSchema');
-module.exports = { postObj };
+module.exports =  mongoose.model('postObj', postObjSchema);

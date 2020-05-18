@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
     email: {type: String, unique: true},
     currLevel: {type: Number},
     friends: [{
-        id: {type: String, unique: true}
+        type: String
+        // id: {type: String, unique: true}
     }]
   //Check out - https://mongoosejs.com/docs/guide.html
 });

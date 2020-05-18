@@ -11,7 +11,9 @@ connection.once('open', () => {
 // require('./models/post.model');
 // require('./models/user.model');
 const usersRouter = require('./routes/users');
+const postsRouter = require('./routes/posts');
 
 const app = express.init()
 app.use('/users', usersRouter);
+app.use('/posts', postsRouter);
 app.listen(port, () => console.log(`Server now running on port ${port}!`));
