@@ -4,7 +4,9 @@ const path = require('path'),
     morgan = require('morgan'),
     bodyParser = require('body-parser'),
     exampleRouter = require('../routes/examples.server.routes');
-
+    const cors = require('cors');
+    
+    
 module.exports.init = () => {
     /* 
         connect to database
@@ -13,9 +15,11 @@ module.exports.init = () => {
     mongoose.connect(process.env.DB_URI || require('./config').db.uri, {
         useNewUrlParser: true
     });
+
     mongoose.set('useCreateIndex', true);
     mongoose.set('useFindAndModify', false);
 
+    require('dotenv').config();
     // initialize app
     const app = express();
 
@@ -23,6 +27,7 @@ module.exports.init = () => {
     app.use(morgan('dev'));
 
     // body parsing middleware
+    app.use(cors());
     app.use(bodyParser.json());
 
     // add a router
