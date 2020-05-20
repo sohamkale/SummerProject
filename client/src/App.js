@@ -1,7 +1,6 @@
 import React from 'react';
 // import 'bootstrap/dist/css/bootstrap.css';
 import { Route, Switch, Redirect  } from 'react-router-dom';
-import Body from "./Components/Shared/Body";
 import NotFound from "./Components/Shared/NotFound";
 // import NavBar from "./Components/Shared/NavBar";
 
