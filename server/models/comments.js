@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
-
-const postSchema = new Schema ({
-    id: {type: String, unique: true}, 
-    commentAns: {type: String}
-    //Thread objects
+const commentSchema = new mongoose.Schema ({
+    commentId: {type: String}, //should be unique or not
+    commentAns: {type: String},
+    numLikes: {type: Number},
+    score: {type: Number}
 })
 
-const postObj = mongoose.model('postObj', 'postSchema', 'postObj');
-module.exports = { postObj };
+
+module.exports =  mongoose.model('comment', commentSchema);

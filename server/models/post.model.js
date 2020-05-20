@@ -1,17 +1,19 @@
 const mongoose = require('mongoose');
-
+const comment = mongoose.model('comment');
+const emoji = mongoose.model('emoji');
 const postObjSchema = new mongoose.Schema({
-  /* Your code for a schema here */
-    id: {type: String, unique: true},  
-    message: {type: String},
+  /* Your code for a schema here */             //type, number of likes, string array of answers - no. likes, no. of points
+    postObjId: {type: String},   //should be unique or not?
+    type: {type: String},
+    numLikes: {type: Number},
+    message: {
+        emojiArray: [] //empty array at first and will add emoji to it later, making it an array [emoji]
+    }, //message -> emoji array -> every emoji has x and y coordinates
     secretAnswer: {type: String},
     timeElapsed: {type: Number},
-    maxTime: {type: Number},
+    maxTime: {type: Number}, //current time + 2 hours //expire time- datetime
     hidden: {type: Boolean},
-    // comments: [{
-    //     id: {type: String, unique: true}, //should be same as the id of the person who posted the comment
-    //     commentAns: {type: String}
-    // }]
+    comments: [] //empty array at first and will add comment to it later, making it an array [comment]
   //Check out - https://mongoosejs.com/docs/guide.html
 },{
     timestamps: true,
