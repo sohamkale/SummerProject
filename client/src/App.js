@@ -1,13 +1,12 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap.css';
 import { Route, Switch, Redirect  } from 'react-router-dom';
 import Body from "./Components/Shared/Body";
 import NotFound from "./Components/Shared/NotFound";
-import NavBar from "./Components/Shared/NavBar";
+// import NavBar from "./Components/Shared/NavBar";
 
 import Home from "./Views/Home/Home";
-import NotFound from "./Views/NotFound";
-import NavBar from "./components/Header/NavBar";
+import NavBar from "./Components/Header/NavBar";
 import LoginApp from "./Views/Login/LoginApp";
 import Signup from "./Views/Signup/Signup";
 const App = () => {
@@ -34,9 +33,9 @@ const App = () => {
       </Route>
         <Route component={NotFound}/>
       </Switch>
-      <div className="container-fluid">
+      {/* <div className="container-fluid">
         <Body/>
-      </div>
+      </div> */}
     </div>
   );
 }

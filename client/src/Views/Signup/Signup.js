@@ -1,7 +1,7 @@
 import './Signup.css'
 import React , { Component, useEffect, useState } from "react";
 import fire from "../../config/Fire";
-import SignupComp from "../../components/Signup/SignupComp";
+import SignupComp from "../../Components/Signup/SignupComp";
 import axios from 'axios';
 // import Footer from "../../components/Footer/Footer";
 

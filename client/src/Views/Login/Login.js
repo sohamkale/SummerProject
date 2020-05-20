@@ -2,7 +2,7 @@ import React , { Component, useState, useEffect } from "react";
 import fire from "./../../config/Fire";
 import * as firebase from 'firebase';
  import "./Login.css";
-import Signin from "../../components/SignIn/Signin";
+import Signin from "../../Components/SignIn/Signin";
 // import Footer from "../../components/Footer/Footer";
 
 const Login = (props) => {

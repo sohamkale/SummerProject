@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const comment = mongoose.model('comment');
-const emoji = mongoose.model('emoji');
+// const comment = mongoose.model('comment');
+// const emoji = mongoose.model('emoji');
 const postObjSchema = new mongoose.Schema({
   /* Your code for a schema here */             //type, number of likes, string array of answers - no. likes, no. of points
     postObjId: {type: String},   //should be unique or not?

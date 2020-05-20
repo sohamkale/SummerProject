@@ -45,12 +45,12 @@ const Navbarcomp = () => {
 <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" />
 <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav">
 <ReactBootStrap.Nav className="mr-auto"> 
-            <Nav.Link href="/true/home">Home</Nav.Link>
+            <Nav.Link href="/home">Home</Nav.Link>
             {/* {isUser ? <Nav.Link href="/true/Login">Dashboard</Nav.Link> : <Nav.Link href="/true/Login">Login</Nav.Link>}
             {isUser ? null : <Nav.Link href="/true/Signup">Signup</Nav.Link>} */}
             <Nav.Link href="/Login">Login</Nav.Link>
-            <Nav.Link href="/Signup">Signup</Nav.Link>
-            {isUser ? <Button onClick={logout}>logout</Button> : <Nav.Link href="/true/Signup">Signup</Nav.Link>}
+            {/* <Nav.Link href="/Signup">Signup</Nav.Link> */}
+            {isUser ? <Button onClick={logout}>logout</Button> : <Nav.Link href="/Signup">Signup</Nav.Link>}
 </ReactBootStrap.Nav>
 </ReactBootStrap.Navbar.Collapse>
 </ReactBootStrap.Navbar>
