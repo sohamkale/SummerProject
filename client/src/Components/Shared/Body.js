@@ -1,24 +1,25 @@
 import React from 'react';
 import Home from "../../Views/Home/Home"
 import EmojiInputBox from "../Emortions/EmojiInputBox"
-import Emoji from "../Emortions/Emoji"
+import DemoCol from '../Demographics/DemoCol'
+import PostBox from '../Emortions/PostBox'
 
 function Body() {
     return (
       <div>
         <center>
-             Type in your post!
+          Welcome to the Den
         </center>
         <div className='row'>
-          <div className='col-5'>
-            <EmojiInputBox onFocus={showEmojiPicker}/>
+
+          <div className='DemoCol col-3'>
+            <DemoCol />
           </div>
-          <div className='col-3'>
-            <Emoji/>
+          <div className='col-6'>
+          <br></br>
+            <PostBox />
           </div>
         </div>
-
-           
       </div>
       );
 }

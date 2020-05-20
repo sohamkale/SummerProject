@@ -1,6 +1,7 @@
 .emoji-input-box{
     width: 100%;
-    height: auto;
+    min-height: 50px;
+    overflow-y: scroll;
     border: 1px dashed black;
     pointer-events: none;
 }
