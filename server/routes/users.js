@@ -6,18 +6,19 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
-    const id = req.body.id;
+    const userId = req.body.userId;
     const name = req.body.name;
     const email = req.body.email;
     const currLevel = Number(req.body.currLevel);
     const friendsList = req.body.friends;
  
     const newUser = new User({
-        'id': id,
+        'userId': userId,
         'name': name,
         'email': email,
         'currLevel': currLevel,
         'friends': friendsList
+            //need to add comments and posts that the user has made that haven't been expired (need to think if its necessary)
     })
     
     newUser.save().then(() => res.json('User Added!')).catch(err => res.status('400').json('Error: ' + err));

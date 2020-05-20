@@ -26,7 +26,6 @@ class LoginApp extends Component {
 
   authListener() {
     fire.auth().onAuthStateChanged((user) => {
-      
       if (user) {
         this.state.count++;
         this.setState({ user });
