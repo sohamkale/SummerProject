@@ -1,4 +1,4 @@
-import React from './node_modules/react';
+import React from 'react';
 // import logo from '../../Assets/logo.svg';
 import './Home.css';
 import Body from "../../components/Shared/Body";

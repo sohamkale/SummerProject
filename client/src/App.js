@@ -4,8 +4,8 @@ import { Route, Switch, Redirect  } from 'react-router-dom';
 import NotFound from "./components/Shared/NotFound";
 // import NavBar from "./Components/Shared/NavBar";
 
-// import Home from "./Views/Home/Home.js"
-// import NavBar from "./Components/Header/NavBar";
+import Home from "./views/Home/Home.js"
+import NavBar from "./components/Header/NavBar";
 import LoginApp from "./views/Login/LoginApp";
 import Signup from "./views/Signup/Signup";
 const App = () => {
@@ -18,9 +18,9 @@ const App = () => {
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous"></link>
       </head>
-      {/* <NavBar /> */}
+      <NavBar />
       <Switch>
-      {/* <Route exact path="/Home" component={Home} /> */}
+      <Route exact path="/Home" component={Home} />
       {/* <Route exact path="/contact" component={ContactMe} /> */}
       <Route exact path="/Login" component={LoginApp} />
       <Route exact path="/Signup" component={Signup} />

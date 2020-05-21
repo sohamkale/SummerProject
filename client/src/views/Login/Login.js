@@ -1,8 +1,8 @@
-import React , { Component, useState, useEffect } from "./node_modules/react";
+import React , { Component, useState, useEffect } from "react";
 import fire from "../../config/Fire";
-import * as firebase from './node_modules/firebase';
+import * as firebase from 'firebase';
  import "./Login.css";
-// import Signin from "../../Components/SignIn/Signin";
+import Signin from "../../components/SignIn/Signin";
 // import Footer from "../../components/Footer/Footer";
 
 const Login = (props) => {
@@ -41,13 +41,13 @@ const Login = (props) => {
 
     return (
         <div>
-            {/* <Signin
+            <Signin
             email={email}
             password={password}
             handleEmailChange={handleEmailChange}
             handlePasswordChange={handlePasswordChange}
             login={login}
-            logout={logout}/> */}
+            logout={logout}/>
         </div>
     );
 

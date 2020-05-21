@@ -1,7 +1,7 @@
-import React from './node_modules/react'
+import React from 'react'
 import EmojiInputBox from './EmojiInputBox'
 import Emoji from "./Emoji"
-import { Button } from './node_modules/react-bootstrap'
+import { Button } from 'react-bootstrap'
 
 
 function PostBox() {

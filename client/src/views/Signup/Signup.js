@@ -1,9 +1,8 @@
 import './Signup.css'
-import React , { Component, useEffect, useState } from "./node_modules/react";
+import React , { Component, useEffect, useState } from "react";
 import fire from "../../config/Fire";
-// import SignupComp from "../../Components/Signup/SignupComp";
-import axios from './node_modules/axios';
-// import Footer from "../../components/Footer/Footer";
+import SignupComp from "../../components/Signup/SignupComp";
+import axios from 'axios';
 
 const Signup = (props) => {
     const [email, setEmail] = useState(null);
@@ -91,21 +90,20 @@ const Signup = (props) => {
     }
 
     return(     
-        // <SignupComp
-        // handleEmailChange={handleEmailChange}
-        // handleFirstNameChange={handleFirstNameChange}
-        // handleLastNameChange={handleLastNameChange}
-        // handlePasswordChange={handlePasswordChange}
-        // handlePhoneNumChange={handlePhoneNumChange}
-        // email={email}
-        // password={password}
-        // firstName={firstName}
-        // lastName={lastName}
-        // phoneNum={phoneNum}
-        // validatePhone={validatePhone}
-        // validPhone={validPhone} 
-        // signup={signup}/>
-        <div></div>
+        <SignupComp
+        handleEmailChange={handleEmailChange}
+        handleFirstNameChange={handleFirstNameChange}
+        handleLastNameChange={handleLastNameChange}
+        handlePasswordChange={handlePasswordChange}
+        handlePhoneNumChange={handlePhoneNumChange}
+        email={email}
+        password={password}
+        firstName={firstName}
+        lastName={lastName}
+        phoneNum={phoneNum}
+        validatePhone={validatePhone}
+        validPhone={validPhone} 
+        signup={signup}/>
     );
 
     
