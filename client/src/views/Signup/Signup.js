@@ -37,12 +37,14 @@ const Signup = (props) => {
         fire.auth().createUserWithEmailAndPassword(email, password).then((u)=>{
             var user = fire.auth().currentUser;
             const newUser = {
-                id: user.uid,
+                userId: user.uid,
                 name: firstName + " " + lastName,
                 email: email,
                 currLevel: "0",
                 friends: []
             }
+            console.log("Before posting: ");
+            console.log(newUser);
             axios.post(API_BASE + "/users/add", newUser)
             .then((res)=>{
                 console.log(res.data);

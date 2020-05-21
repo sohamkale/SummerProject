@@ -11,7 +11,8 @@ router.route('/add').post((req, res) => {
     const email = req.body.email;
     const currLevel = Number(req.body.currLevel);
     const friendsList = req.body.friends;
- 
+    console.log("In Server side before posting: ");
+    console.log(userId + " " + name + " " + email + " " + currLevel + " " + friendsList);
     const newUser = new User({
         'userId': userId,
         'name': name,
