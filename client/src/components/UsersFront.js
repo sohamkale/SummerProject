@@ -12,7 +12,8 @@ const UsersFront = (props) => {
         axios.get(API_BASE + "/users")
             .then((res)=>{
                 if(res.data.length > 0){
-                   
+                    console.log("users");
+                   console.log(res.data);
                     res.data.map(user => array.push(user.email))
                 }
                 console.log(array);
@@ -22,6 +23,8 @@ const UsersFront = (props) => {
             axios.get(API_BASE + "/posts")
             .then((res)=>{
                 if(res.data.length > 0){
+                    console.log("posts");
+                    console.log(res.data);
                     res.data.map(post => postsArray.push(post._id))
                 }
                 console.log(postsArray);
