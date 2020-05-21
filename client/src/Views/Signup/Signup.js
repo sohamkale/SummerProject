@@ -1,7 +1,7 @@
 import './Signup.css'
 import React , { Component, useEffect, useState } from "react";
 import fire from "../../config/Fire";
-import SignupComp from "../../Components/Signup/SignupComp";
+// import SignupComp from "../../Components/Signup/SignupComp";
 import axios from 'axios';
 // import Footer from "../../components/Footer/Footer";
 
@@ -91,20 +91,21 @@ const Signup = (props) => {
     }
 
     return(     
-        <SignupComp
-        handleEmailChange={handleEmailChange}
-        handleFirstNameChange={handleFirstNameChange}
-        handleLastNameChange={handleLastNameChange}
-        handlePasswordChange={handlePasswordChange}
-        handlePhoneNumChange={handlePhoneNumChange}
-        email={email}
-        password={password}
-        firstName={firstName}
-        lastName={lastName}
-        phoneNum={phoneNum}
-        validatePhone={validatePhone}
-        validPhone={validPhone} 
-        signup={signup}/>
+        // <SignupComp
+        // handleEmailChange={handleEmailChange}
+        // handleFirstNameChange={handleFirstNameChange}
+        // handleLastNameChange={handleLastNameChange}
+        // handlePasswordChange={handlePasswordChange}
+        // handlePhoneNumChange={handlePhoneNumChange}
+        // email={email}
+        // password={password}
+        // firstName={firstName}
+        // lastName={lastName}
+        // phoneNum={phoneNum}
+        // validatePhone={validatePhone}
+        // validPhone={validPhone} 
+        // signup={signup}/>
+        <div></div>
     );
 
     
