@@ -6,7 +6,7 @@ import Login from './Login';
 // import AdminDash from "../AdminDash/AdminDash";
 // import Profile from "../UserProfile/profile.js";
 // import LoginCard from '../../components/Cards/LoginCard';
-import Home from "./../Home/Home";
+// import Home from "./../Home/Home";
 
 
 class LoginApp extends Component {
