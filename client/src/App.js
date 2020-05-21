@@ -4,7 +4,7 @@ import { Route, Switch, Redirect  } from 'react-router-dom';
 import NotFound from "./Components/Shared/NotFound";
 // import NavBar from "./Components/Shared/NavBar";
 
-// import Home from "./Views/Home/Home";
+import Home from "./Views/Home/Home.js"
 // import NavBar from "./Components/Header/NavBar";
 import LoginApp from "./Views/Login/LoginApp";
 import Signup from "./Views/Signup/Signup";
@@ -20,7 +20,7 @@ const App = () => {
       </head>
       {/* <NavBar /> */}
       <Switch>
-      {/* <Route exact path="/Home" component={Home} /> */}
+      <Route exact path="/Home" component={Home} />
       {/* <Route exact path="/contact" component={ContactMe} /> */}
       <Route exact path="/Login" component={LoginApp} />
       <Route exact path="/Signup" component={Signup} />
