@@ -45,7 +45,7 @@ const Signup = (props) => {
             }
             console.log("Before posting: ");
             console.log(newUser);
-            axios.post(API_BASE + "/users/add", newUser)
+            axios.post(API_BASE + "/api/users/add", newUser)
             .then((res)=>{
                 console.log(res.data);
                 // window.location.href='/Login';
