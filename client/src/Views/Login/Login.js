@@ -1,6 +1,6 @@
-import React , { Component, useState, useEffect } from "react";
-import fire from "./../../config/Fire";
-import * as firebase from 'firebase';
+import React , { Component, useState, useEffect } from "./node_modules/react";
+import fire from "../../config/Fire";
+import * as firebase from './node_modules/firebase';
  import "./Login.css";
 // import Signin from "../../Components/SignIn/Signin";
 // import Footer from "../../components/Footer/Footer";

@@ -1,8 +1,8 @@
 import './Signup.css'
-import React , { Component, useEffect, useState } from "react";
+import React , { Component, useEffect, useState } from "./node_modules/react";
 import fire from "../../config/Fire";
 // import SignupComp from "../../Components/Signup/SignupComp";
-import axios from 'axios';
+import axios from './node_modules/axios';
 // import Footer from "../../components/Footer/Footer";
 
 const Signup = (props) => {

@@ -1,6 +1,6 @@
-import React from 'react';
+import React from './node_modules/react';
 import "./EmojiInputBox.css"
-import {Button} from 'react-bootstrap'
+import {Button} from './node_modules/react-bootstrap'
 
 function EmojiInputBox()
 {

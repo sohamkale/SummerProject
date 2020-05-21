@@ -1,13 +1,13 @@
 import React from 'react';
 // import 'bootstrap/dist/css/bootstrap.css';
 import { Route, Switch, Redirect  } from 'react-router-dom';
-import NotFound from "./Components/Shared/NotFound";
+import NotFound from "./components/Shared/NotFound";
 // import NavBar from "./Components/Shared/NavBar";
 
 // import Home from "./Views/Home/Home.js"
 // import NavBar from "./Components/Header/NavBar";
-import LoginApp from "./Views/Login/LoginApp";
-import Signup from "./Views/Signup/Signup";
+import LoginApp from "./views/Login/LoginApp";
+import Signup from "./views/Signup/Signup";
 const App = () => {
   return (
   

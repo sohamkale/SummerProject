@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import 'emoji-mart/css/emoji-mart.css'
-import { Picker } from 'emoji-mart'
+import React, { useState } from './node_modules/react';
+import './node_modules/emoji-mart/css/emoji-mart.css'
+import { Picker } from './node_modules/emoji-mart'
  
 function Emoji()
 {

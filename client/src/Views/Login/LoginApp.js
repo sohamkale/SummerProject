@@ -1,5 +1,5 @@
-import React, { Component, useEffect, useState } from 'react';
-import fire from "./../../config/Fire";
+import React, { Component, useEffect, useState } from './node_modules/react';
+import fire from "../../config/Fire";
 import Login from './Login';
 // import Dashboard from "../admin/Dashboard";
 // import Signup from '../Signup/Signup';

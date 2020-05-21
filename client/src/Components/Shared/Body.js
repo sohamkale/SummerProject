@@ -1,5 +1,5 @@
-import React from 'react';
-import Home from "../../Views/Home/Home"
+import React from './node_modules/react';
+import Home from "../../views/Home/Home"
 import EmojiInputBox from "../Emortions/EmojiInputBox"
 import DemoCol from '../Demographics/DemoCol'
 import PostBox from '../Emortions/PostBox'

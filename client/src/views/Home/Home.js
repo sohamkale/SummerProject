@@ -1,7 +1,7 @@
-import React from 'react';
+import React from './node_modules/react';
 // import logo from '../../Assets/logo.svg';
 import './Home.css';
-import Body from "../../Components/Shared/Body";
+import Body from "../../components/Shared/Body";
 function Home() {
     return (
       <div>
