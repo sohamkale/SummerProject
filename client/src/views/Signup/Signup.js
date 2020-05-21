@@ -43,7 +43,7 @@ const Signup = (props) => {
                 currLevel: "0",
                 friends: []
             }
-            axios.post('/users/add', newUser)
+            axios.post('http://localhost:5000/users/add', newUser)
             .then((res)=>{
                 console.log(res.data);
                 // window.location.href='/Login';
