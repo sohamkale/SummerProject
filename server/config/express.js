@@ -34,6 +34,7 @@ module.exports.init = () => {
     app.use('/api/example', exampleRouter);
 
     if (process.env.NODE_ENV === "production"){
+        alert("in production");
         app.use(express.static("../../client/build"));
     }
     return app
