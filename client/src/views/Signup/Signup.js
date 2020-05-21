@@ -3,7 +3,7 @@ import React , { Component, useEffect, useState } from "react";
 import fire from "../../config/Fire";
 import SignupComp from "../../components/Signup/SignupComp";
 import axios from 'axios';
-const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:5000';
+// const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:5000';
 const Signup = (props) => {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
@@ -43,7 +43,7 @@ const Signup = (props) => {
                 currLevel: "0",
                 friends: []
             }
-            axios.post(API_BASE + "/users/add", newUser)
+            axios.post("/users/add", newUser)
             .then((res)=>{
                 console.log(res.data);
                 // window.location.href='/Login';
