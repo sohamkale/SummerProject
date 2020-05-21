@@ -18,6 +18,7 @@ const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
 const commentRouter = require('./routes/comment');
 
+
 const app = express.init()
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
