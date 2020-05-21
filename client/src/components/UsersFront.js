@@ -9,7 +9,7 @@ const UsersFront = (props) => {
     let postsArray = [];
     let array = [];
     useEffect(() => {
-        axios.get('/users')
+        axios.get('/users/')
             .then((res)=>{
                 if(res.data.length > 0){
                     console.log("users");
@@ -20,7 +20,7 @@ const UsersFront = (props) => {
                 setUsers(array);
                 // window.location.href='/Login';
             });
-            axios.get(API_BASE + "/posts")
+            axios.get(API_BASE + "/posts/")
             .then((res)=>{
                 if(res.data.length > 0){
                     console.log("posts");
