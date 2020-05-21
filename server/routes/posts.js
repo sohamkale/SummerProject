@@ -2,6 +2,8 @@ const router = require('express').Router();
 let PostModel = require('../models/post.model');
 
 router.route('/').get((req, res) => {
+    console.log("In Server side before getting posts: ");
+    console.log();
     PostModel.find().then(posts => res.json(posts)).catch(err => res.status('400').json('Error: ' + err));
 });
 
