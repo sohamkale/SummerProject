@@ -9,7 +9,7 @@ const UsersFront = (props) => {
     let postsArray = [];
     let array = [];
     useEffect(() => {
-        axios.get(API_BASE + "/users")
+        axios.get('/users')
             .then((res)=>{
                 if(res.data.length > 0){
                     console.log("users");
