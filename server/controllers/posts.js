@@ -45,7 +45,7 @@ add(req, res) {
 test(req,res)
 {
     req.body=objectify(req.body)
-    console.log(req.body.emojiArray[0])
+    console.log(req.body)
     
 }
 }

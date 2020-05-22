@@ -11,6 +11,7 @@ function PostBox() {
             <b className="card-header">TELL ME AN EMORTION!</b>
             <div className="card-body">
                 <form id='thePost' onSubmit={submit}>
+                    <input hidden name="userId" value="SohamsFirstUser"></input>
                     <label for="type" className='form-check-label'>Type: &nbsp; </label>
                     <select name='type' className='form-control-sm'>
                         <option>Timer</option>
