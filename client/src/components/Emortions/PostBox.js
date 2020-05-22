@@ -1,17 +1,27 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import EmojiInputBox from './EmojiInputBox'
 import Emoji from "./Emoji"
 import { Button } from 'react-bootstrap'
+import fire from "../../config/Fire";
 import $ from 'jquery'
 const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:5000';
 
 function PostBox() {
+    const [userId, setUserId] = useState(null);
+    useEffect (() => {
+        fire.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                setUserId(user.uid);
+            }
+        }); 
+    }, []);
+    
     return (
         <div className="card bg-light mb-3">
             <b className="card-header">TELL ME AN EMORTION!</b>
             <div className="card-body">
                 <form id='thePost' onSubmit={submit}>
-                    <input hidden name="userId" value="SohamsFirstUser"></input>
+                    <input hidden name="userId" value={userId}></input>
                     <label for="type" className='form-check-label'>Type: &nbsp; </label>
                     <select name='type' className='form-control-sm'>
                         <option>Timer</option>

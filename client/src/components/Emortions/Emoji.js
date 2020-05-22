@@ -25,6 +25,7 @@ function Emoji()
 function AppendEmoji(emoji,event)
 {
     var ele = event.target.cloneNode(true);
+    console.log(ele);
     document.getElementById('maintext').appendChild(ele);
 }
 function myFunction() {

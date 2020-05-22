@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Home from "../../views/Home/Home"
 import EmojiInputBox from "../Emortions/EmojiInputBox"
 import DemoCol from '../Demographics/DemoCol'
 import PostBox from '../Emortions/PostBox'
+import CommentBox from "../Emortions/CommentBox";
+import axios from 'axios';
 
 function Body() {
+    const [postsArray, setPostsArray] = useState([]);
+    let posts = [];
+    useEffect(() => {
+      axios.get('/api/posts')
+      .then((res)=>{
+        if(res.data.length > 0){
+            console.log("posts");
+            console.log(res.data);
+            res.data.map(post => posts.push(post))
+        }
+        console.log(posts);
+        setPostsArray(posts);
+    });
+    }, [])
     return (
       <div>
         <center>
@@ -18,6 +34,10 @@ function Body() {
           <div className='col-6'>
           <br></br>
             <PostBox />
+          </div>
+          <div className="col-12">
+            <CommentBox
+            postsArray = {postsArray}/>
           </div>
         </div>
       </div>
