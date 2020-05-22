@@ -4,11 +4,12 @@ import "./CommentBox.css";
 import CommentCard from "./CommentCard";
 const CommentBox = (props) => {
     return(
-        <div className="commentDiv bg-dark">
-        <Container fluid className="bg-danger commentBox">
+        <div className="commentDiv fluid bg-dark">
+        <Container fluid className="commentBox">
+            {console.log(props.postsArray)}
             {props.postsArray.map((post) => (
                 <Row className="mt-3">
-                    <Col sm={12}>
+                    <Col >
                     <CommentCard 
                         post = {post}/>
                     </Col>

@@ -54,7 +54,7 @@ const postsController = {
             'comments': []
             //need to add comments Array here
         })
-        newPost.save().then(() => res.json('post Added!')).catch(err => res.status('400').json('Error: ' + err));
+        newPost.save().then(() => res.json(newPost)).catch(err => res.status('400').json('Error: ' + err));
     }
     // test(req,res)
     // {

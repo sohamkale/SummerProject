@@ -35,10 +35,7 @@ function Body() {
           <br></br>
             <PostBox />
           </div>
-          <div className="col-12">
-            <CommentBox
-            postsArray = {postsArray}/>
-          </div>
+          
         </div>
       </div>
       );

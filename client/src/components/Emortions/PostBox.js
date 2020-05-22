@@ -4,10 +4,13 @@ import Emoji from "./Emoji"
 import { Button } from 'react-bootstrap'
 import fire from "../../config/Fire";
 import $ from 'jquery'
+import axios from 'axios';
+import CommentBox from "../Emortions/CommentBox";
 const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:5000';
-
-function PostBox() {
+const PostBox = () => {
     const [userId, setUserId] = useState(null);
+    const [postsArray, setPostsArray] = useState([]);
+    let posts = [];
     useEffect (() => {
         fire.auth().onAuthStateChanged(function(user) {
             if (user) {
@@ -15,8 +18,22 @@ function PostBox() {
             }
         }); 
     }, []);
-    
+
+    useEffect(() => {
+        axios.get('/api/posts')
+      .then((res)=>{
+        if(res.data.length > 0){
+            console.log("posts");
+            console.log(res.data);
+            res.data.map(post => posts.push(post))
+        }
+        console.log(posts);
+        setPostsArray(posts);
+    });
+    }, [])
+
     return (
+        <div>
         <div className="card bg-light mb-3">
             <b className="card-header">TELL ME AN EMORTION!</b>
             <div className="card-body">
@@ -46,10 +63,18 @@ function PostBox() {
                     <Button type='submit' className='d-inline' variant="info">POST</Button>
                     <br></br>
                 </form>
+                
             </div>
+            
+        </div>
+        <div className=" fluid col-12">
+        <CommentBox
+            postsArray = {postsArray}/>
+        </div>
         </div>
     );
-}
+
+
 
 function submit(e)
 {
@@ -77,9 +102,21 @@ function submit(e)
         contentType: "application/json; charset=utf-8",
         dataType   : "json",
         success:function(data){
-            //whatever you wanna do after the form is successfully submitted
+            axios.get('/api/posts')
+            .then((res)=>{
+              if(res.data.length > 0){
+                  console.log("posts");
+                  console.log(res.data);
+                  res.data.map(post => posts.push(post))
+              }
+              console.log(posts);
+              setPostsArray(posts);
+          }); 
         }
     });
 }
+}
+
+
 
 export default PostBox;
