@@ -3,7 +3,7 @@ import EmojiInputBox from './EmojiInputBox'
 import Emoji from "./Emoji"
 import { Button } from 'react-bootstrap'
 import $ from 'jquery'
-
+const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:5000';
 
 function PostBox() {
     return (
@@ -59,7 +59,7 @@ function submit(e)
     });
     form.push({name:'emojiArray',value: emojiArray})
     $.ajax({
-        url:'http://localhost:5000/api/test/add',
+        url: '/api/posts/add',
         type:'POST',
         data: JSON.stringify(
            form
