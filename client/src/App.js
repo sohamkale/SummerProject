@@ -4,7 +4,7 @@ import { Route, Switch, Redirect  } from 'react-router-dom';
 import NotFound from "./components/Shared/NotFound";
 // import NavBar from "./Components/Shared/NavBar";
 
-import Home from "./views/Home/Home.js"
+import Home from "./views/Home/Home"
 import NavBar from "./components/Header/NavBar";
 import LoginApp from "./views/Login/LoginApp";
 import Signup from "./views/Signup/Signup";
