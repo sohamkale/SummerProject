@@ -9,6 +9,9 @@ all(req, res) {
 },
 
 add(req, res) {
+    //parse the body from front end-
+    req.body = objectify(req.body);
+    //Custom Body
     const postObjId = req.body.postObjId;
     const type = req.body.type;
     const numLikes = Number(req.body.numLikes);
@@ -38,9 +41,20 @@ add(req, res) {
 
 test(req,res)
 {
-    console.log(req.params)
-    res.json(req.body);
+    req.body=objectify(req.body)
+    console.log(req.body.type)
+    res.json('jjs')
+    
 }
 }
+
+function objectify(formArray) {//serialize data function
+ 
+    var returnArray = {};
+    for (var i = 0; i < formArray.length; i++){
+      returnArray[formArray[i]['name']] = formArray[i]['value'];
+    }
+    return returnArray;
+  }
 
 module.exports = postsController;

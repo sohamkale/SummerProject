@@ -44,13 +44,16 @@ function submit(e)
     e.preventDefault();
     $.ajax({
         url:'http://localhost:5000/api/test/add',
-        type:'post',
-        data:$('#thePost').serialize(),
+        type:'POST',
+        data: JSON.stringify(
+           $('#thePost').serializeArray()
+        ),
+        contentType: "application/json; charset=utf-8",
+        dataType   : "json",
         success:function(data){
-            console.log($('#thePost').serialize())
             //whatever you wanna do after the form is successfully submitted
         }
     });
 }
-    
+
 export default PostBox;
