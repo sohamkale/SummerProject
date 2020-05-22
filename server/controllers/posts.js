@@ -34,6 +34,12 @@ add(req, res) {
     })
     
     newPost.save().then(() => res.json('post Added!')).catch(err => res.status('400').json('Error: ' + err));
+},
+
+test(req,res)
+{
+    console.log(req.params)
+    res.json(req.body);
 }
 }
 

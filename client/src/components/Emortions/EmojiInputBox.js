@@ -9,6 +9,8 @@ function EmojiInputBox()
             <div id='maintext' class='emoji-input-box'></div>
             <br></br>
             <Button className='d-inline' onClick={Erase} variant="danger">DELETE</Button>
+            &nbsp;
+            <Button className='d-inline' onClick={EraseAll} variant="danger">CLEAR</Button>
         </div>
     );
 }
@@ -16,7 +18,14 @@ function EmojiInputBox()
 function Erase()
 {
     var maintext = document.getElementById("maintext");
-    maintext.removeChild(maintext.childNodes[maintext.childElementCount-1]);
+    try
+    {maintext.removeChild(maintext.childNodes[maintext.childElementCount-1]);}
+    catch{}
+}
+
+function EraseAll()
+{
+    var maintext = document.getElementById("maintext").innerHTML="";
 }
 
 export default EmojiInputBox;
