@@ -18,7 +18,7 @@ function PostBox() {
                     &nbsp;
                     &nbsp;
                     <label className='form-check-label'>Validity: &nbsp; </label>
-                    <select name='time' className='form-control-sm'>
+                    <select name='validity' className='form-control-sm'>
                         <option>1h</option>
                         <option>2h</option>
                         <option>3h</option>
@@ -30,7 +30,7 @@ function PostBox() {
                     <Emoji />
                     <br></br>
                     <label>Secret Answer</label>
-                    <input id="secret" name="secret" className="form-control"></input>
+                    <input id="secret" name="secretAnswer" className="form-control"></input>
                     <br></br>
                     <Button type='submit' className='d-inline' variant="info">POST</Button>
                     <br></br>
@@ -39,14 +39,29 @@ function PostBox() {
         </div>
     );
 }
+
 function submit(e)
 {
+    
     e.preventDefault();
+    var form = $('#thePost').serializeArray();
+    var emojis = (document.getElementById('maintext').childNodes);
+    var emojiArray=[];
+    emojis.forEach(function(item,index)
+    {
+         if(item.nodeName=="SPAN")
+            emojiArray.push(item.style.backgroundPosition)
+        else
+            emojiArray.push(item.getElementsByTagName("SPAN")[0].style.backgroundPosition)
+        
+        
+    });
+    form.push({name:'emojiArray',value: emojiArray})
     $.ajax({
         url:'http://localhost:5000/api/test/add',
         type:'POST',
         data: JSON.stringify(
-           $('#thePost').serializeArray()
+           form
         ),
         contentType: "application/json; charset=utf-8",
         dataType   : "json",

@@ -1,3 +1,5 @@
+//LEFT BY MOHAMMAD FOR SOHAM TO FINISH//
+
 const router = require('express').Router();
 let PostModel = require('../models/post.model');
 
@@ -12,29 +14,30 @@ add(req, res) {
     //parse the body from front end-
     req.body = objectify(req.body);
     //Custom Body
-    const postObjId = req.body.postObjId;
+    // auto create - const postObjId = req.body.postObjId;
     const type = req.body.type;
-    const numLikes = Number(req.body.numLikes);
-    const emojiArray = req.body.emojiArray;
+    const numLikes = Number(0);
+    //this is an array of positions. const emojiArray = req.body.emojiArray;
     const secretAnswer = req.body.secretAnswer;
     const timeElapsed = req.body.timeElapsed;
-    const maxTime = Number(req.body.maxTime);
-    const hidden = req.body.hidden;
-    const comments = req.body.comments
+    //Calculate expire time from req.body.validity
+    // const maxTime = Number(req.body.maxTime);
+    // const hidden = req.body.hidden;
+    // should be empty to start // const comments = req.body.comments
     
-    const newPost = new PostModel({
-        'postObjId': postObjId,
-        'type': type,
-        'numLikes': numLikes,
-        'message': {
-            'emojiArray': emojiArray
-        },
-        'secretAnswer': secretAnswer,
-        'timeElapsed': timeElapsed,
-        'maxTime': maxTime,
-        'hidden': hidden
-        //need to add comments Array here
-    })
+    // const newPost = new PostModel({
+    //     'postObjId': postObjId,
+    //     'type': type,
+    //     'numLikes': numLikes,
+    //     'message': {
+    //         'emojiArray': emojiArray
+    //     },
+    //     'secretAnswer': secretAnswer,
+    //     'timeElapsed': timeElapsed,
+    //     'maxTime': maxTime,
+    //     'hidden': hidden
+    //     //need to add comments Array here
+    // })
     
     newPost.save().then(() => res.json('post Added!')).catch(err => res.status('400').json('Error: ' + err));
 },
@@ -42,8 +45,7 @@ add(req, res) {
 test(req,res)
 {
     req.body=objectify(req.body)
-    console.log(req.body.type)
-    res.json('jjs')
+    console.log(req.body.emojiArray[0])
     
 }
 }
