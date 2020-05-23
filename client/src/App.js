@@ -12,15 +12,8 @@ import usersFront from "./components/UsersFront";
 import fire from './config/Fire'
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
-    fire.auth().onAuthStateChanged(function(user) {
-      if (user) {
-       setIsLoggedIn(true)
-      } else {
-        setIsLoggedIn(false)
-      }
-    })
+  
   }, []);
 
 

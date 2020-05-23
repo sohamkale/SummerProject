@@ -33,8 +33,8 @@ const PostForm = (props) => {
                 <b className="card-header">TELL ME AN EMORTION!</b>
                 <div className="card-body">
                     <form id='thePost' onSubmit={submit}>
-                        <input hidden name="userId" value={userId}></input>
-                        <label for="type" className='form-check-label'>Type: &nbsp; </label>
+                        <input readOnly hidden name="userId" value={userId? userId: ""}></input>
+                        <label htmlFor="type" className='form-check-label'>Type: &nbsp; </label>
                         <select name='type' className='form-control-sm'>
                             <option>Timer</option>
                         </select>
@@ -53,7 +53,7 @@ const PostForm = (props) => {
                         <Emoji />
                         <br></br>
                         <label>Secret Answer</label>
-                        <input required id="secret" name="secretAnswer" className="form-control"></input>
+                        <input defaultValue="" required id="secret" name="secretAnswer" className="form-control"></input>
                         <br></br>
                         <Button type='submit' className='d-inline' variant="info">POST</Button>
                         <br></br>

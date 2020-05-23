@@ -8,14 +8,14 @@ function Emoji()
    
     return (
       <div>
-        <div class="popup">
+        <div className="popup">
           <div onClick={myFunction}>
             <img src={require('./emoji.png')} width='30px;'></img>
           </div>
           <div className='popuptext' id='myPopup'>
             <Picker onClick={AppendEmoji}  /*include={["flags"]}*/ exclude={["recent"]} />
           </div>
-          {/* <span class="popuptext" id="myPopup">Popup text...</span> */}
+          {/* <span className="popuptext" id="myPopup">Popup text...</span> */}
 
         </div>
       </div>
@@ -25,7 +25,7 @@ function Emoji()
 function AppendEmoji(emoji,event)
 {
     var ele = event.target.cloneNode(true);
-    console.log(ele);
+    //console.log(ele);
     document.getElementById('maintext').appendChild(ele);
 }
 function myFunction() {

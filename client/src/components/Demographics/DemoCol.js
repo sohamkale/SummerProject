@@ -9,13 +9,17 @@ function DemoCol()
     const [displayName, setDisplayName] = useState("anonymous");
     
     useEffect(() => {
+        let mounted =true;
         fire.auth().onAuthStateChanged(function (user) {
             if (user) {
-                console.log(user)
-                setName(user.email);
-                GetUserName(user.uid)
+                if(mounted)
+                    {
+                        setName(user.email);
+                        GetUserName(user.uid)
+                    }
             }
         });
+        return () => mounted = false;
     }, []);
 
     function GetUserName(userId)
@@ -37,7 +41,7 @@ function DemoCol()
         <div>
             <br></br>
             <center> 
-              <img class='dp' src={require('./dpholder.png')}></img>
+              <img className='dp' src={require('./dpholder.png')}></img>
                 {name}<br></br>
                 {displayName}
             </center>

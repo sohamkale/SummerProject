@@ -6,7 +6,7 @@ function EmojiInputBox()
 {
     return (
         <div>
-            <div id='maintext' class='emoji-input-box'></div>
+            <div id='maintext' className='emoji-input-box'></div>
             <br></br>
             <Button className='d-inline' onClick={Erase} variant="danger">DELETE</Button>
             &nbsp;

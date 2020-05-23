@@ -17,14 +17,14 @@ const Emortion = (emortion) => {
 
     return (
         <div>
-            <div class="card">
-                <div class="card-header">
+            <div className="card">
+                <div className="card-header">
                     Emortion By: {name}
                 </div>
-                <div class="card-body">
+                <div className="card-body">
                     <div>
                         {emortion.message.emojiArray.map((position, index) => (
-                            <Emoticon position={position} />
+                            <Emoticon key={index} position={position} />
                         ))}
                     </div>
                     {/* {console.log(new Date().toISOString())} */}
@@ -42,6 +42,7 @@ const Emortion = (emortion) => {
                     <Collapse in={open}>
                         <div id="example-collapse-text">
                             <form>
+                                <input hidden name="userId" value={emortion.userId}></input>
                                 <input className="form-control answer" name="answer" type="text" required placeholder="What do you think emorter is saying?.."></input>
                                 <span><Button variant="info" type="submit">Evaluate</Button></span>
                             </form>
@@ -56,9 +57,9 @@ const Emortion = (emortion) => {
     function Secret() {
         if (new Date(emortion.expiresAt) <= new Date())
             return (
-                <p class="card-text secret">Revealed! <br></br>Secret: {emortion.secretAnswer}</p>
+                <p className="card-text secret">Revealed! <br></br>Secret: {emortion.secretAnswer}</p>
             );
-            else return (<p class="card-text">Answer reveals at {new Date(emortion.expiresAt).toLocaleTimeString()}</p>);
+            else return (<p className="card-text">Answer reveals at {new Date(emortion.expiresAt).toLocaleTimeString()}</p>);
     }
 
     function GetUserName(userId) {
