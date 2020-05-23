@@ -4,7 +4,6 @@ import { emojiIndex } from 'emoji-mart';
 
 function Emortion(emortion) {
     emortion=emortion.emortion
-
     //states and vars
     //const [postsArray, setPostsArray] = useState([]);
     //let posts = [];
