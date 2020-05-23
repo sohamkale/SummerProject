@@ -9,7 +9,7 @@ import NavBar from "./components/Header/NavBar";
 import LoginApp from "./views/Login/LoginApp";
 import Signup from "./views/Signup/Signup";
 import usersFront from "./components/UsersFront";
-import CommentBox from "./components/Emortions/CommentBox";
+
 const App = () => {
   return (
   
@@ -22,7 +22,6 @@ const App = () => {
       <Route exact path="/Login" component={LoginApp} />
       <Route exact path="/Signup" component={Signup} />
       <Route exact path="/usersFront" component={usersFront} />
-      <Route exact path="/commentBox" component={CommentBox} />
       {/* <Route exact path="/delete" component={DeleteImage}/> */}
       {/* remove this above line */}
       <Route exact path="/">

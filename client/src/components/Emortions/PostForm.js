@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap'
 import fire from "../../config/Fire";
 import $ from 'jquery'
 import axios from 'axios';
-import CommentBox from "./CommentBox";
+
 const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:5000';
 
 const PostForm = () => {
