@@ -8,6 +8,6 @@ router.get('/users', usersController.all);
 router.post('/users/add', usersController.add);
 router.get('/posts', postsController.all);
 router.post('/posts/add', postsController.add);
-router.get('/:id', usersController.findName);
+router.get('/users/:id', usersController.findName);
 
 module.exports = router;
