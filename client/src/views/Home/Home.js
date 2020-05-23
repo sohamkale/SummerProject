@@ -22,7 +22,7 @@ const Home = (props) => {
         if(user){
             setUserUid(user.uid);
         }else {
-            alert("Please sign in or create an account to continue!!");
+            // alert("Please sign in or create an account to continue!!");
             window.location.href = "/login";
         }
     })
