@@ -27,6 +27,10 @@ add(req, res) {
     })
     
     newUser.save().then(() => res.json('User Added!')).catch(err => res.status('400').json('Error: ' + err));
+},
+
+findName(req, res) {
+    User.find({"userId": req.params.id}).then(users => res.json(users[0].name)).catch(err => res.status('400').json('Error: ' + err));  
 }
 }
 module.exports = usersController;
