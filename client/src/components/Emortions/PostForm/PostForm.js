@@ -92,7 +92,7 @@ const PostForm = (props) => {
             dataType: "json",
             success: function (data) {
                 if (hasArrived) {
-                   props.postsArray();
+                   props.getPosts();
                 }
             }
         });

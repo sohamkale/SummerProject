@@ -3,8 +3,8 @@ import Emoticon from '../Emortions/Emoticon'
 import { emojiIndex } from 'emoji-mart';
 import './Emortion.css'
 import axios from 'axios';
-import { Button, Collapse } from 'react-bootstrap'
-
+import { Button, Collapse, Row, Container, Col } from 'react-bootstrap'
+import Comments from "./Comments";
 const Emortion = (props) => {
     let emortion = props.emortion
     //states and vars
@@ -24,8 +24,10 @@ const Emortion = (props) => {
             // 'numLikes': numLikes
         }
         axios.post(`/api/posts/answer/${emortion._id}`, comment).then((res)=>{
-            console.log(res.data);
-
+            props.getPosts();
+            document.getElementById('answerInput').value = "";
+            setAnswer("");
+            // console.log(document.getElementById('answerInput').value);
         });
         // console.log(emortion._id);
     }
@@ -63,9 +65,21 @@ const Emortion = (props) => {
                         <div id="example-collapse-text">
                             <form>
                                 <input hidden name="userId" value={emortion.userId}></input>
-                                <input onChange={onChangeAnswer} className="form-control answer" name="answer" type="text" value={answer} required placeholder="What do you think emorter is saying?.."></input>
+                                <input id='answerInput' onChange={onChangeAnswer} className="form-control answer" name="answer" type="text" value={answer} required placeholder="What do you think emorter is saying?.."></input>
                                 <span><Button  onClick ={addComment} variant="info">Evaluate</Button></span>
                             </form>
+                            <Container fluid className="text-center">
+                                <h2>All Comments</h2>
+                                <ul>
+                                {emortion.comments.map((comment) => {
+                                    return (
+                                        // <li className="text-left">{comment.answer}</li>
+                                        <Comments answer={comment.answer} numLikes={comment.numLikes}/>
+                                    )
+                                })}
+                                </ul>
+                            </Container>
+                        
                         </div>
                     </Collapse>
                 </div>

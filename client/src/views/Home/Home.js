@@ -51,11 +51,11 @@ const Home = (props) => {
           </div>
           <div className='col-6'>
           <br></br>
-            <PostForm postsArray={getPosts} />
+            <PostForm getPosts={getPosts} />
             {/*The Posts for the user*/}
             <div id='emortions'>
             {postsArray.map((post,index)=>(
-              <Emortion key={post._id} emortion={post}/>
+              <Emortion key={post._id} getPosts={getPosts} emortion={post}/>
             ))}
             </div>
           </div>
