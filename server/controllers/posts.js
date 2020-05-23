@@ -2,7 +2,7 @@
 
 const router = require('express').Router();
 let PostModel = require('../models/post.model');
-
+const mongoose = require('mongoose')
 const postsController = {
     all(req, res) {
         console.log("In Server side before getting posts: ");
@@ -51,16 +51,32 @@ const postsController = {
             },
             'secretAnswer': secretAnswer,
             'expiresAt': expiresAt,
-            'comments': []
+            'comments': [] //{type: String}
             //need to add comments Array here
         })
         newPost.save().then(() => res.json(newPost)).catch(err => res.status('400').json('Error: ' + err));
+    },
+
+    addComments(req, res) {
+        const answer = req.body.answer;
+        const userId = req.body.userId;
+        const _id = new mongoose.Types.ObjectId();
+        const numLikes = req.body.numLikes;
+        const score = req.body.score;
+        //NEED TO CHECK IF THE STRING MATCHES WITH THE SECRET ANSWER TO DETERMINE THE SCORE
+
+        PostModel.findOneAndUpdate({ "postObjId": req.params.id }, { $push: {comments: {_id: _id, answer: answer, userId: userId, numLikes: numLikes, score: score}} },{new: true}, (err, data) => {
+            if (err) {
+                console.log("ERROR")
+                res.status('404');
+                res.json({ error: 'No data with the specified id was found!' });
+            } else {           
+                console.log(data); 
+                res.json(data);
+            }
+        });
+        // PostModel.find({"postObjId": req.params.id}).then(users => res.json(users[0].name)).catch(err => res.status('400').json('Error: ' + err));  
     }
-    // test(req,res)
-    // {
-    //     req.body=objectify(req.body);
-    //     console.log(req.body);
-    // }
 }
 
 function objectify(formArray) {//serialize data function
