@@ -61,8 +61,21 @@ const postsController = {
         const answer = req.body.answer;
         const userId = req.body.userId;
         const _id = new mongoose.Types.ObjectId();
-        const numLikes = req.body.numLikes;
-        const score = req.body.score;
+        
+        let numLikes, score;
+        console.log("NUMLIKES: " + req.body.numLikes);
+        if(req.body.numLikes != null  || req.body.numLikes != ""){
+            numLikes = req.body.numLikes;
+        }else {
+            numLikes = 0;
+        }
+        
+        if(req.body.score != null || req.body.score != ""){
+            score = req.body.score;
+        }else {
+            score = 0;
+        }
+        
         //NEED TO CHECK IF THE STRING MATCHES WITH THE SECRET ANSWER TO DETERMINE THE SCORE
 
         PostModel.findOneAndUpdate({ "_id": req.params.id }, { $push: {comments: {_id: _id, answer: answer, userId: userId, numLikes: numLikes, score: score}} },{new: true}, (err, data) => {

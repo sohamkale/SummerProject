@@ -5,16 +5,36 @@ import './Emortion.css'
 import axios from 'axios';
 import { Button, Collapse } from 'react-bootstrap'
 
-const Emortion = (emortion) => {
-    emortion = emortion.emortion
+const Emortion = (props) => {
+    let emortion = props.emortion
     //states and vars
     const [name, setName] = useState("anonymous");
     const [open, setOpen] = useState(false);
-
+    const [answer, setAnswer] = useState(null);
+    // const [numLikes, setNumLikes] = useState(0);
     useEffect(() => {
+        console.log(emortion);
         GetUserName(emortion.postObjId)
     }, []);
 
+    const addComment = () => {
+        let comment = {
+            'answer': answer,
+            'userId': emortion.postObjId,
+            // 'numLikes': numLikes
+        }
+        axios.post(`/api/posts/answer/${emortion._id}`, comment).then((res)=>{
+            console.log(res.data);
+
+        });
+        // console.log(emortion._id);
+    }
+
+    const onChangeAnswer = (e) => {
+        console.log(e.target.id);
+        console.log(e.target.value);
+        setAnswer(e.target.value);
+    }
     return (
         <div>
             <div className="card">
@@ -38,13 +58,13 @@ const Emortion = (emortion) => {
                         variant='link'
                     >
                         Answer the Emortion
-      </Button>
+                    </Button>
                     <Collapse in={open}>
                         <div id="example-collapse-text">
                             <form>
                                 <input hidden name="userId" value={emortion.userId}></input>
-                                <input className="form-control answer" name="answer" type="text" required placeholder="What do you think emorter is saying?.."></input>
-                                <span><Button variant="info" type="submit">Evaluate</Button></span>
+                                <input onChange={onChangeAnswer} className="form-control answer" name="answer" type="text" value={answer} required placeholder="What do you think emorter is saying?.."></input>
+                                <span><Button  onClick ={addComment} variant="info">Evaluate</Button></span>
                             </form>
                         </div>
                     </Collapse>
