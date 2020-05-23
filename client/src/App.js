@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 // import 'bootstrap/dist/css/bootstrap.css';
 import { Route, Switch, Redirect  } from 'react-router-dom';
 import NotFound from "./components/Shared/NotFound";
@@ -9,15 +9,30 @@ import NavBar from "./components/Header/NavBar";
 import LoginApp from "./views/Login/LoginApp";
 import Signup from "./views/Signup/Signup";
 import usersFront from "./components/UsersFront";
+import fire from './config/Fire'
 
 const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    fire.auth().onAuthStateChanged(function(user) {
+      if (user) {
+       setIsLoggedIn(true)
+      } else {
+        setIsLoggedIn(false)
+      }
+    })
+  }, []);
+
+
   return (
-  
     //Imported public NavBar
     <div>
+    {
+       
+    }
       <NavBar />
       <Switch>
-      <Route exact path="/Home" component={Home} />
+      <Route exact path="/Home" render={(props) => <Home {...props} isLoggedIn={false} />}/>
       {/* <Route exact path="/contact" component={ContactMe} /> */}
       <Route exact path="/Login" component={LoginApp} />
       <Route exact path="/Signup" component={Signup} />
@@ -25,7 +40,7 @@ const App = () => {
       {/* <Route exact path="/delete" component={DeleteImage}/> */}
       {/* remove this above line */}
       <Route exact path="/">
-        <Redirect to="/Home" />
+        <Redirect to="/Login" />
       </Route>
         <Route component={NotFound}/>
       </Switch>

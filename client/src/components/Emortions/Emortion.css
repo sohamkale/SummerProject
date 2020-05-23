@@ -10,3 +10,15 @@
     /*dark*/
     
 }
+
+.secret
+{
+    margin: 5px;
+    border: 1px dashed blue;
+}
+
+.answer{
+    width: 60%;
+    display: inline;
+    margin: 5px;
+}

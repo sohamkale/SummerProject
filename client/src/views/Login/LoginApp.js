@@ -6,7 +6,7 @@ import Login from './Login';
 // import AdminDash from "../AdminDash/AdminDash";
 // import Profile from "../UserProfile/profile.js";
 // import LoginCard from '../../components/Cards/LoginCard';
-// import Home from "./../Home/Home";
+import Home from "../Home/Home";
 
 
 class LoginApp extends Component {
@@ -42,7 +42,7 @@ class LoginApp extends Component {
       if(this.state.user.email === "admin@gmail.com"){ //change this to attractionSalonweb@gmail.com
         // return <AdminDash/>
       }else {
-        // return <Dashboard/>
+         return <Home isLoggedIn={true}/>
         // this.props.history.push('/home');
       }
     }else {

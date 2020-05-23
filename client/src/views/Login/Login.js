@@ -3,6 +3,8 @@ import fire from "../../config/Fire";
 import * as firebase from 'firebase';
  import "./Login.css";
 import Signin from "../../components/SignIn/Signin";
+import { Redirect } from "react-router-dom";
+import Home from '../Home/Home'
 // import Footer from "../../components/Footer/Footer";
 
 const Login = (props) => {
@@ -17,11 +19,13 @@ const Login = (props) => {
     const login = (e) => {
         e.preventDefault();
         firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(function() {
+            
         }).catch(function(error){
             console.log(error);
         })
     
         fire.auth().signInWithEmailAndPassword(email,password).then((u)=>{
+           
         }).catch((err)=>{
             if(err.message === "The email address is badly formatted."){
                 alert("Please Enter Your E-mail and Password to Sign In");
