@@ -39,7 +39,9 @@ const Navbarcomp = () => {
     }, [userUid])
 
     const logout = () => {
+        // window.location.href = "/login";
         fire.auth().signOut();
+        
     }
     return (
 <ReactBootStrap.Navbar collapseOnSelect expand="sm" bg="light" variant="light">

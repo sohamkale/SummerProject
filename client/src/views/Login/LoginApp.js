@@ -42,8 +42,7 @@ class LoginApp extends Component {
       if(this.state.user.email === "admin@gmail.com"){ //change this to attractionSalonweb@gmail.com
         // return <AdminDash/>
       }else {
-         return <Home isLoggedIn={true}/>
-        // this.props.history.push('/home');
+        window.location.href = "/home";
       }
     }else {
       return <Login/>
