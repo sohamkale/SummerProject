@@ -1,0 +1,12 @@
+.like
+{
+    width: 24px;
+    height: 24px; 
+    display: inline-block; 
+    background-image: url("https://unpkg.com/emoji-datasource-apple@5.0.1/img/apple/sheets-256/64.png"); 
+    background-size: 5700% 5700%; 
+    background-position: 23.2143% 69.6429%;
+
+    /*dark*/
+    
+}

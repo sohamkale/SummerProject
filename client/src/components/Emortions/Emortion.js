@@ -1,48 +1,55 @@
-import React from 'react';
+import React,{ useEffect, useState } from 'react';
 import Emoticon from '../Emortions/Emoticon'
 import { emojiIndex } from 'emoji-mart';
+import './Emortion.css'
+import axios from 'axios';
 
-function Emortion(emortion) {
-    emortion=emortion.emortion
+const Emortion = (emortion) => {
+    emortion = emortion.emortion
     //states and vars
-    //const [postsArray, setPostsArray] = useState([]);
-    //let posts = [];
-
-    //useEffect
-    // useEffect (() => {
-    //    //UseEffect Function on Load
-    //    axios.get('/api/posts')
-    //   .then((res)=>{
-    //     if(res.data.length > 0){
-    //         console.log("posts");
-    //         console.log(res.data);
-    //         res.data.map(post => posts.push(post))
-    //     }
-    //     console.log(posts);
-    //     setPostsArray(posts);
-    // });
-    // }, []);
+    const [name, setName] = useState("anonymous");
+    
+    useEffect(() => {
+        GetUserName(emortion.postObjId)
+    }, []);
 
     return (
         <div>
-        <div class="card">
-            <div class="card-header">
-                Emortion By: 
+            <div class="card">
+                <div class="card-header">
+                    Emortion By: {name}
             </div>
-            <div class="card-body">
-                <div>
-                    {emortion.message.emojiArray.map((position, index)=>(
-                        <Emoticon position={position}/>
-                    ))}
+                <div class="card-body">
+                    <div>
+                        {emortion.message.emojiArray.map((position, index) => (
+                            <Emoticon position={position} />
+                        ))}
+                    </div>
+                    <p class="card-text">Secret: {emortion.secretAnswer}</p>
+                    <span className='like'></span> {emortion.numLikes}
+                        
                 </div>
-                <p class="card-text">Secret: {emortion.secretAnswer}</p>
-                <hr></hr>
-                    <p>Likes: {emortion.numLikes}</p>
             </div>
-        </div>
-        <br></br>
+            <br></br>
         </div>
     );
+
+    function GetUserName(userId)
+    {
+         axios.get('/api/users/'+userId)
+        .then((res)=>{
+          if(res.data){
+              console.log("data is "+res.data)
+            setName(res.data);
+          }
+          else{
+              console.log(res)
+              setName ("Not Found");
+          }
+      });
+    }
 }
+
+
 
 export default Emortion;

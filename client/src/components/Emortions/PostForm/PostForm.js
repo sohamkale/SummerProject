@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import EmojiInputBox from './EmojiInputBox'
-import Emoji from "./Emoji"
+import EmojiInputBox from '../EmojiInputBox'
+import Emoji from "../Emoji"
 import { Button } from 'react-bootstrap'
-import fire from "../../config/Fire";
+import fire from "../../../config/Fire";
 import $ from 'jquery'
 import axios from 'axios';
 
@@ -97,6 +97,7 @@ const PostForm = (props) => {
             }
         });
     }
+
 }
 
 
