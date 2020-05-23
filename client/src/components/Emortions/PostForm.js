@@ -5,12 +5,12 @@ import { Button } from 'react-bootstrap'
 import fire from "../../config/Fire";
 import $ from 'jquery'
 import axios from 'axios';
-import CommentBox from "../Emortions/CommentBox";
+import CommentBox from "./CommentBox";
 const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:5000';
-const PostBox = () => {
+
+const PostForm = () => {
     const [userId, setUserId] = useState(null);
-    const [postsArray, setPostsArray] = useState([]);
-    let posts = [];
+    
     useEffect (() => {
         fire.auth().onAuthStateChanged(function(user) {
             if (user) {
@@ -18,19 +18,6 @@ const PostBox = () => {
             }
         }); 
     }, []);
-
-    useEffect(() => {
-        axios.get('/api/posts')
-      .then((res)=>{
-        if(res.data.length > 0){
-            console.log("posts");
-            console.log(res.data);
-            res.data.map(post => posts.push(post))
-        }
-        console.log(posts);
-        setPostsArray(posts);
-    });
-    }, [])
 
     return (
         <div>
@@ -58,19 +45,18 @@ const PostBox = () => {
                     <Emoji />
                     <br></br>
                     <label>Secret Answer</label>
-                    <input id="secret" name="secretAnswer" className="form-control"></input>
+                    <input required id="secret" name="secretAnswer" className="form-control"></input>
                     <br></br>
                     <Button type='submit' className='d-inline' variant="info">POST</Button>
                     <br></br>
                 </form>
                 
-            </div>
-            
+            </div>    
         </div>
-        <div className=" fluid col-12">
+        {/* <div className=" fluid col-12">
         <CommentBox
             postsArray = {postsArray}/>
-        </div>
+        </div> */}
         </div>
     );
 
@@ -78,7 +64,6 @@ const PostBox = () => {
 
 function submit(e)
 {
-    
     e.preventDefault();
     var form = $('#thePost').serializeArray();
     var emojis = (document.getElementById('maintext').childNodes);
@@ -88,9 +73,7 @@ function submit(e)
          if(item.nodeName=="SPAN")
             emojiArray.push(item.style.backgroundPosition)
         else
-            emojiArray.push(item.getElementsByTagName("SPAN")[0].style.backgroundPosition)
-        
-        
+            emojiArray.push(item.getElementsByTagName("SPAN")[0].style.backgroundPosition) 
     });
     form.push({name:'emojiArray',value: emojiArray})
     $.ajax({
@@ -102,16 +85,16 @@ function submit(e)
         contentType: "application/json; charset=utf-8",
         dataType   : "json",
         success:function(data){
-            axios.get('/api/posts')
-            .then((res)=>{
-              if(res.data.length > 0){
-                  console.log("posts");
-                  console.log(res.data);
-                  res.data.map(post => posts.push(post))
-              }
-              console.log(posts);
-              setPostsArray(posts);
-          }); 
+        //     axios.get('/api/posts')
+        //     .then((res)=>{
+        //       if(res.data.length > 0){
+        //           console.log("posts");
+        //           console.log(res.data);
+        //           res.data.map(post => posts.push(post))
+        //       }
+        //       console.log(posts);
+        //       setPostsArray(posts);
+        //   }); 
         }
     });
 }
@@ -119,4 +102,4 @@ function submit(e)
 
 
 
-export default PostBox;
+export default PostForm;

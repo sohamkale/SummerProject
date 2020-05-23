@@ -2,23 +2,18 @@ import React, { useState, useEffect } from 'react';
 import Home from "../../views/Home/Home"
 import EmojiInputBox from "../Emortions/EmojiInputBox"
 import DemoCol from '../Demographics/DemoCol'
-import PostBox from '../Emortions/PostBox'
-import CommentBox from "../Emortions/CommentBox";
+import PostForm from '../Emortions/PostForm'
+import Emortion from "../Emortions/Emortion";
 import axios from 'axios';
 
 function Body() {
     const [postsArray, setPostsArray] = useState([]);
-    let posts = [];
     useEffect(() => {
       axios.get('/api/posts')
       .then((res)=>{
         if(res.data.length > 0){
-            console.log("posts");
-            console.log(res.data);
-            res.data.map(post => posts.push(post))
+            setPostsArray(res.data);
         }
-        console.log(posts);
-        setPostsArray(posts);
     });
     }, [])
     return (
@@ -33,9 +28,13 @@ function Body() {
           </div>
           <div className='col-6'>
           <br></br>
-            <PostBox />
+            <PostForm />
+            {/*The Posts for the user*/}
+            {postsArray.map((post,index)=>(
+              <Emortion emortion={post}/>
+            ))}
+           
           </div>
-          
         </div>
       </div>
       );
