@@ -11,8 +11,55 @@ const Emortion = (props) => {
     //states and vars
     const [name, setName] = useState("anonymous");
     const [open, setOpen] = useState(false);
-    const [answer, setAnswer] = useState(null);
+    // const [answer, setAnswer] = useState("");
     const [userId, setUserId] = useState();
+    const [returnNo, setReturnNo] = useState(0);
+    const [funcNo, setfuncNo] = useState(0);
+    
+    const Open= () => {
+        const[value, setValue] = useState();
+        const onChangeValue = (e) => {
+            // console.log(e.target.id);
+            // console.log(e.target.value);
+            setValue(e.target.value);
+            //  onChangeAnswer(e.target.value);
+        }
+        const onSubmitButton = () => {
+            addComment(value);
+        }
+        return (
+            <div>
+        <Button
+            onClick={() => setOpen(!open)}
+            aria-controls="example-collapse-text"
+            aria-expanded={open}
+            variant='link'
+        >
+            Answer the Emortion
+        </Button>
+        <Collapse in={open}>
+        <div id="example-collapse-text">
+            <form>
+                <input hidden name="userId" value={emortion.userId}></input>
+                <input id='answerInput' onChange={onChangeValue} className="form-control answer" name="answer" type="text" value={value} required placeholder="What do you think emorter is saying?.."></input>
+                <span><Button  onClick ={onSubmitButton} variant="info">Evaluate</Button></span>
+            </form>
+            <Container fluid className="text-center">
+                <h2>All Comments</h2>
+                <ul>
+                {emortion.comments.map((comment, index) => {
+                    return (
+                        <Comments key={index} answer={comment.answer} comment={comment} numLikes={comment.numLikes}/>
+                    )
+                })}
+                </ul>
+            </Container>
+        </div>
+    </Collapse>
+    </div>
+        );
+    }
+
     useEffect(() => {
         console.log(emortion);
         GetUserName(emortion.postObjId);
@@ -24,7 +71,8 @@ const Emortion = (props) => {
         })
     }, []);
 
-    const addComment = () => {
+    const addComment = (answer) => {
+        // alert(answer);
         let comment = {
             'answer': answer,
             'userId': userId,
@@ -33,19 +81,22 @@ const Emortion = (props) => {
         axios.post(`/api/posts/answer/${emortion._id}`, comment).then((res)=>{
             props.getPosts();
             document.getElementById('answerInput').value = "";
-            setAnswer("");
-            // console.log(document.getElementById('answerInput').value);
+            // setAnswer("");
         });
-        // console.log(emortion._id);
     }
 
-    const onChangeAnswer = (e) => {
-        console.log(e.target.id);
-        console.log(e.target.value);
-        setAnswer(e.target.value);
-    }
+    // const onChangeAnswer = (e) => {
+    //     console.log(e);
+    //     // console.log(e.target.value);
+    //     setAnswer(e);
+    // }    
+
+    
     return (
+        
         <div>
+           { console.log("inside return: " + returnNo) }
+           {/* {setReturnNo(returnNo+1)} */}
             <div className="card">
                 <div className="card-header">
                     Emortion By: {name}
@@ -60,7 +111,7 @@ const Emortion = (props) => {
                     <Secret />
 
                     <span className='like'></span> {emortion.numLikes}
-                    <Button
+                    {/* <Button
                         onClick={() => setOpen(!open)}
                         aria-controls="example-collapse-text"
                         aria-expanded={open}
@@ -68,6 +119,7 @@ const Emortion = (props) => {
                     >
                         Answer the Emortion
                     </Button>
+                    
                     <Collapse in={open}>
                         <div id="example-collapse-text">
                             <form>
@@ -78,24 +130,29 @@ const Emortion = (props) => {
                             <Container fluid className="text-center">
                                 <h2>All Comments</h2>
                                 <ul>
-                                {emortion.comments.map((comment) => {
+                                {emortion.comments.map((comment, index) => {
                                     return (
                                         // <li className="text-left">{comment.answer}</li>
-                                        <Comments answer={comment.answer} comment={comment} numLikes={comment.numLikes}/>
+                                        <Comments key={index} answer={comment.answer} comment={comment} numLikes={comment.numLikes}/>
                                     )
                                 })}
                                 </ul>
                             </Container>
-                        
                         </div>
-                    </Collapse>
+                    </Collapse> */}
+                    <Open/>
+                    
                 </div>
             </div>
             <br></br>
         </div>
     );
 
+    
+
     function Secret() {
+        console.log("inside secret: " + funcNo);
+        // {setfuncNo(funcNo+1)}
         if (new Date(emortion.expiresAt) <= new Date())
             return (
                 <p className="card-text secret">Revealed! <br></br>Secret: {emortion.secretAnswer}</p>
