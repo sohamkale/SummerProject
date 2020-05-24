@@ -5,16 +5,16 @@ import './Emortion.css'
 import axios from 'axios';
 import fire from './../../config/Fire';
 import { Button, Collapse, Row, Container, Col } from 'react-bootstrap'
-import Comments from "./Comments";
+import Comments from "./Answers/Comments";
+import $ from 'jquery'
 const Emortion = (props) => {
     let emortion = props.emortion
     //states and vars
     const [name, setName] = useState("anonymous");
     const [open, setOpen] = useState(false);
-    const [answer, setAnswer] = useState(null);
+    //const [answer, setAnswer] = useState(null);
     const [userId, setUserId] = useState();
     useEffect(() => {
-        console.log(emortion);
         GetUserName(emortion.postObjId);
         fire.auth().onAuthStateChanged((user) => {
             if(user){
@@ -24,26 +24,26 @@ const Emortion = (props) => {
         })
     }, []);
 
-    const addComment = () => {
-        let comment = {
-            'answer': answer,
-            'userId': userId,
-            // 'numLikes': numLikes
-        }
-        axios.post(`/api/posts/answer/${emortion._id}`, comment).then((res)=>{
-            props.getPosts();
-            document.getElementById('answerInput').value = "";
-            setAnswer("");
-            // console.log(document.getElementById('answerInput').value);
-        });
-        // console.log(emortion._id);
-    }
+    // const addComment = () => {
+    //     let comment = {
+    //         'answer': answer,
+    //         'userId': userId,
+    //         // 'numLikes': numLikes
+    //     }
+    //     axios.post(`/api/posts/answer/${emortion._id}`, comment).then((res)=>{
+    //         props.getPosts();
+    //         document.getElementById('answerInput').value = "";
+    //         setAnswer("");
+    //         // console.log(document.getElementById('answerInput').value);
+    //     });
+    //     // console.log(emortion._id);
+    // }
 
-    const onChangeAnswer = (e) => {
-        console.log(e.target.id);
-        console.log(e.target.value);
-        setAnswer(e.target.value);
-    }
+    // const onChangeAnswer = (e) => {
+    //     console.log(e.target.id);
+    //     console.log(e.target.value);
+    //     setAnswer(e.target.value);
+    // }
     return (
         <div>
             <div className="card">
@@ -60,7 +60,19 @@ const Emortion = (props) => {
                     <Secret />
 
                     <span className='like'></span> {emortion.numLikes}
-                    <Button
+                    <AnswerAgent/>
+                    
+                </div>
+            </div>
+            <br></br>
+        </div>
+    );
+
+    function AnswerAgent()
+    {
+        if(userId!=emortion.postObjId)
+        return(<div>
+            <Button
                         onClick={() => setOpen(!open)}
                         aria-controls="example-collapse-text"
                         aria-expanded={open}
@@ -70,10 +82,10 @@ const Emortion = (props) => {
                     </Button>
                     <Collapse in={open}>
                         <div id="example-collapse-text">
-                            <form>
-                                <input hidden name="userId" value={emortion.userId}></input>
-                                <input id='answerInput' onChange={onChangeAnswer} className="form-control answer" name="answer" type="text" value={answer} required placeholder="What do you think emorter is saying?.."></input>
-                                <span><Button  onClick ={addComment} variant="info">Evaluate</Button></span>
+                            <form id={'answerForm'+emortion._id} onSubmit={SendComment}>
+                                <input hidden name="userId" value={userId}></input>
+                                <input defaultValue="" required name="answer" className="form-control answer" placeholder="What do you think the Emorter is saying?"></input>
+                                <span><Button  type="submit" variant="info">Evaluate</Button></span>
                             </form>
                             <Container fluid className="text-center">
                                 <h2>All Comments</h2>
@@ -89,11 +101,30 @@ const Emortion = (props) => {
                         
                         </div>
                     </Collapse>
-                </div>
-            </div>
-            <br></br>
-        </div>
-    );
+        </div>)
+        else
+            return(<div></div>);
+    }
+
+    function SendComment(e)
+    {
+        console.log(e)
+        e.preventDefault();
+        var form = $('#answerForm'+emortion._id).serializeArray();
+        $.ajax({
+            url: '/api/posts/answer/'+emortion._id,
+            type: 'POST',
+            data: JSON.stringify(
+                form
+            ),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                props.getPosts();
+                console.log(e)
+            }
+        });
+    }
 
     function Secret() {
         if (new Date(emortion.expiresAt) <= new Date())

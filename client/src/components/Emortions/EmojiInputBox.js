@@ -25,7 +25,11 @@ function Erase()
 
 function EraseAll()
 {
-    var maintext = document.getElementById("maintext").innerHTML="";
+        document.getElementById("maintext").innerHTML="";
+        document.getElementById("postType").value="Timer";
+        document.getElementById("postValidity").value="1h";
+        document.getElementById("postSecret").value="";
+    
 }
 
 export default EmojiInputBox;

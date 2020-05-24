@@ -35,13 +35,13 @@ const PostForm = (props) => {
                     <form id='thePost' onSubmit={submit}>
                         <input readOnly hidden name="userId" value={userId ? userId: ""}></input>
                         <label htmlFor="type" className='form-check-label'>Type: &nbsp; </label>
-                        <select name='type' className='form-control-sm'>
+                        <select id="postType" name='type' className='form-control-sm'>
                             <option>Timer</option>
                         </select>
                     &nbsp;
                     &nbsp;
                     <label className='form-check-label'>Validity: &nbsp; </label>
-                        <select name='validity' className='form-control-sm'>
+                        <select id="postValidity" name='validity' className='form-control-sm'>
                             <option>1h</option>
                             <option>2h</option>
                             <option>3h</option>
@@ -53,7 +53,7 @@ const PostForm = (props) => {
                         <Emoji />
                         <br></br>
                         <label>Secret Answer</label>
-                        <input defaultValue="" required id="secret" name="secretAnswer" className="form-control"></input>
+                        <input defaultValue="" required id="postSecret" name="secretAnswer" className="form-control"></input>
                         <br></br>
                         <Button type='submit' className='d-inline' variant="info">POST</Button>
                         <br></br>
@@ -67,9 +67,7 @@ const PostForm = (props) => {
         </div> */}
         </div>
     );
-
-
-
+    
     function submit(e) {
         e.preventDefault();
         var form = $('#thePost').serializeArray();
@@ -92,6 +90,7 @@ const PostForm = (props) => {
             dataType: "json",
             success: function (data) {
                 if (hasArrived) {
+                    EraseAll();
                    props.getPosts();
                 }
             }
@@ -100,6 +99,12 @@ const PostForm = (props) => {
 
 }
 
-
+function EraseAll()
+{
+        document.getElementById("maintext").innerHTML="";
+        document.getElementById("postType").value="Timer";
+        document.getElementById("postValidity").value="1h";
+        document.getElementById("postSecret").value="";
+}
 
 export default PostForm;
