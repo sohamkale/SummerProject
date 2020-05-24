@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import "./Comments.css";
 import axios from 'axios';
 const Comments = (props) => {
-    const [user, setUser] = useState();
+    const [commenter, setCommenter] = useState();
     useEffect(()=>{
-        console.log(props);
+        console.log(props.comment);
         if(props != null){
-            axios.get(`/api/users/${props.comment.userId}`).then((res) => {
-                setUser(res.data)
-            })
+            setCommenter(props.comment.name);
         }
        
     }, [])
@@ -20,7 +18,7 @@ const Comments = (props) => {
                         console.log(res.data);
                     })}
                 })()} */}
-                <div>{user ? user: ""}</div>
+                <div>{commenter ? commenter: ""}</div>
             <li>{props.answer} &nbsp; <span className='like'></span> {props.numLikes}</li>
             </div>
         </div>

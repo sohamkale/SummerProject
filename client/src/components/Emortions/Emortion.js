@@ -50,7 +50,7 @@ const Emortion = (props) => {
                 {emortion.comments.map((comment, index) => {
                     return (
 
-                        <Comments key={index} answer={comment.answer} comment={comment} numLikes={comment.numLikes}/>
+                        <Comments key={index} currUser={props.currUser} answer={comment.answer} comment={comment} numLikes={comment.numLikes}/>
                     )
                 })}
                 </ul>
@@ -77,6 +77,7 @@ const Emortion = (props) => {
         let comment = {
             'answer': answer,
             'userId': userId,
+            'name': props.currUser
             // 'numLikes': numLikes
         }
         axios.post(`/api/posts/answer/${emortion._id}`, comment).then((res)=>{

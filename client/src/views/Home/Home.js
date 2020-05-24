@@ -10,6 +10,7 @@ const Home = (props) => {
     
     const [postsArray, setPostsArray] = useState([]);
     const [userUid, setUserUid] = useState(null);
+    const [currUser, setCurrUser] = useState(null);
     useEffect(() => {
       axios.get('/api/posts')
       .then((res)=>{
@@ -20,7 +21,11 @@ const Home = (props) => {
 
     fire.auth().onAuthStateChanged((user) => {
         if(user){
+          axios.get(`/api/users/${user.uid}`).then((res) => {
+            setCurrUser(res.data)
+          })
             setUserUid(user.uid);
+
         }else {
             // alert("Please sign in or create an account to continue!!");
             window.location.href = "/login";
@@ -55,7 +60,7 @@ const Home = (props) => {
             {/*The Posts for the user*/}
             <div id='emortions'>
             {postsArray.map((post,index)=>(
-              <Emortion key={post._id} getPosts={getPosts} emortion={post}/>
+              <Emortion currUser={currUser} key={post._id} getPosts={getPosts} emortion={post}/>
             ))}
             </div>
           </div>
