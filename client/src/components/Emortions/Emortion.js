@@ -17,7 +17,7 @@ const Emortion = (props) => {
     const [funcNo, setfuncNo] = useState(0);
     
     const Open= () => {
-        const[value, setValue] = useState();
+        const[value, setValue] = useState("");
         const onChangeValue = (e) => {
             // console.log(e.target.id);
             // console.log(e.target.value);
@@ -49,6 +49,7 @@ const Emortion = (props) => {
                 <ul>
                 {emortion.comments.map((comment, index) => {
                     return (
+
                         <Comments key={index} answer={comment.answer} comment={comment} numLikes={comment.numLikes}/>
                     )
                 })}

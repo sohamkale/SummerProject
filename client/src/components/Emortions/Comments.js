@@ -4,9 +4,13 @@ import axios from 'axios';
 const Comments = (props) => {
     const [user, setUser] = useState();
     useEffect(()=>{
-        axios.get(`/api/users/${props.comment.userId}`).then((res) => {
-            setUser(res.data)
-        })
+        console.log(props);
+        if(props != null){
+            axios.get(`/api/users/${props.comment.userId}`).then((res) => {
+                setUser(res.data)
+            })
+        }
+       
     }, [])
     return (
         <div className="text-left">
