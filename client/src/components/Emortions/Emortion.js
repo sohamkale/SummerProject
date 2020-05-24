@@ -84,16 +84,17 @@ const Emortion = (props) => {
                         <div id="example-collapse-text">
                             <form id={'answerForm'+emortion._id} onSubmit={SendComment}>
                                 <input hidden name="userId" value={userId}></input>
+                                <input hidden name="name" value={props.currUser}></input>
                                 <input defaultValue="" required name="answer" className="form-control answer" placeholder="What do you think the Emorter is saying?"></input>
                                 <span><Button  type="submit" variant="info">Evaluate</Button></span>
                             </form>
                             <Container fluid className="text-center">
                                 <h2>All Comments</h2>
                                 <ul>
-                                {emortion.comments.map((comment) => {
+                                {emortion.comments.map((comment, index) => {
                                     return (
                                         // <li className="text-left">{comment.answer}</li>
-                                        <Comments answer={comment.answer} comment={comment} numLikes={comment.numLikes}/>
+                                        <Comments key={index} currUser={props.currUser} answer={comment.answer} comment={comment} numLikes={comment.numLikes}/>
                                     )
                                 })}
                                 </ul>

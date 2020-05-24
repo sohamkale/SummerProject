@@ -18,7 +18,7 @@ const postsController = {
         const postObjId = req.body.userId;
         const type = req.body.type;
         const numLikes = Number(0);
-
+        
         //this is an array of positions. 
         const emojiArray = req.body.emojiArray;
         const secretAnswer = req.body.secretAnswer;
@@ -59,7 +59,7 @@ const postsController = {
         const answer = req.body.answer;
         const userId = req.body.userId;
         const _id = new mongoose.Types.ObjectId();
-        
+        const name = req.body.name;
         let numLikes, score;
         if(req.body.numLikes != null  || req.body.numLikes != ""){
             numLikes = req.body.numLikes;
@@ -82,15 +82,15 @@ const postsController = {
         
         //NEED TO CHECK IF THE STRING MATCHES WITH THE SECRET ANSWER TO DETERMINE THE SCORE
 
-        // PostModel.findOneAndUpdate({ "_id": req.params.id }, { $push: {comments: {_id: _id, answer: answer, userId: userId, numLikes: numLikes, score: score}} },{new: true}, (err, data) => {
-        //     if (err) {
-        //         res.status('404');
-        //         res.json({ error: 'No data with the specified id was found!' });
-        //     } else {            
-        //         res.json(data);
-        //     }
-        // });
-        // PostModel.find({"postObjId": req.params.id}).then(users => res.json(users[0].name)).catch(err => res.status('400').json('Error: ' + err));  
+        PostModel.findOneAndUpdate({ "_id": req.params.id }, { $push: {comments: {_id: _id, answer: answer, userId: userId, numLikes: numLikes, score: score, name: name}} },{new: true}, (err, data) => {
+            if (err) {
+                res.status('404');
+                res.json({ error: 'No data with the specified id was found!' });
+            } else {            
+                res.json(data);
+            }
+        });
+        
     }
 }
 
