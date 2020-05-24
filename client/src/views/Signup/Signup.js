@@ -48,7 +48,7 @@ const Signup = (props) => {
             axios.post(API_BASE + "/api/users/add", newUser)
             .then((res)=>{
                 console.log(res.data);
-                // window.location.href='/Login';
+                window.location.href='/Login';
             });
             console.log(u);
         }).catch((err)=>{

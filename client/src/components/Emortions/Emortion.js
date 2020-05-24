@@ -3,6 +3,7 @@ import Emoticon from '../Emortions/Emoticon'
 import { emojiIndex } from 'emoji-mart';
 import './Emortion.css'
 import axios from 'axios';
+import fire from './../../config/Fire';
 import { Button, Collapse, Row, Container, Col } from 'react-bootstrap'
 import Comments from "./Comments";
 const Emortion = (props) => {
@@ -11,16 +12,22 @@ const Emortion = (props) => {
     const [name, setName] = useState("anonymous");
     const [open, setOpen] = useState(false);
     const [answer, setAnswer] = useState(null);
-    // const [numLikes, setNumLikes] = useState(0);
+    const [userId, setUserId] = useState();
     useEffect(() => {
         console.log(emortion);
-        GetUserName(emortion.postObjId)
+        GetUserName(emortion.postObjId);
+        fire.auth().onAuthStateChanged((user) => {
+            if(user){
+                setUserId(user.uid);
+            }else {
+            }
+        })
     }, []);
 
     const addComment = () => {
         let comment = {
             'answer': answer,
-            'userId': emortion.postObjId,
+            'userId': userId,
             // 'numLikes': numLikes
         }
         axios.post(`/api/posts/answer/${emortion._id}`, comment).then((res)=>{
@@ -74,7 +81,7 @@ const Emortion = (props) => {
                                 {emortion.comments.map((comment) => {
                                     return (
                                         // <li className="text-left">{comment.answer}</li>
-                                        <Comments answer={comment.answer} numLikes={comment.numLikes}/>
+                                        <Comments answer={comment.answer} comment={comment} numLikes={comment.numLikes}/>
                                     )
                                 })}
                                 </ul>
