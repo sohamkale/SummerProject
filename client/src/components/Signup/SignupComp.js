@@ -13,19 +13,19 @@ const SignupComp = (props) => {
                 <div className="SignupButtonMargin" align="center"><h2>Sign Up</h2></div>
                 </Col>
                 <Col mb={6}>
-                <input name="firstName" onChange={props.handleFirstNameChange} value={props.firstName} id="firstName" type="text" placeholder="First Name" class="input"/>
+                <input name="firstName" onChange={props.handleFirstNameChange} value={props.firstName} id="firstName" type="text" placeholder="First Name" className="input"/>
                 </Col>
                 <Col mb={6}>
-                <input name="lastName" onChange={props.handleLastNameChange} value={props.lastName} id="lastName" type="text" placeholder="Last Name" class="input"/>
+                <input name="lastName" onChange={props.handleLastNameChange} value={props.lastName} id="lastName" type="text" placeholder="Last Name" className="input"/>
                 </Col>
                 <Col sm={12}>
-                <input name="phoneNum" onChange={(e) => props.validatePhone(e)} value={props.phoneNum} id="phoneNum" type="text" placeholder="Phone Number" class="input"/>
+                <input name="phoneNum" onChange={(e) => props.validatePhone(e)} value={props.phoneNum} id="phoneNum" type="text" placeholder="Phone Number" className="input"/>
                 </Col>
                 <Col sm={12}>
-                <input name="email" id="email" type="email" onChange={props.handleEmailChange} value={props.email} placeholder="Email" class="input" />
+                <input name="email" id="email" type="email" onChange={props.handleEmailChange} value={props.email} placeholder="Email" className="input" />
                 </Col>
                 <Col sm={12}>
-                <input name="password" id="password" type="password" onChange={props.handlePasswordChange} value={props.password} placeholder="Password" class="input"/>
+                <input name="password" id="password" type="password" onChange={props.handlePasswordChange} value={props.password} placeholder="Password" className="input"/>
                 </Col>
                 <Col mb={6} className="text-center SignupButtonMargin">
                 <Button onClick={props.signup} name="submit">Sign Up</Button>

@@ -6,6 +6,8 @@ import Nav from 'react-bootstrap/Nav';
 import fire from "./../../config/Fire";
 import {Button} from "react-bootstrap";
 import * as ReactBootStrap from "react-bootstrap";
+
+
 const Navbarcomp = () => {
     const [initials, setInitials] = useState("");
     const [userUid, setUserUid] = useState(null);
@@ -37,10 +39,12 @@ const Navbarcomp = () => {
     }, [userUid])
 
     const logout = () => {
+        // window.location.href = "/login";
         fire.auth().signOut();
+        
     }
     return (
-<ReactBootStrap.Navbar collapseOnSelect expand="sm" bg="dark" variant="dark">
+<ReactBootStrap.Navbar collapseOnSelect expand="sm" bg="light" variant="light">
 <ReactBootStrap.Navbar.Brand href="/home">{initials}</ReactBootStrap.Navbar.Brand>
 <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" />
 <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav">
