@@ -2,7 +2,11 @@
 
 const router = require('express').Router();
 let PostModel = require('../models/post.model');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const express = require('../config/express');
+// const app = express.init()
+// var http = require('http').Server(app);
+var io = require('socket.io')
 const postsController = {
     all(req, res) {
         console.log("In Server side before getting posts: ");
@@ -41,7 +45,7 @@ const postsController = {
 
         // should be empty to start 
         // const comments = req.body.comments
-
+        
         const newPost = new PostModel({
             'postObjId': postObjId,
             'type': type,
@@ -54,6 +58,7 @@ const postsController = {
             'comments': [] //{type: String}
             //need to add comments Array here
         })
+        
         newPost.save().then(() => res.json(newPost)).catch(err => res.status('400').json('Error: ' + err));
     },
 

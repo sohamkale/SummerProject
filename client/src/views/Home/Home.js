@@ -5,8 +5,10 @@ import PostForm from '../../components/Emortions/PostForm/PostForm'
 import Emortion from "../../components/Emortions/Emortion";
 import fire from '../../config/Fire'
 import axios from 'axios';
-
+import io from 'socket.io-client';
+// const socket = openSocket();
 const Home = (props) => {
+    // const socket = io('http://localhost:4000');
     
     const [postsArray, setPostsArray] = useState([]);
     const [userUid, setUserUid] = useState(null);
@@ -44,8 +46,20 @@ const Home = (props) => {
         }); 
     } 
 
+    // const socketFunc = () => {
+    //   alert("HI");
+    //   let socket = io();
+    //   alert(socket);
+    //   {
+    //     socket.on('message', data => {
+    //       alert(data)
+    //   })}
+    // }
+
     return (
+      
         <div>
+          {/* {socketFunc()} */}
         <center>
           Welcome to the Den
         </center>

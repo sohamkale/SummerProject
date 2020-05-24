@@ -12,16 +12,13 @@ const connection = mongoose.connection;
 connection.once('open', () => {
     console.log("MongoDB connection established successfully!");
 })
-// require('./models/post.model');
-// require('./models/user.model');
-// const usersRouter = require('./routes/users');
-// const postsRouter = require('./routes/posts');
-// const commentRouter = require('./routes/comment');
-
 
 const app = express.init()
-// app.use('/users', usersRouter);
-// app.use('/posts', postsRouter);
-// app.use('/comments', commentRouter);
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+io.on('connection', (err) =>{
+    io.emit('message', "Hell0");
+    console.log('a user is connected');
+   })
 
-app.listen(port, () => console.log(`Server now running on port ${port}!`));
+http.listen(port, () => console.log(`Server now running on port ${port}!`)); //app.listen

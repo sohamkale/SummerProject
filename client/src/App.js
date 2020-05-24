@@ -10,19 +10,17 @@ import LoginApp from "./views/Login/LoginApp";
 import Signup from "./views/Signup/Signup";
 import usersFront from "./components/UsersFront";
 import fire from './config/Fire'
-
+import io from 'socket.io-client';
 const App = () => {
   useEffect(() => {
   
   }, []);
 
-
+  
   return (
     //Imported public NavBar
     <div>
-    {
-       
-    }
+    
       <NavBar />
       <Switch>
       <Route exact path="/Home" render={(props) => <Home {...props} isLoggedIn={false} />}/>
