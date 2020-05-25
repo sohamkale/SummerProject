@@ -13,6 +13,13 @@ const Signup = (props) => {
     const [lastName, setLastName] = useState(null);
     const [phoneNum, setPhoneNum] = useState(null);
     const [validPhone, setValidPhone] = useState(null);
+    const ENDPOINT = "http://localhost:5000";
+   
+    useEffect(() => {
+        
+        
+        // console.log(socket);
+    }, [ENDPOINT]);
 
     const signup = (e) => {
         if(!validPhone)
@@ -53,10 +60,7 @@ const Signup = (props) => {
                 window.location.href='/Login';
             });
             console.log(u);
-
-            const socket = io();
-            socket.emit('join', newUser);
-            console.log(socket);
+           
         }).catch((err)=>{
             if(err.message === "The email address is badly formatted."){
                 alert("Please fill in a valid email");

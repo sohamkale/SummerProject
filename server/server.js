@@ -17,12 +17,12 @@ const app = express.init()
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 io.on('connection', (socket) =>{
-    socket.on('join', (str) => {
-        console.log("ASDFDS");
-        console.log(str);
-    })
-    io.emit('message', "Hell0");
-    console.log('a user is connected in server');
+    // io.emit('message', "Hell0");
+        console.log('a user is connected in server');
+    socket.on('join', ({currUser}) => {
+        console.log(currUser);
+    }) 
 })
+
 app.use('/api', api);
 http.listen(port, () => console.log(`Server now running on port ${port}!`)); //app.listen

@@ -13,15 +13,20 @@ const Home = (props) => {
     const [postsArray, setPostsArray] = useState([]);
     const [userUid, setUserUid] = useState(null);
     const [currUser, setCurrUser] = useState(null);
+    const ENDPOINT = "http://localhost:5000";
+   
+    useEffect(() => {
+        const socket = io(ENDPOINT);
+        socket.emit('join', {currUser});
+        
+    }, [ENDPOINT, currUser]);
     useEffect(() => {
       axios.get('/api/posts')
       .then((res)=>{
         if(res.data.length > 0){
             setPostsArray(res.data);
         }
-        // const socket = io();
-        // socket.emit('join', "SOMEONE HAS JOINED");
-        // console.log(socket);
+        
     }, []);
 
     fire.auth().onAuthStateChanged((user) => {
