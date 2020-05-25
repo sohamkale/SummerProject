@@ -16,8 +16,11 @@ const Home = (props) => {
     const ENDPOINT = "http://localhost:5000";
    
     useEffect(() => {
+      if(currUser != null){
+        alert("SOCKET");
         const socket = io(ENDPOINT);
         socket.emit('join', {currUser});
+      }       
         
     }, [ENDPOINT, currUser]);
     useEffect(() => {
