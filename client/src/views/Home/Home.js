@@ -13,17 +13,17 @@ const Home = (props) => {
     const [postsArray, setPostsArray] = useState([]);
     const [userUid, setUserUid] = useState(null);
     const [currUser, setCurrUser] = useState(null);
-    // const ENDPOINT = "/";
-    const ENDPOINT = "https://facetweetit.herokuapp.com";
+    const ENDPOINT = "/";
+   
     useEffect(() => {
       let room = "commonRoom";
       if(currUser != null){
-         alert("SOCKET");
+        // alert("SOCKET");
         socket = io(ENDPOINT);
         socket.emit('join', {currUser, room});
         socket.on('joinedRoom', message => {
           console.log(message);
-           alert(message.text);
+          // alert(message.text);
           });
 
           socket.on('message', message => {
@@ -114,9 +114,9 @@ const Home = (props) => {
             <PostForm getPosts={getPosts} />
             {/*The Posts for the user*/}
             <div id='emortions'>
-            {postsArray.length > 1 ? postsArray.map((post,index)=>(
+            {postsArray.map((post,index)=>(
               <Emortion currUser={currUser} key={post._id} getPosts={getPosts} emortion={post}/>
-            )) : null}
+            ))}
             </div>
           </div>
         </div>
