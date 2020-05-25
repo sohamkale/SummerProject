@@ -16,22 +16,35 @@ const Home = (props) => {
     const ENDPOINT = "http://localhost:5000";
    
     useEffect(() => {
+      let room = "commonRoom";
       if(currUser != null){
         alert("SOCKET");
         socket = io(ENDPOINT);
-        socket.emit('join', {currUser});
+        socket.emit('join', {currUser, room});
+        socket.on('joinedRoom', message => {
+          console.log(message);
+          alert(message.text);
+          });
+
+          socket.on('message', message => {
+            // alert(message.user);
+            // console.log(message);
+            setPostsArray(message.posts);
+            // setMessages(messages => [ ...messages, message ]);
+            });
       }       
+
         
     }, [ENDPOINT, currUser]);
+
+
     useEffect(() => {
       axios.get('/api/posts')
       .then((res)=>{
         if(res.data.length > 0){
             setPostsArray(res.data);
-        }
-        
-    }, []);
-
+        } 
+    });
     fire.auth().onAuthStateChanged((user) => {
         if(user){
           axios.get(`/api/users/${user.uid}`).then((res) => {
@@ -45,18 +58,29 @@ const Home = (props) => {
             window.location.href = "/login";
         }
     })
+
     }, []);
+
+    useEffect(() => {
+      
+        
+      
+      
+  }, [])
+
+
 
     const getPosts = () => {
       console.log(socket);
-       socket.emit('addPosts', "Inside getPosts");
-      axios.get('/api/posts')
-          .then((res)=>{
-            if(res.data.length > 0){
-                //Copy the variable//
-            setPostsArray(res.data)
-            }
-        }); 
+      socket.emit('addPosts', {currUser}, () => setPostsArray([]));
+  
+      // axios.get('/api/posts')
+      //     .then((res)=>{
+      //       if(res.data.length > 0){
+      //           //Copy the variable//
+      //       setPostsArray(res.data)
+      //       }
+      //   }); 
     } 
 
     // const socketFunc = () => {
