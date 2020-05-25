@@ -12,14 +12,14 @@ import usersFront from "./components/UsersFront";
 import fire from './config/Fire'
 import io from 'socket.io-client';
 const App = () => {
-  useEffect(() => {
-    let socket = io();
-    // alert(socket);
-    // {
-    //   socket.on('message', data => {
-    //     alert(data)
-    // })}
-  }, []);
+  // const ENDPOINT = "http://localhost:5000";
+   
+  // useEffect(() => {
+  //     //     alert("SOCKET");
+  //         let currUser = "soham kale";
+  //         const socket = io(ENDPOINT);
+  //         socket.emit('join', {currUser});
+  // }, [ENDPOINT]);
 
   
   return (
