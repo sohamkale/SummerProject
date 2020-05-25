@@ -15,27 +15,27 @@ const Home = (props) => {
     const [currUser, setCurrUser] = useState(null);
     const ENDPOINT = "/";
    
-    useEffect(() => {
-      let room = "commonRoom";
-      if(currUser != null){
-        // alert("SOCKET");
-        socket = io(ENDPOINT);
-        socket.emit('join', {currUser, room});
-        socket.on('joinedRoom', message => {
-          console.log(message);
-          // alert(message.text);
-          });
+    // useEffect(() => {
+    //   let room = "commonRoom";
+    //   if(currUser != null){
+    //     // alert("SOCKET");
+    //     socket = io(ENDPOINT);
+    //     socket.emit('join', {currUser, room});
+    //     socket.on('joinedRoom', message => {
+    //       console.log(message);
+    //       // alert(message.text);
+    //       });
 
-          socket.on('message', message => {
-            // alert(message.user);
-            // console.log(message);
-            setPostsArray(message.posts);
-            // setMessages(messages => [ ...messages, message ]);
-            });
-      }       
+    //       socket.on('message', message => {
+    //         // alert(message.user);
+    //         // console.log(message);
+    //         setPostsArray(message.posts);
+    //         // setMessages(messages => [ ...messages, message ]);
+    //         });
+    //   }       
 
         
-    }, [ENDPOINT, currUser]);
+    // }, [ENDPOINT, currUser]);
 
 
     useEffect(() => {
