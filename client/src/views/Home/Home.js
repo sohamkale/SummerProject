@@ -18,12 +18,12 @@ const Home = (props) => {
     useEffect(() => {
       let room = "commonRoom";
       if(currUser != null){
-        // alert("SOCKET");
+         alert("SOCKET");
         socket = io(ENDPOINT);
         socket.emit('join', {currUser, room});
         socket.on('joinedRoom', message => {
           console.log(message);
-          // alert(message.text);
+           alert(message.text);
           });
 
           socket.on('message', message => {
