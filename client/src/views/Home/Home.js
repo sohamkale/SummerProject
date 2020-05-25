@@ -15,58 +15,71 @@ const Home = (props) => {
     const [currUser, setCurrUser] = useState(null);
     const ENDPOINT = "/";
    
-    // useEffect(() => {
-    //   let room = "commonRoom";
-    //   if(currUser != null){
-    //     // alert("SOCKET");
-    //     socket = io(ENDPOINT);
-    //     socket.emit('join', {currUser, room});
-    //     socket.on('joinedRoom', message => {
-    //       console.log(message);
-    //       // alert(message.text);
-    //       });
+    useEffect(() => {
+      let room = "commonRoom";
+      if(currUser != null){
+        // alert("SOCKET");
+        socket = io(ENDPOINT);
+        socket.emit('join', {currUser, room});
+        socket.on('joinedRoom', message => {
+          console.log(message);
+          // alert(message.text);
+          });
 
-    //       socket.on('message', message => {
-    //         // alert(message.user);
-    //         // console.log(message);
-    //         setPostsArray(message.posts);
-    //         // setMessages(messages => [ ...messages, message ]);
-    //         });
-    //   }       
+          socket.on('message', message => {
+            // alert(message.user);
+            // console.log(message);
+            setPostsArray(message.posts);
+            // setMessages(messages => [ ...messages, message ]);
+            });
+      }       
 
         
-    // }, [ENDPOINT, currUser]);
+    }, [ENDPOINT, currUser]);
 
 
+    // useEffect(() => {
+    //   axios.get('/api/posts')
+    //   .then((res)=>{
+    //     if(res.data.length > 0){
+    //         setPostsArray(res.data);
+    //     } 
+    // });
+    // fire.auth().onAuthStateChanged((user) => {
+    //     if(user){
+    //       axios.get(`/api/users/${user.uid}`).then((res) => {
+    //         setCurrUser(res.data)
+    //       })
+          
+    //         setUserUid(user.uid);
+
+    //     }else {
+    //         // alert("Please sign in or create an account to continue!!");
+    //         window.location.href = "/login";
+    //     }
+    // })
+
+    // }, []);
     useEffect(() => {
       axios.get('/api/posts')
       .then((res)=>{
         if(res.data.length > 0){
             setPostsArray(res.data);
-        } 
+        }
     });
+
     fire.auth().onAuthStateChanged((user) => {
         if(user){
-          axios.get(`/api/users/${user.uid}`).then((res) => {
-            setCurrUser(res.data)
-          })
-          
+            axios.get(`/api/users/${user.uid}`).then((res) => {
+              setCurrUser(res.data)
+            })
             setUserUid(user.uid);
-
         }else {
             // alert("Please sign in or create an account to continue!!");
             window.location.href = "/login";
         }
     })
-
     }, []);
-
-    useEffect(() => {
-      
-        
-      
-      
-  }, [])
 
 
 
