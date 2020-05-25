@@ -24,8 +24,10 @@ const Emortion = (props) => {
             setValue(e.target.value);
             //  onChangeAnswer(e.target.value);
         }
-        const onSubmitButton = () => {
-            addComment(value);
+        const onSubmitButton = event => {
+            event.preventDefault();
+            console.log(event);
+            addComment(value, event);
         }
         return (
             <div>
@@ -72,8 +74,9 @@ const Emortion = (props) => {
         })
     }, []);
 
-    const addComment = (answer) => {
+    const addComment = (answer, event) => {
         // alert(answer);
+        event.preventDefault();
         let comment = {
             'answer': answer,
             'userId': userId,
@@ -81,7 +84,7 @@ const Emortion = (props) => {
             // 'numLikes': numLikes
         }
         axios.post(`/api/posts/answer/${emortion._id}`, comment).then((res)=>{
-            props.getPosts();
+            props.getPosts(event);
             document.getElementById('answerInput').value = "";
             // setAnswer("");
         });

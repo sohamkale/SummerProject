@@ -70,7 +70,8 @@ const Home = (props) => {
 
 
 
-    const getPosts = () => {
+    const getPosts = (event) => {
+      event.preventDefault();
       console.log(socket);
       socket.emit('addPosts', {currUser}, () => setPostsArray([]));
   
