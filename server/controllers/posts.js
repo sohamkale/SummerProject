@@ -4,10 +4,8 @@ const router = require('express').Router();
 let PostModel = require('../models/post.model');
 const mongoose = require('mongoose');
 const express = require('../config/express');
-var io = require('socket.io');
 // const app = express.init()
 // var http = require('http').Server(app);
-var io = require('socket.io')
 const postsController = {
     all(req, res) {
         console.log("In Server side before getting posts: ");
@@ -59,7 +57,6 @@ const postsController = {
             'comments': [] //{type: String}
             //need to add comments Array here
         })
-        io.sockets.emit('message', "Hell0");
         newPost.save().then(() => res.json(newPost)).catch(err => res.status('400').json('Error: ' + err));
     },
 

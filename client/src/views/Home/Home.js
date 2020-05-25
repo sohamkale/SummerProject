@@ -18,7 +18,7 @@ const Home = (props) => {
     useEffect(() => {
       if(currUser != null){
         alert("SOCKET");
-         socket = io(ENDPOINT);
+        socket = io(ENDPOINT);
         socket.emit('join', {currUser});
       }       
         
@@ -37,6 +37,7 @@ const Home = (props) => {
           axios.get(`/api/users/${user.uid}`).then((res) => {
             setCurrUser(res.data)
           })
+          
             setUserUid(user.uid);
 
         }else {
@@ -47,7 +48,8 @@ const Home = (props) => {
     }, []);
 
     const getPosts = () => {
-      //alert('called')
+      console.log(socket);
+       socket.emit('addPosts', "Inside getPosts");
       axios.get('/api/posts')
           .then((res)=>{
             if(res.data.length > 0){

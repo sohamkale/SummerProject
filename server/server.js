@@ -24,6 +24,11 @@ io.on('connection', (socket) =>{
     socket.on('join', ({currUser}) => {
         console.log(currUser);
     }) 
+    socket.on('addPosts', (str) => {
+
+        console.log("ASDSDSADSASDSASDSADSADSDSASDSASDSASDSDSASDSASDSADSDSDSAD");
+        console.log(str);
+    }) 
 })
 
 app.use('/api', api);
