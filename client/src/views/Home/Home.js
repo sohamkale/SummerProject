@@ -13,8 +13,8 @@ const Home = (props) => {
     const [postsArray, setPostsArray] = useState([]);
     const [userUid, setUserUid] = useState(null);
     const [currUser, setCurrUser] = useState(null);
-    const ENDPOINT = "/";
-   
+    // const ENDPOINT = "/";
+    const ENDPOINT = "https://facetweetit.herokuapp.com";
     useEffect(() => {
       let room = "commonRoom";
       if(currUser != null){
@@ -114,7 +114,7 @@ const Home = (props) => {
             <PostForm getPosts={getPosts} />
             {/*The Posts for the user*/}
             <div id='emortions'>
-            {postsArray ? postsArray.map((post,index)=>(
+            {postsArray.length > 1 ? postsArray.map((post,index)=>(
               <Emortion currUser={currUser} key={post._id} getPosts={getPosts} emortion={post}/>
             )) : null}
             </div>
