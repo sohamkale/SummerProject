@@ -13,7 +13,12 @@ import fire from './config/Fire'
 import io from 'socket.io-client';
 const App = () => {
   useEffect(() => {
-  
+    let socket = io();
+    // alert(socket);
+    {
+      socket.on('message', data => {
+        alert(data)
+    })}
   }, []);
 
   
