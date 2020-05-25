@@ -6,7 +6,7 @@ import Emortion from "../../components/Emortions/Emortion";
 import fire from '../../config/Fire'
 import axios from 'axios';
 import io from 'socket.io-client';
-
+let socket;
 const Home = (props) => {
     // const socket = io('http://localhost:4000');
     
@@ -18,7 +18,7 @@ const Home = (props) => {
     useEffect(() => {
       if(currUser != null){
         alert("SOCKET");
-        const socket = io(ENDPOINT);
+         socket = io(ENDPOINT);
         socket.emit('join', {currUser});
       }       
         
