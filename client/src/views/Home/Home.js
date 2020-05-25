@@ -18,12 +18,12 @@ const Home = (props) => {
     useEffect(() => {
       let room = "commonRoom";
       if(currUser != null){
-        alert("SOCKET");
+        // alert("SOCKET");
         socket = io(ENDPOINT);
         socket.emit('join', {currUser, room});
         socket.on('joinedRoom', message => {
           console.log(message);
-          alert(message.text);
+          // alert(message.text);
           });
 
           socket.on('message', message => {
@@ -71,7 +71,10 @@ const Home = (props) => {
 
 
     const getPosts = (event) => {
-      event.preventDefault();
+      if(event){
+        event.preventDefault();
+      }
+      
       console.log(socket);
       socket.emit('addPosts', {currUser}, () => setPostsArray([]));
   
