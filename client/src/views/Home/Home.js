@@ -13,7 +13,7 @@ const Home = (props) => {
     const [postsArray, setPostsArray] = useState([]);
     const [userUid, setUserUid] = useState(null);
     const [currUser, setCurrUser] = useState(null);
-    const ENDPOINT = "http://localhost:5000";
+    const ENDPOINT = "/";
    
     useEffect(() => {
       let room = "commonRoom";
