@@ -33,7 +33,7 @@ module.exports.init = () => {
 
     // add a router
     // app.use('/api/example', exampleRouter);
-    // app.use('/api', api);
+    app.use('/api', api);
     // var http = require('http').Server(app);
     // var io = require('socket.io')(http);
     // io.on('connection', (err) =>{

@@ -45,5 +45,5 @@ io.on('connection', (socket) =>{
     }) 
 })
 
-app.use('/api', api);
+
 http.listen(port, () => console.log(`Server now running on port ${port}!`)); //app.listen
