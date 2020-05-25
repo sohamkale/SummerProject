@@ -114,9 +114,9 @@ const Home = (props) => {
             <PostForm getPosts={getPosts} />
             {/*The Posts for the user*/}
             <div id='emortions'>
-            {postsArray.map((post,index)=>(
+            {postsArray ? postsArray.map((post,index)=>(
               <Emortion currUser={currUser} key={post._id} getPosts={getPosts} emortion={post}/>
-            ))}
+            )) : null}
             </div>
           </div>
         </div>
