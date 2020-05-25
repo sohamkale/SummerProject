@@ -3,6 +3,8 @@ import React , { Component, useEffect, useState } from "react";
 import fire from "../../config/Fire";
 import SignupComp from "../../components/Signup/SignupComp";
 import axios from 'axios';
+import io from 'socket.io-client';
+
 const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:5000';
 const Signup = (props) => {
     const [email, setEmail] = useState(null);
@@ -51,6 +53,10 @@ const Signup = (props) => {
                 window.location.href='/Login';
             });
             console.log(u);
+
+            const socket = io();
+            socket.emit('join', newUser);
+            console.log(socket);
         }).catch((err)=>{
             if(err.message === "The email address is badly formatted."){
                 alert("Please fill in a valid email");

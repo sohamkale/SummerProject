@@ -15,10 +15,10 @@ const App = () => {
   useEffect(() => {
     let socket = io();
     // alert(socket);
-    {
-      socket.on('message', data => {
-        alert(data)
-    })}
+    // {
+    //   socket.on('message', data => {
+    //     alert(data)
+    // })}
   }, []);
 
   

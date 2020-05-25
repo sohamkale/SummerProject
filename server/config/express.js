@@ -33,13 +33,13 @@ module.exports.init = () => {
 
     // add a router
     // app.use('/api/example', exampleRouter);
-    app.use('/api', api);
-    var http = require('http').Server(app);
-    var io = require('socket.io')(http);
-    io.on('connection', (err) =>{
-        io.emit('message', "Hell0");
-        console.log('a user is connected');
-    })
+    // app.use('/api', api);
+    // var http = require('http').Server(app);
+    // var io = require('socket.io')(http);
+    // io.on('connection', (err) =>{
+    //     io.emit('message', "Hell0");
+    //     console.log('a user is connected');
+    // })
 
     app.all('/*', function(req, res, next) {
         // CORS headers

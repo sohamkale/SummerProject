@@ -6,7 +6,7 @@ import Emortion from "../../components/Emortions/Emortion";
 import fire from '../../config/Fire'
 import axios from 'axios';
 import io from 'socket.io-client';
-// const socket = openSocket();
+
 const Home = (props) => {
     // const socket = io('http://localhost:4000');
     
@@ -19,7 +19,10 @@ const Home = (props) => {
         if(res.data.length > 0){
             setPostsArray(res.data);
         }
-    });
+        // const socket = io();
+        // socket.emit('join', "SOMEONE HAS JOINED");
+        // console.log(socket);
+    }, []);
 
     fire.auth().onAuthStateChanged((user) => {
         if(user){
