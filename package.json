@@ -32,6 +32,7 @@
     "mongoose": "^5.7.1",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.10",
+    "react-media-hook": "^0.4.7",
     "should": "^13.2.3",
     "socket.io": "^2.3.0",
     "supertest": "^4.0.2"
