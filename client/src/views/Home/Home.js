@@ -6,7 +6,10 @@ import Emortion from "../../components/Emortions/Emortion";
 import fire from '../../config/Fire'
 import axios from 'axios';
 import io from 'socket.io-client';
+import "./Home.css";
 let socket;
+
+
 const Home = (props) => {
     // const socket = io('http://localhost:4000');
     
@@ -117,12 +120,12 @@ const Home = (props) => {
         <center>
           Welcome to the Den
         </center>
-        <div className='row'>
+        <div className=' App-width App-header row-fluid'>
 
           <div className='DemoCol col-3'>
             <DemoCol />
           </div>
-          <div className='col-md-8 '>
+          <div className='col-md-8 row-fluid App-width'>
           <br></br>
             <PostForm getPosts={getPosts} />
             {/*The Posts for the user*/}

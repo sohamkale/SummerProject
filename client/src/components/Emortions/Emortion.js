@@ -30,7 +30,7 @@ const Emortion = (props) => {
             addComment(value, event);
         }
         return (
-            <div className="md-12">
+            <div>
         <Button
             onClick={() => setOpen(!open)}
             aria-controls="example-collapse-text"

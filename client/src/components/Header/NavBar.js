@@ -44,11 +44,11 @@ const Navbarcomp = () => {
         
     }
     return (
-<ReactBootStrap.Navbar collapseOnSelect expand="md" bg="light" variant="light">
+<ReactBootStrap.Navbar collapseOnSelect expand="md" variant="light">
 <ReactBootStrap.Navbar.Brand href="/home">{initials}</ReactBootStrap.Navbar.Brand>
 <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" />
 <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav">
-<ReactBootStrap.Nav className="mr-auto"> 
+<ReactBootStrap.Nav> 
             <Nav.Link href="/home">Home</Nav.Link>
             {/* {isUser ? <Nav.Link href="/true/Login">Dashboard</Nav.Link> : <Nav.Link href="/true/Login">Login</Nav.Link>}
             {isUser ? null : <Nav.Link href="/true/Signup">Signup</Nav.Link>} */}
