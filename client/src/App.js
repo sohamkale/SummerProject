@@ -24,7 +24,7 @@ const App = () => {
   
   return (
     //Imported public NavBar
-    <div>
+    <div fluid>
     
       <NavBar />
       <Switch>

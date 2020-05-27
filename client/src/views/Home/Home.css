@@ -25,3 +25,7 @@ body {
 .App-link {
     color: #09d3ac;
 }
+
+.App-width{
+    max-width: 100vh;
+}

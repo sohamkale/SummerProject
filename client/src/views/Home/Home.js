@@ -112,7 +112,7 @@ const Home = (props) => {
 
     return (
       
-        <div>
+        <div className="App-width">
           {/* {socketFunc()} */}
         <center>
           Welcome to the Den
@@ -122,7 +122,7 @@ const Home = (props) => {
           <div className='DemoCol col-3'>
             <DemoCol />
           </div>
-          <div className='col-6'>
+          <div className='col-md-8 '>
           <br></br>
             <PostForm getPosts={getPosts} />
             {/*The Posts for the user*/}

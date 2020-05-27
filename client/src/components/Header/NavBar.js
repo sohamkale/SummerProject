@@ -44,7 +44,7 @@ const Navbarcomp = () => {
         
     }
     return (
-<ReactBootStrap.Navbar collapseOnSelect expand="sm" bg="light" variant="light">
+<ReactBootStrap.Navbar collapseOnSelect expand="md" bg="light" variant="light">
 <ReactBootStrap.Navbar.Brand href="/home">{initials}</ReactBootStrap.Navbar.Brand>
 <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" />
 <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav">
