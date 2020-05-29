@@ -64,6 +64,7 @@ const Emortion = (props) => {
     }
 
     useEffect(() => {
+        console.log(props);
         console.log(emortion);
         GetUserName(emortion.postObjId);
         fire.auth().onAuthStateChanged((user) => {
@@ -75,7 +76,7 @@ const Emortion = (props) => {
     }, []);
 
     const addComment = (answer, event) => {
-        // alert(answer);
+        // console.log(props);
         event.preventDefault();
         let comment = {
             'answer': answer,
@@ -84,7 +85,16 @@ const Emortion = (props) => {
             // 'numLikes': numLikes
         }
         axios.post(`/api/posts/answer/${emortion._id}`, comment).then((res)=>{
-            props.getPosts(event);
+            let comment2 = {
+                'answer': answer,
+                'userId': userId,
+                'name': props.currUser,
+                'postId': emortion._id
+            }
+            // console.log("POSTARRAY: " );
+            // console.log(props.postsArray);
+            props.addComment(comment2, props.postsArray);
+            // props.getPosts(event);
             document.getElementById('answerInput').value = "";
             // setAnswer("");
         });

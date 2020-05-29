@@ -4,7 +4,7 @@ import axios from 'axios';
 const Comments = (props) => {
     const [commenter, setCommenter] = useState();
     useEffect(()=>{
-        console.log(props.comment);
+        // console.log(props.comment);
         if(props != null){
             setCommenter(props.comment.name);
         }

@@ -17,12 +17,13 @@ const Home = (props) => {
     const [userUid, setUserUid] = useState(null);
     const [currUser, setCurrUser] = useState(null);
     const ENDPOINT = "/";
-   
+    const [socketIO, setsocketIO] = useState(null);
     useEffect(() => {
       let room = "commonRoom";
       if(currUser != null){
         // alert("SOCKET");
         socket = io(ENDPOINT);
+        setsocketIO(socket);
         socket.emit('join', {currUser, room});
         socket.on('joinedRoom', message => {
           console.log(message);
@@ -30,10 +31,7 @@ const Home = (props) => {
           });
 
           socket.on('message', message => {
-            // alert(message.user);
-            // console.log(message);
             setPostsArray(message.posts);
-            // setMessages(messages => [ ...messages, message ]);
             });
       }       
 
@@ -86,12 +84,14 @@ const Home = (props) => {
 
 
 
-    const getPosts = (event) => {
-      if(event){
-        event.preventDefault();
-      }
+    const getPosts = (postsArray)  => {
+      // if(event){
+      //   event.preventDefault();
+      // }
+      // console.log("PostsArray: ");
+      // console.log(postsArray);
       
-      console.log(socket);
+      // console.log(socket);
       socket.emit('addPosts', {currUser}, () => setPostsArray([]));
   
       // axios.get('/api/posts')
@@ -103,15 +103,11 @@ const Home = (props) => {
       //   }); 
     } 
 
-    // const socketFunc = () => {
-    //   alert("HI");
-    //   let socket = io();
-    //   alert(socket);
-    //   {
-    //     socket.on('message', data => {
-    //       alert(data)
-    //   })}
-    // }
+    const addComment = (comment, allPosts) => {
+      // console.log("ADD COMMENT: ");
+      // console.log(allPosts);
+      socket.emit('addComment', {currUser, comment, allPosts}, () => setPostsArray([]));
+    } 
 
     return (
       
@@ -127,11 +123,11 @@ const Home = (props) => {
           </div>
           <div className='col-md-8 row-fluid App-width'>
           <br></br>
-            <PostForm getPosts={getPosts} />
+            <PostForm getPosts={getPosts} postsArray={postsArray} />
             {/*The Posts for the user*/}
             <div id='emortions'>
             {postsArray.map((post,index)=>(
-              <Emortion currUser={currUser} key={post._id} getPosts={getPosts} emortion={post}/>
+              <Emortion currUser={currUser} key={post._id} postsArray={postsArray} socket={socketIO} addComment={addComment} getPosts={getPosts} emortion={post}/>
             ))}
             </div>
           </div>

@@ -29,20 +29,41 @@ io.on('connection', (socket) =>{
         // io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) }); //not required
         console.log(currUser);
     }) 
-    socket.on('addPosts', ({currUser, str}, callback) => {
+    
+    socket.on('addComment', ({currUser, comment, allPosts}, callback) => {
+        let array = [];
+        let lastComment = comment;
+       
+        let reqPostId;
+        console.log("ALLPOSTS: " );
+        console.log(allPosts);
+        if(allPosts && comment){
+            reqPostId = comment.postId;
+            array = allPosts;
+            array.map((arr) => {
+                if(reqPostId === arr._id){
+                    arr.comments.push(comment);
+                }
+            })
+            io.to(commonRoom).emit('message', { user: currUser, posts: array, lastComment: lastComment })
+        }
+         
+        // PostModel.find({}).then(function(posts) {
+        //     lastPost = posts[posts.length - 1]
+        //     array = posts;
+        //     // console.log(commonRoom);
+            
+        // } );
+        //  console.log(array);
+    })
+    
+    socket.on('addPosts', ({currUser}, callback) => {
         let array = [];
         PostModel.find({}).then(function(posts) {
-            //console.log(array);
             array = posts;
-            console.log(commonRoom);
             io.to(commonRoom).emit('message', { user: currUser, posts: array })
         } );
-         console.log(array);
-        //  callback();
-        // console.log("ASDSDSADSASDSASDSADSADSDSASDSASDSASDSDSASDSASDSADSDSDSAD");
-        
-        // console.log(str);
-    }) 
+    })
 })
 
 
