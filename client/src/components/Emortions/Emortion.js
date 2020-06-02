@@ -12,66 +12,12 @@ const Emortion = (props) => {
     //states and vars
     const [name, setName] = useState("anonymous");
     const [open, setOpen] = useState(false);
-    // const [answer, setAnswer] = useState("");
-    const [userId, setUserId] = useState();
-    const [returnNo, setReturnNo] = useState(0);
-    const [funcNo, setfuncNo] = useState(0);
-    
-    const Open= () => {
-        const[value, setValue] = useState("");
-        const onChangeValue = (e) => {
-            // console.log(e.target.id);
-            // console.log(e.target.value);
-            setValue(e.target.value);
-            //  onChangeAnswer(e.target.value);
-        }
-        const onSubmitButton = event => {
-            event.preventDefault();
-            console.log(event);
-            addComment(value, event);
-        }
-        return (
-            <div>
-        <Button
-            onClick={() => setOpen(!open)}
-            aria-controls="example-collapse-text"
-            aria-expanded={open}
-            variant='link'
-        >
-            Answer the Emortion
-        </Button>
-        <Collapse in={open}>
-        <div id="example-collapse-text">
-            <form>
-                <input hidden name="userId" value={emortion.userId}></input>
-                <input id='answerInput' onChange={onChangeValue} className="form-control answer" name="answer" type="text" value={value} required placeholder="What do you think emorter is saying?.."></input>
-                <span><Button  onClick ={onSubmitButton} variant="info">Evaluate</Button></span>
-            </form>
-            <Container fluid className="text-center">
-                <h2>All Comments</h2>
-                <ul>
-                {emortion.comments.map((comment, index) => {
-                    return (
+    //const [answer, setAnswer] = useState(null);
 
-                        <Comments key={index} currUser={props.currUser} answer={comment.answer} comment={comment} numLikes={comment.numLikes}/>
-                    )
-                })}
-                </ul>
-            </Container>
-        </div>
-    </Collapse>
-    </div>
-        );
-    }
 
     useEffect(() => {
         GetUserName(emortion.postObjId);
-        fire.auth().onAuthStateChanged((user) => {
-            if(user){
-                setUserId(user.uid);
-            }else {
-            }
-        })
+
     }, []);
 
     const addComment = (answer, event) => {
@@ -100,14 +46,67 @@ const Emortion = (props) => {
     }
 
     // const onChangeAnswer = (e) => {
-    //     console.log(e);
-    //     // console.log(e.target.value);
-    //     setAnswer(e);
-    // }    
+    //     console.log(e.target.id);
+    //     console.log(e.target.value);
+    //     setAnswer(e.target.value);
+    // }
 
-    
+
+    function SendComment(e)
+    {
+        e.preventDefault();
+        var form = $('#answerForm'+emortion._id).serializeArray();
+        $.ajax({
+            url: '/api/posts/answer/'+emortion._id,
+            type: 'POST',
+            data: JSON.stringify(
+                form
+            ),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                props.getPosts();
+                console.log(e)
+            }
+        });
+    }
+
+    function Secret() {
+        if (new Date(emortion.expiresAt) <= new Date())
+            return (
+                <p className="card-text secret">Revealed! <br></br>Secret: {emortion.secretAnswer}</p>
+            );
+        else return (<p className="card-text">Answer reveals at {new Date(emortion.expiresAt).toLocaleTimeString()}</p>);
+    }
+
+    function GetUserName(userId) {
+        axios.get('/api/users/' + userId)
+            .then((res) => {
+                if (res.data) {
+                    //console.log("data is "+res.data)
+                    setName(res.data);
+                }
+                else {
+                    //console.log(res)
+                    setName("Not Found");
+                }
+            });
+    }
+
+    function AnswerAgent()
+    {
+        return (props.userUid!=emortion.postObjId)? (<div>
+                <form id={'answerForm'+emortion._id} onSubmit={SendComment}>
+                    <input readOnly hidden name="userId" value={props.userUid}></input>
+                    <input defaultValue="" required name="answer" className="form-control answer" placeholder="What do you think the Emorter is saying?"></input>
+                    <span><Button  type="submit" variant="info">Evaluate</Button></span>
+                </form>
+            </div>):
+                (<div></div>);
+    }
+
+    //Main
     return (
-        
         <div>
            { console.log("inside return: " + returnNo) }
            {/* {setReturnNo(returnNo+1)} */}
@@ -125,37 +124,33 @@ const Emortion = (props) => {
                     <Secret />
 
                     <span className='like'></span> {emortion.numLikes}
-                    {/* <Button
+
+                    <Button
                         onClick={() => setOpen(!open)}
                         aria-controls="example-collapse-text"
                         aria-expanded={open}
                         variant='link'
-                    >
-                        Answer the Emortion
+                    >Show Answers
                     </Button>
                     
                     <Collapse in={open}>
                         <div id="example-collapse-text">
-                            <form id={'answerForm'+emortion._id} onSubmit={SendComment}>
-                                <input hidden name="userId" value={userId}></input>
-                                <input hidden name="name" value={props.currUser}></input>
-                                <input defaultValue="" required name="answer" className="form-control answer" placeholder="What do you think the Emorter is saying?"></input>
-                                <span><Button  type="submit" variant="info">Evaluate</Button></span>
-                            </form>
+                            <AnswerAgent/>
                             <Container fluid className="text-center">
                                 <h2>All Comments</h2>
                                 <ul>
-                                {emortion.comments.map((comment, index) => {
-                                    return (
-                                        // <li className="text-left">{comment.answer}</li>
-                                        <Comments key={index} currUser={props.currUser} answer={comment.answer} comment={comment} numLikes={comment.numLikes}/>
-                                    )
-                                })}
+                                    {emortion.comments.map((comment, index) => {
+                                        return (
+                                            // <li className="text-left">{comment.answer}</li>
+                                            <Comments key={index} currUser={props.currUser} answer={comment.answer} comment={comment} numLikes={comment.numLikes}/>
+                                        )
+                                    })}
                                 </ul>
                             </Container>
+
                         </div>
-                    </Collapse> */}
-                    <Open/>
+                    </Collapse>
+
                     
                 </div>
             </div>
@@ -163,31 +158,6 @@ const Emortion = (props) => {
         </div>
     );
 
-    
-
-    function Secret() {
-        console.log("inside secret: " + funcNo);
-        // {setfuncNo(funcNo+1)}
-        if (new Date(emortion.expiresAt) <= new Date())
-            return (
-                <p className="card-text secret">Revealed! <br></br>Secret: {emortion.secretAnswer}</p>
-            );
-            else return (<p className="card-text">Answer reveals at {new Date(emortion.expiresAt).toLocaleTimeString()}</p>);
-    }
-
-    function GetUserName(userId) {
-        axios.get('/api/users/' + userId)
-            .then((res) => {
-                if (res.data) {
-                    //console.log("data is "+res.data)
-                    setName(res.data);
-                }
-                else {
-                    //console.log(res)
-                    setName("Not Found");
-                }
-            });
-    }
 }
 
 

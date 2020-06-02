@@ -10,7 +10,7 @@ const postsController = {
     all(req, res) {
         console.log("In Server side before getting posts: ");
         console.log();
-        PostModel.find().then(posts => res.json(posts)).catch(err => res.status('400').json('Error: ' + err));
+        PostModel.find().sort({ createdAt: -1 }).then(posts => res.json(posts)).catch(err => res.status('400').json('Error: ' + err));
     },
 
     add(req, res) {

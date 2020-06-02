@@ -62,51 +62,16 @@ const Home = (props) => {
 
     // }, []);
     useEffect(() => {
-      axios.get('/api/posts')
-      .then((res)=>{
-        if(res.data.length > 0){
-            setPostsArray(res.data);
-        }
-    });
-
-    fire.auth().onAuthStateChanged((user) => {
-        if(user){
-            axios.get(`/api/users/${user.uid}`).then((res) => {
-              setCurrUser(res.data)
-            })
-            setUserUid(user.uid);
-        }else {
-            // alert("Please sign in or create an account to continue!!");
-            window.location.href = "/login";
-        }
-    })
     }, []);
 
-
-
-    const getPosts = (postsArray)  => {
-      // if(event){
-      //   event.preventDefault();
-      // }
-      // console.log("PostsArray: ");
-      // console.log(postsArray);
-      
-      // console.log(socket);
-      socket.emit('addPosts', {currUser}, () => setPostsArray([]));
-  
-      // axios.get('/api/posts')
-      //     .then((res)=>{
-      //       if(res.data.length > 0){
-      //           //Copy the variable//
-      //       setPostsArray(res.data)
-      //       }
-      //   }); 
-    } 
-
-    const addComment = (comment, allPosts) => {
-      // console.log("ADD COMMENT: ");
-      // console.log(allPosts);
-      socket.emit('addComment', {currUser, comment, allPosts}, () => setPostsArray([]));
+    const getPosts = () => {
+      axios.get('/api/posts')
+          .then((res)=>{
+            if(res.data.length > 0){
+                //Copy the variable//
+            props.setPostsArray(res.data)
+            }
+        });
     } 
 
     return (
@@ -116,18 +81,17 @@ const Home = (props) => {
         <center>
           Welcome to the Den
         </center>
-        <div className=' App-width App-header row-fluid'>
-
-          <div className='DemoCol col-3'>
-            <DemoCol />
+        <div className='row'>
+          <div className='DemoCol col-2'>
+            <DemoCol username={props.username}/>
           </div>
           <div className='col-md-8 row-fluid App-width'>
           <br></br>
-            <PostForm getPosts={getPosts} postsArray={postsArray} />
+            <PostForm userUid={props.userUid} getPosts={getPosts} />
             {/*The Posts for the user*/}
             <div id='emortions'>
-            {postsArray.map((post,index)=>(
-             <Emortion currUser={currUser} key={post._id} getPosts={getPosts} emortion={post}/>
+            {props.postsArray.map((post,index)=>(
+             <Emortion username={props.username} userUid={props.userUid} key={post._id} getPosts={getPosts} emortion={post} userUid={props.userUid}/>
             ))}
             </div>
           </div>

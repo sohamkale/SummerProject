@@ -9,14 +9,9 @@ import axios from 'axios';
 const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:5000';
 
 const PostForm = (props) => {
-    const [userId, setUserId] = useState(null);
     const [hasArrived, setHasArrived] = useState(false);
     useEffect(() => {
-        fire.auth().onAuthStateChanged(function (user) {
-            if (user) {
-                setUserId(user.uid);
-            }
-        });
+
     }, []);
 
     useEffect(() => {
@@ -25,16 +20,13 @@ const PostForm = (props) => {
     }, [props]);
 
 
-
-
     return (
         <div>
             <div className="card bg-light mb-3">
                 <b className="card-header">TELL ME AN EMORTION!</b>
                 <div className="card-body">
                     <form id='thePost' onSubmit={submit}>
-                        <input readOnly hidden name="userId" value={userId ? userId: ""}></input>
-                        {/* <input readOnly hidden name="postsArray" value={props.postsArray ? props.postsArray: ""}></input> */}
+                        <input readOnly hidden name="userId" value={props.userUid ? props.userUid: ""}></input>
                         <label htmlFor="type" className='form-check-label'>Type: &nbsp; </label>
                         <select id="postType" name='type' className='form-control-sm'>
                             <option>Timer</option>
