@@ -7,40 +7,19 @@ import fire from '../../config/Fire'
 import axios from 'axios';
 
 const Home = (props) => {
-    
-    const [postsArray, setPostsArray] = useState([]);
-    const [userUid, setUserUid] = useState(null);
-    const [currUser, setCurrUser] = useState(null);
+    //have the posts in props.postsarray
+    console.log(props)
     useEffect(() => {
-      axios.get('/api/posts')
-      .then((res)=>{
-        if(res.data.length > 0){
-            setPostsArray(res.data);
-        }
-    });
-
-    fire.auth().onAuthStateChanged((user) => {
-        if(user){
-            axios.get(`/api/users/${user.uid}`).then((res) => {
-              setCurrUser(res.data)
-            })
-            setUserUid(user.uid);
-        }else {
-            // alert("Please sign in or create an account to continue!!");
-            window.location.href = "/login";
-        }
-    })
     }, []);
 
     const getPosts = () => {
-      //alert('called')
       axios.get('/api/posts')
           .then((res)=>{
             if(res.data.length > 0){
                 //Copy the variable//
-            setPostsArray(res.data)
+            props.setPostsArray(res.data)
             }
-        }); 
+        });
     } 
 
     return (
@@ -49,17 +28,16 @@ const Home = (props) => {
           Welcome to the Den
         </center>
         <div className='row'>
-
-          <div className='DemoCol col-3'>
-            <DemoCol />
+          <div className='DemoCol col-2'>
+            <DemoCol username={props.username}/>
           </div>
           <div className='col-6'>
           <br></br>
-            <PostForm getPosts={getPosts} />
+            <PostForm userUid={props.userUid} getPosts={getPosts} />
             {/*The Posts for the user*/}
             <div id='emortions'>
-            {postsArray.map((post,index)=>(
-             <Emortion currUser={currUser} key={post._id} getPosts={getPosts} emortion={post}/>
+            {props.postsArray.map((post,index)=>(
+             <Emortion username={props.username} userUid={props.userUid} key={post._id} getPosts={getPosts} emortion={post} userUid={props.userUid}/>
             ))}
             </div>
           </div>

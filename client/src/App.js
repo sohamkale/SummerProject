@@ -4,43 +4,31 @@ import { Route, Switch, Redirect  } from 'react-router-dom';
 import NotFound from "./components/Shared/NotFound";
 // import NavBar from "./Components/Shared/NavBar";
 
+import LoggedInTest from './views/Home/LoggedInTest'
 import Home from "./views/Home/Home"
+import Door from './views/Home/Door'
 import NavBar from "./components/Header/NavBar";
 import LoginApp from "./views/Login/LoginApp";
+
 import Signup from "./views/Signup/Signup";
 import usersFront from "./components/UsersFront";
 import fire from './config/Fire'
+import axios from "axios";
 
-const App = () => {
-  useEffect(() => {
-  
-  }, []);
-
+const App = (props) => {
+    const [username, setUserName] = useState(null);
+    const [useremail, setUserEmail] = useState(null);
+    const [userUid, setUserUid] = useState(null);
 
   return (
-    //Imported public NavBar
-    <div>
-    {
-       
-    }
-      <NavBar />
-      <Switch>
-      <Route exact path="/Home" render={(props) => <Home {...props} isLoggedIn={false} />}/>
-      {/* <Route exact path="/contact" component={ContactMe} /> */}
-      <Route exact path="/Login" component={LoginApp} />
-      <Route exact path="/Signup" component={Signup} />
-      <Route exact path="/usersFront" component={usersFront} />
-      {/* <Route exact path="/delete" component={DeleteImage}/> */}
-      {/* remove this above line */}
-      <Route exact path="/">
-        <Redirect to="/Login" />
-      </Route>
-        <Route component={NotFound}/>
-      </Switch>
-      {/* <div className="container-fluid">
-        <Body/>
-      </div> */}
-    </div>
+      <div>
+          <NavBar username={username} setUserName={setUserName} userUid={userUid} setUserUid={setUserUid} setUserEmail={setUserEmail}/>
+          {/*<Door/>*/}
+          <Route exact path="/Login" component={LoginApp} />
+          <Route exact path="/Home" render={(props) => <Door {...props} username={username} userUid={userUid} />}/>
+          <Route exact path="/" render={(props) => <Door {...props} username={username} userUid={userUid} />}/>
+
+      </div>
   );
 }
 
