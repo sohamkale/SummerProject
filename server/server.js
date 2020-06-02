@@ -7,6 +7,8 @@ require('dotenv').config();
 let PostModel = require("./models/post.model");
 let User = require('./models/user.model');
 const commonRoom = "commonRoom";
+
+
 // Use env port or default
 const port = process.env.PORT || 5000;
 
