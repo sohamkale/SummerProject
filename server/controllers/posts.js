@@ -2,7 +2,10 @@
 
 const router = require('express').Router();
 let PostModel = require('../models/post.model');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const express = require('../config/express');
+// const app = express.init()
+// var http = require('http').Server(app);
 const postsController = {
     all(req, res) {
         console.log("In Server side before getting posts: ");
@@ -38,7 +41,7 @@ const postsController = {
 
         // should be empty to start 
         // const comments = req.body.comments
-
+        
         const newPost = new PostModel({
             'postObjId': postObjId,
             'type': type,

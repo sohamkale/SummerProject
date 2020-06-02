@@ -10,19 +10,22 @@ import LoginApp from "./views/Login/LoginApp";
 import Signup from "./views/Signup/Signup";
 import usersFront from "./components/UsersFront";
 import fire from './config/Fire'
-
+import io from 'socket.io-client';
 const App = () => {
-  useEffect(() => {
+  // const ENDPOINT = "http://localhost:5000";
+   
+  // useEffect(() => {
+  //     //     alert("SOCKET");
+  //         let currUser = "soham kale";
+  //         const socket = io(ENDPOINT);
+  //         socket.emit('join', {currUser});
+  // }, [ENDPOINT]);
+
   
-  }, []);
-
-
   return (
     //Imported public NavBar
     <div>
-    {
-       
-    }
+    
       <NavBar />
       <Switch>
       <Route exact path="/Home" render={(props) => <Home {...props} isLoggedIn={false} />}/>

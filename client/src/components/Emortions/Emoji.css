@@ -49,3 +49,21 @@
     from {opacity: 0;}
     to {opacity:1 ;}
   }
+
+  .popupDiv{
+    display: flex;
+    align-content: center;
+    /* justify-content: center; */
+    align-self: center;
+    width: 100%;
+    /* width: 100vw; */
+  }
+
+  .popupImg{
+   padding-left: 10%;
+  }
+
+  .picker{
+    background-color: aqua;
+    width: 10vw;
+  }

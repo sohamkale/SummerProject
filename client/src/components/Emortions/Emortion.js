@@ -12,8 +12,58 @@ const Emortion = (props) => {
     //states and vars
     const [name, setName] = useState("anonymous");
     const [open, setOpen] = useState(false);
-    //const [answer, setAnswer] = useState(null);
+    // const [answer, setAnswer] = useState("");
     const [userId, setUserId] = useState();
+    const [returnNo, setReturnNo] = useState(0);
+    const [funcNo, setfuncNo] = useState(0);
+    
+    const Open= () => {
+        const[value, setValue] = useState("");
+        const onChangeValue = (e) => {
+            // console.log(e.target.id);
+            // console.log(e.target.value);
+            setValue(e.target.value);
+            //  onChangeAnswer(e.target.value);
+        }
+        const onSubmitButton = event => {
+            event.preventDefault();
+            console.log(event);
+            addComment(value, event);
+        }
+        return (
+            <div>
+        <Button
+            onClick={() => setOpen(!open)}
+            aria-controls="example-collapse-text"
+            aria-expanded={open}
+            variant='link'
+        >
+            Answer the Emortion
+        </Button>
+        <Collapse in={open}>
+        <div id="example-collapse-text">
+            <form>
+                <input hidden name="userId" value={emortion.userId}></input>
+                <input id='answerInput' onChange={onChangeValue} className="form-control answer" name="answer" type="text" value={value} required placeholder="What do you think emorter is saying?.."></input>
+                <span><Button  onClick ={onSubmitButton} variant="info">Evaluate</Button></span>
+            </form>
+            <Container fluid className="text-center">
+                <h2>All Comments</h2>
+                <ul>
+                {emortion.comments.map((comment, index) => {
+                    return (
+
+                        <Comments key={index} currUser={props.currUser} answer={comment.answer} comment={comment} numLikes={comment.numLikes}/>
+                    )
+                })}
+                </ul>
+            </Container>
+        </div>
+    </Collapse>
+    </div>
+        );
+    }
+
     useEffect(() => {
         GetUserName(emortion.postObjId);
         fire.auth().onAuthStateChanged((user) => {
@@ -24,28 +74,43 @@ const Emortion = (props) => {
         })
     }, []);
 
-    // const addComment = () => {
-    //     let comment = {
-    //         'answer': answer,
-    //         'userId': userId,
-    //         // 'numLikes': numLikes
-    //     }
-    //     axios.post(`/api/posts/answer/${emortion._id}`, comment).then((res)=>{
-    //         props.getPosts();
-    //         document.getElementById('answerInput').value = "";
-    //         setAnswer("");
-    //         // console.log(document.getElementById('answerInput').value);
-    //     });
-    //     // console.log(emortion._id);
-    // }
+    const addComment = (answer, event) => {
+        // console.log(props);
+        event.preventDefault();
+        let comment = {
+            'answer': answer,
+            'userId': userId,
+            'name': props.currUser
+            // 'numLikes': numLikes
+        }
+        axios.post(`/api/posts/answer/${emortion._id}`, comment).then((res)=>{
+            let comment2 = {
+                'answer': answer,
+                'userId': userId,
+                'name': props.currUser,
+                'postId': emortion._id
+            }
+            // console.log("POSTARRAY: " );
+            // console.log(props.postsArray);
+            props.addComment(comment2, props.postsArray);
+            // props.getPosts(event);
+            document.getElementById('answerInput').value = "";
+            // setAnswer("");
+        });
+    }
 
     // const onChangeAnswer = (e) => {
-    //     console.log(e.target.id);
-    //     console.log(e.target.value);
-    //     setAnswer(e.target.value);
-    // }
+    //     console.log(e);
+    //     // console.log(e.target.value);
+    //     setAnswer(e);
+    // }    
+
+    
     return (
+        
         <div>
+           { console.log("inside return: " + returnNo) }
+           {/* {setReturnNo(returnNo+1)} */}
             <div className="card">
                 <div className="card-header">
                     Emortion By: {name}
@@ -60,19 +125,7 @@ const Emortion = (props) => {
                     <Secret />
 
                     <span className='like'></span> {emortion.numLikes}
-                    <AnswerAgent/>
-                    
-                </div>
-            </div>
-            <br></br>
-        </div>
-    );
-
-    function AnswerAgent()
-    {
-        if(userId!=emortion.postObjId)
-        return(<div>
-            <Button
+                    {/* <Button
                         onClick={() => setOpen(!open)}
                         aria-controls="example-collapse-text"
                         aria-expanded={open}
@@ -80,6 +133,7 @@ const Emortion = (props) => {
                     >
                         Answer the Emortion
                     </Button>
+                    
                     <Collapse in={open}>
                         <div id="example-collapse-text">
                             <form id={'answerForm'+emortion._id} onSubmit={SendComment}>
@@ -99,35 +153,21 @@ const Emortion = (props) => {
                                 })}
                                 </ul>
                             </Container>
-                        
                         </div>
-                    </Collapse>
-        </div>)
-        else
-            return(<div></div>);
-    }
+                    </Collapse> */}
+                    <Open/>
+                    
+                </div>
+            </div>
+            <br></br>
+        </div>
+    );
 
-    function SendComment(e)
-    {
-        console.log(e)
-        e.preventDefault();
-        var form = $('#answerForm'+emortion._id).serializeArray();
-        $.ajax({
-            url: '/api/posts/answer/'+emortion._id,
-            type: 'POST',
-            data: JSON.stringify(
-                form
-            ),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data) {
-                props.getPosts();
-                console.log(e)
-            }
-        });
-    }
+    
 
     function Secret() {
+        console.log("inside secret: " + funcNo);
+        // {setfuncNo(funcNo+1)}
         if (new Date(emortion.expiresAt) <= new Date())
             return (
                 <p className="card-text secret">Revealed! <br></br>Secret: {emortion.secretAnswer}</p>

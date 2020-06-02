@@ -25,6 +25,8 @@
     "jquery": "^3.5.1",
     "mongoose": "^5.9.14",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "react-media-hook": "^0.4.7",
+    "socket.io": "^2.3.0"
   }
 }

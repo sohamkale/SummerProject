@@ -2,25 +2,41 @@ import React, { useState } from 'react';
 import 'emoji-mart/css/emoji-mart.css'
 import './Emoji.css'
 import { Picker } from 'emoji-mart'
- 
+import { useMediaPredicate } from "react-media-hook";
 function Emoji()
 {
+  const isMobile = useMediaPredicate("(max-width: 767px)");
+  const isTablet = useMediaPredicate("(min-width: 768px)");
+  const isDesktop = useMediaPredicate("(min-width: 1025px)");
    
     return (
       <div>
-        <div className="popup">
-          <div onClick={myFunction}>
+        <div className="popup popupDiv">
+          <div  className=" popupDiv" onClick={myFunction}>
             <img src={require('./emoji.png')} width='30px;'></img>
           </div>
           <div className='popuptext' id='myPopup'>
-            <Picker onClick={AppendEmoji}  /*include={["flags"]}*/ exclude={["recent"]} />
+            <PickerFunc/>
+           
           </div>
           {/* <span className="popuptext" id="myPopup">Popup text...</span> */}
 
         </div>
       </div>
     );
+
+    function PickerFunc () {
+      if(isMobile){
+        return <Picker style={{ width: '90vw', position: 'absolute', top: '2vh', right: '-23vw'}} onClick={AppendEmoji}  /*include={["flags"]}*/ exclude={["recent"]} />
+      }else if(isTablet){
+        return <Picker style={{width: '60vw', position: 'absolute', top: '2vh', right: '2vw'}} onClick={AppendEmoji}  /*include={["flags"]}*/ exclude={["recent"]} />
+      }else if (isDesktop) {
+        return <Picker onClick={AppendEmoji}  /*include={["flags"]}*/ exclude={["recent"]} />
+      }
+  }
 }
+
+
 
 function AppendEmoji(emoji,event)
 {

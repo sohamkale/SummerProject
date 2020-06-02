@@ -34,6 +34,7 @@ const PostForm = (props) => {
                 <div className="card-body">
                     <form id='thePost' onSubmit={submit}>
                         <input readOnly hidden name="userId" value={userId ? userId: ""}></input>
+                        {/* <input readOnly hidden name="postsArray" value={props.postsArray ? props.postsArray: ""}></input> */}
                         <label htmlFor="type" className='form-check-label'>Type: &nbsp; </label>
                         <select id="postType" name='type' className='form-control-sm'>
                             <option>Timer</option>

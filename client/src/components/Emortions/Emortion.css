@@ -22,3 +22,7 @@
     display: inline;
     margin: 5px;
 }
+
+.containerFluid{
+    width: 100%;
+}

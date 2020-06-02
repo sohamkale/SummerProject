@@ -4,9 +4,11 @@ import axios from 'axios';
 const Comments = (props) => {
     const [commenter, setCommenter] = useState();
     useEffect(()=>{
+        // console.log(props.comment);
         if(props != null){
             setCommenter(props.comment.name);
         }
+       
     }, [])
     return (
         <div className="text-left">
