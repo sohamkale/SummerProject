@@ -7,8 +7,13 @@ import fire from './../../config/Fire';
 import { Button, Collapse, Row, Container, Col } from 'react-bootstrap'
 import Comments from "./Answers/Comments";
 import $ from 'jquery'
+
+
+
 const Emortion = (props) => {
     let emortion = props.emortion
+
+    //console.log(props)
     //states and vars
     const [name, setName] = useState("anonymous");
     const [open, setOpen] = useState(false);
@@ -38,7 +43,7 @@ const Emortion = (props) => {
             }
             // console.log("POSTARRAY: " );
             // console.log(props.postsArray);
-            props.addComment(comment2, props.postsArray);
+            //props.addComment(comment2, props.postsArray);
             // props.getPosts(event);
             document.getElementById('answerInput').value = "";
             // setAnswer("");

@@ -5,7 +5,6 @@ import axios from 'axios';
 
 function DemoCol(props)
 {
-
     useEffect(() => {
 
     }, []);

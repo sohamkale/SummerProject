@@ -60,8 +60,9 @@ io.on('connection', (socket) =>{
     })
     
     socket.on('addPosts', ({currUser}, callback) => {
+        console.log("came in add post with"+currUser);
         let array = [];
-        PostModel.find({}).then(function(posts) {
+        PostModel.find({}).sort({ createdAt: -1 }).then(function(posts) {
             array = posts;
             io.to(commonRoom).emit('message', { user: currUser, posts: array })
         } );

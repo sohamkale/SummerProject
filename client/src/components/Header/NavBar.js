@@ -7,17 +7,24 @@ import fire from "./../../config/Fire";
 import {Button} from "react-bootstrap";
 import * as ReactBootStrap from "react-bootstrap";
 import axios from "axios";
+import $ from "jquery";
 
 
 const Navbarcomp = (props) => {
-
     useEffect(() => {
         fire.auth().onAuthStateChanged((user) => {
             if(user){
                 props.setUserUid(user.uid);
                 props.setUserEmail(user.email);
-                axios.get(`/api/users/${user.uid}`).then((res) => {
+               /* axios.get(`/api/users/${user.uid}`).then((res) => {
                     props.setUserName(res.data)
+                });*/
+                $.ajax({
+                    url: '/api/users/'+user.uid,
+                    type: 'GET',
+                    success: function (res) {
+                        props.setUserName(res);
+                    }
                 });
             }
         })

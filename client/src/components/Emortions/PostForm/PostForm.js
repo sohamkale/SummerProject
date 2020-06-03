@@ -84,7 +84,7 @@ const PostForm = (props) => {
             success: function (data) {
                 if (hasArrived) {
                     EraseAll();
-                   props.getPosts();
+                    props.getPosts(props.postsArray);
                 }
             }
         });
