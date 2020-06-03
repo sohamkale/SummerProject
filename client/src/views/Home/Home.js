@@ -44,13 +44,13 @@ const Home = (props) => {
 
     return (
 
-        <div className="">
+        <div className="App-width">
             {/* {socketFunc()} */}
             <center>
                 Welcome to the Den
             </center>
-            <div className='row'>
-                <div className='DemoCol col-2'>
+            <div className='App-width App-header row-fluid'>
+                <div className='DemoCol col-3'>
                     <DemoCol username={props.username}/>
                 </div>
                 <div className='col-md-6 row-fluid App-width'>
