@@ -12,10 +12,7 @@ let socket;
 
 
 const Home = (props) => {
-     //const socket = io('http://localhost:4000');
 
-    /*const [postsArray, setPostsArray] = useState([]);
-    const [userUid, setUserUid] = useState(null);*/
     const [currUser, setCurrUser] = useState(props.username);
     const ENDPOINT = "/";
     const [socketIO, setsocketIO] = useState(null);
@@ -23,7 +20,6 @@ const Home = (props) => {
 
     useEffect(() => {
         let room = "commonRoom";
-
             // alert("SOCKET");
             socket = io(ENDPOINT);
             setsocketIO(socket);
@@ -32,50 +28,18 @@ const Home = (props) => {
                 console.log(message);
                 // alert(message.text);
             });
-
             socket.on('message', message => {
                 props.setPostsArray(message.posts);
             });
 
-
     }, [ENDPOINT, currUser]);
 
-    // }, []);
     useEffect(() => {
-        // axios.get('/api/posts')
-        //     .then((res)=>{
-        //         if(res.data.length > 0){
-        //             props.setPostsArray(res.data);
-        //         }
-        //     });
 
-        // fire.auth().onAuthStateChanged((user) => {
-        //     if(user){
-        //         axios.get(`/api/users/${user.uid}`).then((res) => {
-        //             setCurrUser(res.data)
-        //         })
-        //     }else {
-        //         // alert("Please sign in or create an account to continue!!");
-        //         //window.location.href = "/login";
-        //     }
-        // })
     }, []);
 
-    const getPosts = (postsArray) => {
-      /*axios.get('/api/posts')
-          .then((res)=>{
-            if(res.data.length > 0){
-                //Copy the variable//
-            props.setPostsArray(res.data)
-            }
-        });*/
+    const getPosts = () => {
         socket.emit('addPosts', {currUser}, () => props.setPostsArray([]));
-    }
-
-    const addComment = (comment, allPosts) => {
-        // console.log("ADD COMMENT: ");
-        // console.log(allPosts);
-        socket.emit('addComment', {currUser, comment, allPosts}, () => props.setPostsArray([]));
     }
 
     return (
@@ -95,7 +59,7 @@ const Home = (props) => {
                     {/*The Posts for the user*/}
                     <div id='emortions'>
                         {props.postsArray.map((post,index)=>(
-                            <Emortion username={props.username} userUid={props.userUid} key={post._id}  socket={socketIO} addComment={addComment} getPosts={getPosts} emortion={post}/>
+                            <Emortion ENDPOINT={ENDPOINT} username={props.username} userUid={props.userUid} key={post._id}  socket={socket} getPosts={getPosts} emortion={post}/>
                         ))}
                     </div>
                 </div>

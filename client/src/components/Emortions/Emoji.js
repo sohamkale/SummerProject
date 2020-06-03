@@ -30,7 +30,7 @@ function Emoji()
         return <Picker style={{ width: '90vw', position: 'absolute', top: '2vh', right: '-23vw'}} onClick={AppendEmoji}  /*include={["flags"]}*/ exclude={["recent"]} />
       }else if(isTablet){
         return <Picker style={{width: '60vw', position: 'absolute', top: '2vh', right: '2vw'}} onClick={AppendEmoji}  /*include={["flags"]}*/ exclude={["recent"]} />
-      }else if (isDesktop) {
+      }else /*if (isDesktop)*/ {
         return <Picker onClick={AppendEmoji}  /*include={["flags"]}*/ exclude={["recent"]} />
       }
   }

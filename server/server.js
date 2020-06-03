@@ -32,40 +32,24 @@ io.on('connection', (socket) =>{
         console.log(currUser);
     }) 
     
-    socket.on('addComment', ({currUser, comment, allPosts}, callback) => {
+    socket.on('addComment', (id, callback) => {
         let array = [];
-        let lastComment = comment;
-       
-        let reqPostId;
-        console.log("ALLPOSTS: " );
-        console.log(allPosts);
-        if(allPosts && comment){
-            reqPostId = comment.postId;
-            array = allPosts;
-            array.map((arr) => {
-                if(reqPostId === arr._id){
-                    arr.comments.push(comment);
-                }
-            })
-            io.to(commonRoom).emit('message', { user: currUser, posts: array, lastComment: lastComment })
-        }
-         
-        // PostModel.find({}).then(function(posts) {
-        //     lastPost = posts[posts.length - 1]
-        //     array = posts;
-        //     // console.log(commonRoom);
-            
-        // } );
-        //  console.log(array);
-    })
+
+        console.log(id)
+        var id = require('mongoose').Types.ObjectId(id);
+        PostModel.find({}).sort({ createdAt: -1 }).then(function(posts) {
+            array = posts;
+            io.to(commonRoom).emit('message', { posts: array })
+        } ).catch(err => console.log(err.message));
+
+    });
     
-    socket.on('addPosts', ({currUser}, callback) => {
-        console.log("came in add post with"+currUser);
+    socket.on('addPosts', ({currUser,postId}, callback) => {
         let array = [];
         PostModel.find({}).sort({ createdAt: -1 }).then(function(posts) {
             array = posts;
             io.to(commonRoom).emit('message', { user: currUser, posts: array })
-        } );
+        } )
     })
 })
 

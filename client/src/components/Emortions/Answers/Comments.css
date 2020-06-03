@@ -4,3 +4,11 @@
     border-radius: 2%;
     background-color: white;
 }
+.commenter{
+    text-decoration: underline;
+}
+
+li{
+    position: relative;
+    left: 25px;
+}

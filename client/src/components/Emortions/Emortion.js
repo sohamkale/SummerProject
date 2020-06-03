@@ -5,8 +5,9 @@ import './Emortion.css'
 import axios from 'axios';
 import fire from './../../config/Fire';
 import { Button, Collapse, Row, Container, Col } from 'react-bootstrap'
-import Comments from "./Answers/Comments";
+import Comment from "./Answers/Comment";
 import $ from 'jquery'
+import io from "socket.io-client";
 
 
 
@@ -17,6 +18,7 @@ const Emortion = (props) => {
     //states and vars
     const [name, setName] = useState("anonymous");
     const [open, setOpen] = useState(false);
+    //const [comments, setComments] = useState(props.emortion.comments);
     //const [answer, setAnswer] = useState(null);
 
 
@@ -24,38 +26,18 @@ const Emortion = (props) => {
         GetUserName(emortion.postObjId);
 
     }, []);
+/*    useEffect(() => {
 
-    const addComment = (answer, event) => {
-        // console.log(props);
-        event.preventDefault();
-        let comment = {
-            'answer': answer,
-            'userId': props.userUid,
-            'name': props.currUser
-            // 'numLikes': numLikes
-        }
-        axios.post(`/api/posts/answer/${emortion._id}`, comment).then((res)=>{
-            let comment2 = {
-                'answer': answer,
-                'userId': props.userUid,
-                'name': props.currUser,
-                'postId': emortion._id
-            }
-            // console.log("POSTARRAY: " );
-            // console.log(props.postsArray);
-            //props.addComment(comment2, props.postsArray);
-            // props.getPosts(event);
-            document.getElementById('answerInput').value = "";
-            // setAnswer("");
+        props.socket.on('comment', message => {
+            setComments(message.posts);
         });
+
+    }, [props.ENDPOINT]);*/
+
+    const getComments = (postId) => {
+        var username=props.userUid;
+        props.socket.emit('addComment', postId, () => props.setPostsArray([]));
     }
-
-    // const onChangeAnswer = (e) => {
-    //     console.log(e.target.id);
-    //     console.log(e.target.value);
-    //     setAnswer(e.target.value);
-    // }
-
 
     function SendComment(e)
     {
@@ -65,13 +47,11 @@ const Emortion = (props) => {
             url: '/api/posts/answer/'+emortion._id,
             type: 'POST',
             data: JSON.stringify(
-                form
-            ),
+                form),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
-                props.getPosts();
-                console.log(e)
+                getComments(form[0].value);
             }
         });
     }
@@ -102,6 +82,7 @@ const Emortion = (props) => {
     {
         return (props.userUid!=emortion.postObjId)? (<div>
                 <form id={'answerForm'+emortion._id} onSubmit={SendComment}>
+                    <input readOnly hidden name="postId" value={props.emortion._id}></input>
                     <input readOnly hidden name="userId" value={props.userUid}></input>
                     <input defaultValue="" required name="answer" className="form-control answer" placeholder="What do you think the Emorter is saying?"></input>
                     <span><Button  type="submit" variant="info">Evaluate</Button></span>
@@ -142,14 +123,12 @@ const Emortion = (props) => {
                             <AnswerAgent/>
                             <Container fluid className="text-center">
                                 <h2>All Comments</h2>
-                                <ul>
                                     {emortion.comments.map((comment, index) => {
                                         return (
                                             // <li className="text-left">{comment.answer}</li>
-                                            <Comments key={index} currUser={props.currUser} answer={comment.answer} comment={comment} numLikes={comment.numLikes}/>
+                                            <Comment key={index} comment={comment}/>
                                         )
                                     })}
-                                </ul>
                             </Container>
 
                         </div>
