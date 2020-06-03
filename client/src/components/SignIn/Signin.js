@@ -25,13 +25,12 @@ const Signin = (props) => {
             </div>
 
             <button className="btn btn-lg btn-primary btn-block text-uppercase" onClick={props.login} type="submit">Sign in</button>
-         {/*   <form action='Signup' classNameName="buf">
-            <hr className="my-2"/>
-            <button className="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign up</button>
-            </form>*/}
-            
-            <hr className="my-4"/>
           </form>
+            <form className="form-signin" action='Signup'>
+              <hr className="my-2"/>
+            <button className="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign up</button>
+            </form>
+
         </div>
       </div>
     </div>

@@ -24,6 +24,7 @@ const App = (props) => {
           <NavBar username={username} setUserName={setUserName} userUid={userUid} setUserUid={setUserUid} setUserEmail={setUserEmail}/>
           {/*<Door/>*/}
           <Route exact path="/Login" component={LoginApp} />
+          <Route exact path="/Signup" component={Signup} />
           <Route exact path="/Home" render={(props) => <Door {...props} username={username} userUid={userUid} />}/>
           <Route exact path="/" render={(props) => <Door {...props} username={username} userUid={userUid} />}/>
 

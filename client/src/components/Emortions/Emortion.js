@@ -25,14 +25,14 @@ const Emortion = (props) => {
         event.preventDefault();
         let comment = {
             'answer': answer,
-            'userId': userId,
+            'userId': props.userUid,
             'name': props.currUser
             // 'numLikes': numLikes
         }
         axios.post(`/api/posts/answer/${emortion._id}`, comment).then((res)=>{
             let comment2 = {
                 'answer': answer,
-                'userId': userId,
+                'userId': props.userUid,
                 'name': props.currUser,
                 'postId': emortion._id
             }
@@ -108,7 +108,6 @@ const Emortion = (props) => {
     //Main
     return (
         <div>
-           { console.log("inside return: " + returnNo) }
            {/* {setReturnNo(returnNo+1)} */}
             <div className="card">
                 <div className="card-header">
