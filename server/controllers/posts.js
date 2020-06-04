@@ -41,7 +41,9 @@ const postsController = {
         //Calculate expire time from req.body.validity
         const validity = req.body.validity; 
         let currDateTime = new Date();
+        let expiryDateTime = new Date();
         let currHours = currDateTime.getHours();
+        let expiryHours = expiryDateTime.getHours();
         if(validity === '1h'){
             currDateTime.setHours(currHours + Number(1));
         }else if(validity === '2h'){
@@ -49,8 +51,10 @@ const postsController = {
         }else if(validity === '3h'){
             currDateTime.setHours(currHours + Number(3));
         }
-        let expiresAt = currDateTime;
-
+        expiryDateTime.setHours(expiryHours + Number(72));
+        let revealsAt = currDateTime;
+        let expiresAt = expiryDateTime;
+        
         // should be empty to start 
         // const comments = req.body.comments
         
@@ -62,6 +66,7 @@ const postsController = {
                 'emojiArray': emojiArray
             },
             'secretAnswer': secretAnswer,
+            'revealsAt': revealsAt,
             'expiresAt': expiresAt,
             'comments': [] //{type: String}
             //need to add comments Array here

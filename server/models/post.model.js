@@ -9,6 +9,7 @@ const postObjSchema = new mongoose.Schema({
     }, //message -> emoji array -> every emoji has x and y coordinates
     secretAnswer: {type: String},
     expiresAt: {type: Date},
+    revealsAt: {type: Date},
     userLikes: [],
     comments: [{type: Object}] //empty array at first and will add comment to it later, making it an array [comment]
   //Check out - https://mongoosejs.com/docs/guide.html
