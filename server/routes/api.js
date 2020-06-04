@@ -11,6 +11,6 @@ router.get('/users/:id', usersController.findName);
 router.get('/posts', postsController.all);
 router.post('/posts/add', postsController.add);
 router.post('/posts/answer/:id', postsController.addComments);
-
+router.get('/posts/diduseranswer/:userId', postsController.didUserAnswer);
 
 module.exports = router;
