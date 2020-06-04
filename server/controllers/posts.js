@@ -112,6 +112,22 @@ const postsController = {
                 res.json('404: POST NOT FOUND');
             } 
         })
+    },
+
+    likePosts(req, res){
+        //req.body._id will contain the id of the post in question.
+        //req.params.userId is the userId
+        console.log(req.body);
+        var currNumLikes = req.body.numLikes;
+
+        PostModel.findOneAndUpdate({"_id": req.body._id}, { $set: {numLikes: ++currNumLikes} },{new: true}, (err, data) => {
+            if (err) {
+                res.status('404');
+                res.json({ error: err });
+            } else {            
+                res.json(data);
+            }
+        });
     }
 
 

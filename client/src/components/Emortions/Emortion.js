@@ -18,6 +18,7 @@ const Emortion = (props) => {
     //states and vars
     const [name, setName] = useState("anonymous");
     const [open, setOpen] = useState(false);
+    const [numLikes, setNumLikes] = useState(0);
     //const [comments, setComments] = useState(props.emortion.comments);
     //const [answer, setAnswer] = useState(null);
 
@@ -78,6 +79,20 @@ const Emortion = (props) => {
             });
     }
 
+    const likeComment = () =>{
+        setNumLikes(numLikes + 1);
+    
+        var likePostObj = {
+            "_id": props.emortion._id,
+            "numLikes": props.emortion.numLikes
+        }
+        axios.post(`/api/posts/like/${props.userUid}`, likePostObj).then((res)=>{
+            console.log(res.data);
+            props.getPosts();
+        })
+
+    }
+
     function AnswerAgent()
     {
         return (props.userUid!=emortion.postObjId)? (<div>
@@ -108,8 +123,8 @@ const Emortion = (props) => {
                     {/* {console.log(new Date().toISOString())} */}
                     <Secret />
 
-                    <span className='like'></span> {emortion.numLikes}
-
+                    <span onClick={likeComment} className='like'></span> {emortion.numLikes}
+                    
                     <Button
                         onClick={() => setOpen(!open)}
                         aria-controls="example-collapse-text"
