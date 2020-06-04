@@ -55,7 +55,7 @@ const Emortion = (props) => {
     }
 
     function Secret() {
-        if (new Date(emortion.expiresAt) <= new Date())
+        if (new Date(emortion.revealsAt) <= new Date())
             return (
                 <div>
                     <span className="badge badge-success">REVEALED</span>
