@@ -130,16 +130,51 @@ const postsController = {
         //req.body._id will contain the id of the post in question.
         //req.params.userId is the userId
         console.log(req.body);
+   
         var currNumLikes = req.body.numLikes;
-
-        PostModel.findOneAndUpdate({"_id": req.body._id}, { $set: {numLikes: ++currNumLikes} },{new: true}, (err, data) => {
+        var shouldIncrementLikes = true;
+        PostModel.find({"_id": req.body._id}, (err, data) => {
             if (err) {
                 res.status('404');
                 res.json({ error: err });
-            } else {            
-                res.json(data);
+            } else {   
+                if(data[0]){
+                    // data[0].userLikes.map((userLike => {
+                    //     if(userLike === req.params.userId){
+                    //         shouldIncrementLikes = false;
+                    //         break 
+                    //     }
+                    // }))
+
+                    for (var i = 0; i < data[0].userLikes.length; i++) {
+                        if(data[0].userLikes[i] === req.params.userId){
+                            shouldIncrementLikes = false;
+                            break; 
+                        }
+                    }
+                }          
+                if(shouldIncrementLikes){
+                    PostModel.findOneAndUpdate({"_id": req.body._id}, { $set: {numLikes: ++currNumLikes}, $push: {userLikes: req.params.userId} }, {new: true}, (err, data) => {
+                        if (err) {
+                            res.status('404');
+                            res.json({ error: err });
+                        } else {            
+                            res.json(data);
+                        }
+                    });
+                }else if(!shouldIncrementLikes){
+                    PostModel.findOneAndUpdate({"_id": req.body._id}, { $set: {numLikes: --currNumLikes}, $pull: {userLikes: req.params.userId} }, {new: true}, (err, data) => {
+                        if (err) {
+                            res.status('404');
+                            res.json({ error: err });
+                        } else {            
+                            res.json(data);
+                        }
+                    }); 
+                }
             }
-        });
+        });      
+        
     }
 
 
