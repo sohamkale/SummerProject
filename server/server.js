@@ -34,11 +34,16 @@ io.on('connection', (socket) =>{
     
     socket.on('addComment', (id, callback) => {
         let array = [];
-
+        let currDateTime = new Date();
         console.log(id)
         var id = require('mongoose').Types.ObjectId(id);
         PostModel.find({}).sort({ createdAt: -1 }).then(function(posts) {
-            array = posts;
+            // array = posts;
+            posts.map((post) => {
+                if(post.expiresAt > currDateTime){
+                   array.push(post); 
+                }
+            })
             io.to(commonRoom).emit('message', { posts: array })
         } ).catch(err => console.log(err.message));
 
@@ -46,8 +51,14 @@ io.on('connection', (socket) =>{
     
     socket.on('addPosts', ({currUser,postId}, callback) => {
         let array = [];
+        let currDateTime = new Date();
         PostModel.find({}).sort({ createdAt: -1 }).then(function(posts) {
-            array = posts;
+            // array = posts;
+            posts.map((post) => {
+                if(post.expiresAt > currDateTime){
+                   array.push(post); 
+                }
+            })
             io.to(commonRoom).emit('message', { user: currUser, posts: array })
         } )
     })

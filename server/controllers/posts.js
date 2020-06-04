@@ -8,9 +8,21 @@ const express = require('../config/express');
 // var http = require('http').Server(app);
 const postsController = {
     all(req, res) {
+        let currDateTime = new Date();
+        var validPosts = [];
+        console.log(currDateTime);
         console.log("In Server side before getting posts: ");
         console.log();
-        PostModel.find().sort({ createdAt: -1 }).then(posts => res.json(posts)).catch(err => res.status('400').json('Error: ' + err));
+        PostModel.find().sort({ createdAt: -1 }).then(
+            posts => {
+                posts.map((post) => {
+                    if(post.expiresAt > currDateTime){
+                       validPosts.push(post); 
+                    }
+                })
+                res.json(validPosts)
+            }
+           ).catch(err => res.status('400').json('Error: ' + err));
     },
 
     add(req, res) {
