@@ -76,6 +76,7 @@ const postsController = {
         const _id = new mongoose.Types.ObjectId();
         const name = req.body.name;
         let numLikes, score;
+        var shouldAddComment = true;
         if(req.body.numLikes != null  || req.body.numLikes != ""){
             numLikes = req.body.numLikes;
         }else {
@@ -97,12 +98,40 @@ const postsController = {
         
         //NEED TO CHECK IF THE STRING MATCHES WITH THE SECRET ANSWER TO DETERMINE THE SCORE
 
-        PostModel.findOneAndUpdate({ "_id": req.params.id }, { $push: {comments: {_id: _id, answer: answer, userId: userId, numLikes: numLikes, score: score, name: name}} },{new: true}, (err, data) => {
+        // PostModel.findOneAndUpdate({ "_id": req.params.id }, { $push: {comments: {_id: _id, answer: answer, userId: userId, numLikes: numLikes, score: score, name: name}} },{new: true}, (err, data) => {
+        //     if (err) {
+        //         res.status('404');
+        //         res.json({ error: 'No data with the specified id was found!' });
+        //     } else {            
+        //         res.json(data);
+        //     }
+        // });
+
+        PostModel.find({"_id": req.params.id}, (err, data) => {
             if (err) {
                 res.status('404');
-                res.json({ error: 'No data with the specified id was found!' });
-            } else {            
-                res.json(data);
+                res.json({ error: err });
+            } else {   
+                if(data[0]){
+                    for (var i = 0; i < data[0].comments.length; i++) {
+                        if(data[0].comments[i].userId === userId){
+                            shouldAddComment = false;
+                            break; 
+                        }
+                    }
+                }          
+                if(shouldAddComment){
+                    PostModel.findOneAndUpdate({ "_id": req.params.id }, { $push: {comments: {_id: _id, answer: answer, userId: userId, numLikes: numLikes, score: score, name: name}} },{new: true}, (err, data) => {
+                        if (err) {
+                            res.status('404');
+                            res.json({ error: 'No data with the specified id was found!' });
+                        } else {            
+                            res.json(data);
+                        }
+                    });
+                }else if(!shouldAddComment){
+                    res.json({error: 'Error: One user can post only one comment per emortion!!!'})
+                }
             }
         });
         
@@ -139,13 +168,6 @@ const postsController = {
                 res.json({ error: err });
             } else {   
                 if(data[0]){
-                    // data[0].userLikes.map((userLike => {
-                    //     if(userLike === req.params.userId){
-                    //         shouldIncrementLikes = false;
-                    //         break 
-                    //     }
-                    // }))
-
                     for (var i = 0; i < data[0].userLikes.length; i++) {
                         if(data[0].userLikes[i] === req.params.userId){
                             shouldIncrementLikes = false;

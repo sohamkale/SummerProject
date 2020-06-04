@@ -44,7 +44,12 @@ const Emortion = (props) => {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
-                getComments(form[0].value);
+                if(data.error){
+                    alert(data.error);
+                }else {
+                    getComments(form[0].value);
+                }
+                
             }
         });
     }
