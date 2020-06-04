@@ -8,6 +8,7 @@ import {Button} from "react-bootstrap";
 import * as ReactBootStrap from "react-bootstrap";
 import axios from "axios";
 import $ from "jquery";
+import './NavBar.css'
 
 
 const Navbarcomp = (props) => {
@@ -53,23 +54,10 @@ const Navbarcomp = (props) => {
 
     }
     return (
-/*<ReactBootStrap.Navbar collapseOnSelect expand="sm" bg="light" variant="light">
-<ReactBootStrap.Navbar.Brand href="/home">{initials}</ReactBootStrap.Navbar.Brand>
-<ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" />
-<ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav">
-<ReactBootStrap.Nav className="mr-auto">
-            <Nav.Link href="/LoggedIn">LoggedInTest</Nav.Link>
-            {/!* {isUser ? <Nav.Link href="/true/Login">Dashboard</Nav.Link> : <Nav.Link href="/true/Login">Login</Nav.Link>}
-            {isUser ? null : <Nav.Link href="/true/Signup">Signup</Nav.Link>} *!/}
-            <Nav.Link href="/Login">Login</Nav.Link>
-            {/!* <Nav.Link href="/Signup">Signup</Nav.Link> *!/}
-            {isUser ? <Button onClick={logout}>logout</Button> : <Nav.Link href="/Signup">Signup</Nav.Link>}
-</ReactBootStrap.Nav>
-</ReactBootStrap.Navbar.Collapse>
-</ReactBootStrap.Navbar>*/
+
 <div>
     <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-        <a className="navbar-brand" href="#">FACETWEETIT</a>
+       <img className="logo" src={require('./logo.png')} width="60px" height="auto" alt=""/>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>

@@ -5,3 +5,13 @@
     border: 1px dashed black;
     pointer-events: none;
 }
+
+button{
+    margin:5px !important;
+    margin-left: 0 !important;
+}
+
+#maintext{
+    margin: 5px;
+    margin-left:0;
+}

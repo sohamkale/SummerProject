@@ -1,42 +1,6 @@
-/* body {
-    margin: 0;
-}
-
-.App {
-    text-align: center;
-    background: #282c34;
-}
-
-.App-logo {
-    height: 40vmin;
-} */
-
-.App-header {
-    /* background-color: #282c34; */
-    min-height: 100vh;
-    display: flex;
-    /* flex-direction: column; */
-    /* align-items: center; */
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    /* color: white; */
-}
-
-/* .App-link {
-    color: #09d3ac;
-} */
-
-.App-width{
-    width: 100vw;
-}
-
-.App-header2 {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    /* flex-direction: column; */
-    align-content: center;
-    align-self: center;
+.container-fluid{
+    position: relative;
+    top: 20px !important;
 }
 
 .loader {
@@ -53,3 +17,13 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+body{
+    background-color: rgba(248,206,236,0.1);
+    background-image: url('./logo.png');
+    background-size: 300px;
+}
+
+/*.postCol{
+    !*background-color: rgba(211,211,211,0.5);*!
+    padding: 0;
+}*/

@@ -11,8 +11,8 @@ function Emoji()
    
     return (
       <div>
-        <div className="popup popupDiv">
-          <div  className=" popupDiv" onClick={myFunction}>
+        <div className="popup">
+          <div  className="" onClick={myFunction}>
             <img src={require('./emoji.png')} width='30px;'></img>
           </div>
           <div className='popuptext' id='myPopup'>

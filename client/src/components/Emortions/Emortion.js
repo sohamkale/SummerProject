@@ -9,8 +9,6 @@ import Comment from "./Answers/Comment";
 import $ from 'jquery'
 import io from "socket.io-client";
 
-
-
 const Emortion = (props) => {
     let emortion = props.emortion
 
@@ -27,13 +25,7 @@ const Emortion = (props) => {
         GetUserName(emortion.postObjId);
 
     }, []);
-/*    useEffect(() => {
 
-        props.socket.on('comment', message => {
-            setComments(message.posts);
-        });
-
-    }, [props.ENDPOINT]);*/
 
     const getComments = (postId) => {
         var username=props.userUid;
@@ -60,9 +52,18 @@ const Emortion = (props) => {
     function Secret() {
         if (new Date(emortion.expiresAt) <= new Date())
             return (
-                <p className="card-text secret">Revealed! <br></br>Secret: {emortion.secretAnswer}</p>
+                <div>
+                    <span className="badge badge-success">REVEALED</span>
+                    <p className="card-text secret">Secret: {emortion.secretAnswer}</p>
+                </div>
+
+
             );
-        else return (<p className="card-text">Answer reveals at {new Date(emortion.expiresAt).toLocaleTimeString()}</p>);
+        else return (
+            <div>
+                <span className="badge badge-warning">Answer reveals at {new Date(emortion.expiresAt).toLocaleTimeString()} or when Answered</span>
+            </div>
+        );
     }
 
     function GetUserName(userId) {
@@ -95,7 +96,7 @@ const Emortion = (props) => {
 
     function AnswerAgent()
     {
-        return (props.userUid!=emortion.postObjId)? (<div>
+        return (props.userUid!=emortion.postObjId & new Date(emortion.expiresAt) >= new Date())? (<div>
                 <form id={'answerForm'+emortion._id} onSubmit={SendComment}>
                     <input readOnly hidden name="postId" value={props.emortion._id}></input>
                     <input readOnly hidden name="userId" value={props.userUid}></input>
@@ -111,10 +112,8 @@ const Emortion = (props) => {
         <div>
            {/* {setReturnNo(returnNo+1)} */}
             <div className="card">
-                <div className="card-header">
-                    Emortion By: {name}
-                </div>
                 <div className="card-body">
+                    <div className="blackburger-font">Emortion By {name}</div>
                     <div>
                         {emortion.message.emojiArray.map((position, index) => (
                             <Emoticon key={index} position={position} />
