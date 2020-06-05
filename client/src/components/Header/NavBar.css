@@ -1,3 +1,14 @@
 .navbar-collapse.collapse.in {
     display: block!important;
 }
+
+.logo{
+    margin-top: -5px !important;
+    margin-bottom: -5px !important;
+}
+
+.dpName{
+    font-family: gloogun;
+    font-size: 25px;
+    text-transform: uppercase;
+}

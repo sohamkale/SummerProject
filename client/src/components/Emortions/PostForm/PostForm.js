@@ -23,8 +23,8 @@ const PostForm = (props) => {
     return (
         <div>
             <div className="card bg-light mb-3">
-                <b className="card-header">TELL ME AN EMORTION!</b>
                 <div className="card-body">
+                    <div className="blackburger-font">TELL ME AN EMORTION!</div>
                     <form id='thePost' onSubmit={submit}>
                         <input readOnly hidden name="userId" value={props.userUid ? props.userUid: ""}></input>
                         <label htmlFor="type" className='form-check-label'>Type: &nbsp; </label>
@@ -39,17 +39,16 @@ const PostForm = (props) => {
                             <option>2h</option>
                             <option>3h</option>
                         </select>
-                        <br></br>
-                        <br></br>
                         <EmojiInputBox />
-                        <br></br>
+                        <center><div className="text-danger"><b id="empty_warning"></b></div></center>
                         <Emoji />
-                        <br></br>
-                        <label>Secret Answer</label>
-                        <input defaultValue="" required id="postSecret" name="secretAnswer" className="form-control"></input>
-                        <br></br>
-                        <Button type='submit' className='d-inline' variant="info">POST</Button>
-                        <br></br>
+                        <div className="form-group row">
+                            <label  className="col-sm-2 col-form-label">Secret</label>
+                            <div className="col-sm-6">
+                                <input defaultValue="" required id="postSecret" name="secretAnswer" className="form-control"></input>
+                            </div>
+                            <Button size="sm" type='submit' className='d-inline' variant="secondary" className="col-sm-2">POST</Button>
+                        </div>
                     </form>
 
                 </div>
@@ -62,32 +61,41 @@ const PostForm = (props) => {
     );
     
     function submit(e) {
+
         e.preventDefault();
-        var form = $('#thePost').serializeArray();
-        var emojis = (document.getElementById('maintext').childNodes);
-        var emojiArray = [];
-        emojis.forEach(function (item, index) {
-            if (item.nodeName == "SPAN")
-                emojiArray.push(item.style.backgroundPosition)
-            else
-                emojiArray.push(item.getElementsByTagName("SPAN")[0].style.backgroundPosition)
-        });
-        form.push({ name: 'emojiArray', value: emojiArray })
-        $.ajax({
-            url: '/api/posts/add',
-            type: 'POST',
-            data: JSON.stringify(
-                form
-            ),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data) {
-                if (hasArrived) {
-                    EraseAll();
-                    props.getPosts(props.postsArray);
+
+        document.getElementById("empty_warning").innerHTML="";
+
+        if(document.getElementById("maintext").childElementCount<=0)
+            document.getElementById("empty_warning").innerHTML="You cannot Post a message without an emoji!";
+
+        else{
+            var form = $('#thePost').serializeArray();
+            var emojis = (document.getElementById('maintext').childNodes);
+            var emojiArray = [];
+            emojis.forEach(function (item, index) {
+                if (item.nodeName == "SPAN")
+                    emojiArray.push(item.style.backgroundPosition)
+                else
+                    emojiArray.push(item.getElementsByTagName("SPAN")[0].style.backgroundPosition)
+            });
+            form.push({ name: 'emojiArray', value: emojiArray })
+            $.ajax({
+                url: '/api/posts/add',
+                type: 'POST',
+                data: JSON.stringify(
+                    form
+                ),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (hasArrived) {
+                        EraseAll();
+                        props.getPosts();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
 }

@@ -4,13 +4,26 @@ const router = require('express').Router();
 let PostModel = require('../models/post.model');
 const mongoose = require('mongoose');
 const express = require('../config/express');
-// const app = express.init()
-// var http = require('http').Server(app);
 const postsController = {
     all(req, res) {
+        let currDateTime = new Date();
+        var validPosts = [];
+        //how many days do you want the post to expire by?
+        var expireDays =3 ;
+        var three_day = 1000 * 60 * 60 * 24* expireDays;
+
         console.log("In Server side before getting posts: ");
         console.log();
-        PostModel.find().sort({ createdAt: -1 }).then(posts => res.json(posts)).catch(err => res.status('400').json('Error: ' + err));
+        PostModel.find().sort({ createdAt: -1 }).then(
+            posts => {
+                posts.map((post) => {
+                    if(new Date() - post.createdAt < three_day){
+                       validPosts.push(post); 
+                    }
+                })
+                res.json(validPosts)
+            }
+           ).catch(err => res.status('400').json('Error: ' + err));
     },
 
     add(req, res) {
@@ -20,7 +33,7 @@ const postsController = {
         //Custom Body
         const postObjId = req.body.userId;
         const type = req.body.type;
-        const numLikes = Number(0);
+        // const numLikes = Number(0);
         
         //this is an array of positions. 
         const emojiArray = req.body.emojiArray;
@@ -29,7 +42,9 @@ const postsController = {
         //Calculate expire time from req.body.validity
         const validity = req.body.validity; 
         let currDateTime = new Date();
+        let expiryDateTime = new Date();
         let currHours = currDateTime.getHours();
+        let expiryHours = expiryDateTime.getHours();
         if(validity === '1h'){
             currDateTime.setHours(currHours + Number(1));
         }else if(validity === '2h'){
@@ -37,19 +52,22 @@ const postsController = {
         }else if(validity === '3h'){
             currDateTime.setHours(currHours + Number(3));
         }
-        let expiresAt = currDateTime;
-
+        expiryDateTime.setHours(expiryHours + Number(72));
+        let revealsAt = currDateTime;
+        let expiresAt = expiryDateTime;
+        
         // should be empty to start 
         // const comments = req.body.comments
         
         const newPost = new PostModel({
             'postObjId': postObjId,
             'type': type,
-            'numLikes': numLikes,
+            'likes': [],
             'message': {
                 'emojiArray': emojiArray
             },
             'secretAnswer': secretAnswer,
+            'revealsAt': revealsAt,
             'expiresAt': expiresAt,
             'comments': [] //{type: String}
             //need to add comments Array here
@@ -63,7 +81,8 @@ const postsController = {
         const userId = req.body.userId;
         const _id = new mongoose.Types.ObjectId();
         const name = req.body.name;
-        let numLikes, score;
+        const score=0;
+        var shouldAddComment = true;
         if(req.body.numLikes != null  || req.body.numLikes != ""){
             numLikes = req.body.numLikes;
         }else {
@@ -75,26 +94,108 @@ const postsController = {
         // }else {
         //     score = 0;
         // }
-        score=0;
+       /* score=0;
         PostModel.find({"_id": req.params.id}).then(data => {
             var secret = data[0].secretAnswer;
             //Do regex here//
             var secWords = secret.split(' ');
             console.log(secWords)
-        }).catch(err => res.status('400').json('Error: ' + err));  
+        }).catch(err => res.status('400').json('Error: ' + err));  */
         
         //NEED TO CHECK IF THE STRING MATCHES WITH THE SECRET ANSWER TO DETERMINE THE SCORE
 
-        PostModel.findOneAndUpdate({ "_id": req.params.id }, { $push: {comments: {_id: _id, answer: answer, userId: userId, numLikes: numLikes, score: score, name: name}} },{new: true}, (err, data) => {
+        // PostModel.findOneAndUpdate({ "_id": req.params.id }, { $push: {comments: {_id: _id, answer: answer, userId: userId, numLikes: numLikes, score: score, name: name}} },{new: true}, (err, data) => {
+        //     if (err) {
+        //         res.status('404');
+        //         res.json({ error: 'No data with the specified id was found!' });
+        //     } else {            
+        //         res.json(data);
+        //     }
+        // });
+
+        PostModel.find({"_id": req.params.id}, (err, data) => {
             if (err) {
                 res.status('404');
-                res.json({ error: 'No data with the specified id was found!' });
-            } else {            
-                res.json(data);
+                res.json({ error: err });
+            } else {   
+                if(data[0]){
+                    for (var i = 0; i < data[0].comments.length; i++) {
+                        if(data[0].comments[i].userId === userId){
+                            shouldAddComment = false;
+                            break; 
+                        }
+                    }
+                }          
+                if(shouldAddComment){
+                    PostModel.findOneAndUpdate({ "_id": req.params.id }, { $push: {comments: {_id: _id, answer: answer, userId: userId, likes: [], score: score, name: name}} },{new: true}, (err, data) => {
+                        if (err) {
+                            res.status('404');
+                            res.json({ error: 'No data with the specified id was found!' });
+                        } else {            
+                            res.json(data);
+                        }
+                    });
+                }else if(!shouldAddComment){
+                    res.json({error: 'Error: One user can post only one comment per emortion!!!'})
+                }
             }
         });
         
+    },
+
+    didUserAnswer(req, res){
+        //req.body._id will contain the id of the post in question.
+        //req.params.userId is the userId
+        var userAnswered = false;
+        PostModel.find({"_id": req.body._id}).then(data => {
+            if(data[0].comments){
+                data[0].comments.map((comment => {
+                    if(comment.userId === req.params.userId){
+                        userAnswered = true;
+                    }
+                }))
+                res.json(userAnswered);
+            }else {
+                res.json('404: POST NOT FOUND');
+            } 
+        })
+    },
+
+    likePosts(req, res){
+        //req.body._id will contain the id of the post in question.
+        //req.params.userId is the userId
+
+        return PostModel.findOneAndUpdate({"_id": req.body._id},{$push:{likes:req.params.userId}}, null ,(err, data) => {
+            if (err) {
+                res.status('404');
+                res.json({ error: err });
+            } else {   
+              console.log(data);
+              res.status('200');
+              res.json(data);
+            }
+        });      
+        
+    },
+
+    dislikePosts(req, res){
+        //req.body._id will contain the id of the post in question.
+        //req.params.userId is the userId
+
+        return PostModel.findOneAndUpdate({"_id": req.body._id},{$pull:{likes:req.params.userId}}, null ,(err, data) => {
+            if (err) {
+                res.status('404');
+                res.json({ error: err });
+            } else {
+                console.log(data);
+                res.status('200');
+                res.json(data);
+            }
+        });
+
     }
+
+
 }
 
 function objectify(formArray) {//serialize data function

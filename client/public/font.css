@@ -1,0 +1,20 @@
+@font-face {
+    font-family: gloogun;
+    src: url('./gloogun.TTF');
+}
+
+@font-face {
+    font-family: blackburger;
+    src: url('./blackburger.ttf');
+}
+
+.blackburger-font{
+    font-family: blackburger;
+    font-size: 20px;
+}
+
+.gloogun-font{
+    font-family: gloogun;
+    font-size: 20px;
+    text-transform: uppercase;
+}

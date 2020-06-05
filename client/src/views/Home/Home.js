@@ -3,8 +3,6 @@ import { Route, Switch, Redirect  } from 'react-router-dom';
 import DemoCol from '../../components/Demographics/DemoCol'
 import PostForm from '../../components/Emortions/PostForm/PostForm'
 import Emortion from "../../components/Emortions/Emortion";
-import fire from '../../config/Fire'
-import axios from 'axios';
 import io from 'socket.io-client';
 
 import './Home.css'
@@ -44,17 +42,11 @@ const Home = (props) => {
 
     return (
 
-        <div className="">
+        <div className="container-fluid">
             {/* {socketFunc()} */}
-            <center>
-                Welcome to the Den
-            </center>
             <div className='row'>
-                <div className='DemoCol col-2'>
-                    <DemoCol username={props.username}/>
-                </div>
-                <div className='col-md-6 row-fluid App-width'>
-                    <br></br>
+                <DemoCol username={props.username}/>
+                <div className='col-md-5 col-lg-5 col-sm-12 postCol'>
                     <PostForm getPosts={getPosts} postsArray={props.postsArray} username={props.username} userUid={props.userUid} />
                     {/*The Posts for the user*/}
                     <div id='emortions'>
@@ -63,6 +55,7 @@ const Home = (props) => {
                         ))}
                     </div>
                 </div>
+                <div className="col-lg-2 col-md-2 d-sm-none"></div>
             </div>
         </div>
     );

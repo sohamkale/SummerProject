@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const commentSchema = new mongoose.Schema ({
     commentId: {type: String}, //should be unique or not
     answer: {type: String},
-    numLikes: {type: Number},
+    likes: [],
     score: {type: Number}
 })
 

@@ -7,10 +7,8 @@ function EmojiInputBox()
     return (
         <div>
             <div id='maintext' className='emoji-input-box'></div>
-            <br></br>
-            <Button className='d-inline' onClick={Erase} variant="danger">DELETE</Button>
-            &nbsp;
-            <Button className='d-inline' onClick={EraseAll} variant="danger">CLEAR</Button>
+            <Button size="sm" className='d-inline' onClick={Erase} variant="danger">DELETE</Button>
+            <Button  size="sm" className='d-inline' onClick={EraseAll} variant="danger">CLEAR</Button>
         </div>
     );
 }
