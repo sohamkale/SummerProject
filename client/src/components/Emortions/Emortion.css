@@ -1,3 +1,4 @@
+/*
 .like
 {
     width: 24px;
@@ -7,18 +8,20 @@
     background-size: 5700% 5700%; 
     background-position: 23.2143% 69.6429%;
 
-    /*dark*/
+    !*dark*!
     
 }
+*/
 
 .secret
 {
     margin: 10px;
     margin-left: 0;
     padding: 5px;
-    border: 1px dashed yellow;
-    font-family: "Cambria";
-    font-weight: bolder;
+    text-decoration: royalblue underline;
+    font-family: "Ink Free";
+    font-weight: 900;
+    font-size: 18px;
 }
 
 .answer{
@@ -31,7 +34,19 @@
     width: 100%;
 }
 
-.like:hover{
+.likes:hover{
     transform: scale(1.5);
     cursor: pointer;
+}
+
+.comment-heading{
+    font-family: "Bookman Old Style";
+    font-size: 16px;
+}
+
+.likeCount{
+    font-family: blackburger;
+    color: royalblue;
+    position: relative;
+    top: 5px;
 }

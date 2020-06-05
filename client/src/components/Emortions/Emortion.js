@@ -4,10 +4,11 @@ import { emojiIndex } from 'emoji-mart';
 import './Emortion.css'
 import axios from 'axios';
 import fire from './../../config/Fire';
-import { Button, Collapse, Row, Container, Col } from 'react-bootstrap'
+import { Button, Collapse, Dropdown, Row, Container, Col } from 'react-bootstrap'
 import Comment from "./Answers/Comment";
 import $ from 'jquery'
 import io from "socket.io-client";
+import {LikeButton, DislikeButton} from "./thumbs";
 
 const Emortion = (props) => {
     let emortion = props.emortion
@@ -22,7 +23,10 @@ const Emortion = (props) => {
 
 
     useEffect(() => {
-        GetUserName(emortion.postObjId);
+        if(props.emortion.name)
+            setName(props.emortion.name);
+        else
+            GetUserName(emortion.postObjId);
 
     }, []);
 
@@ -34,6 +38,7 @@ const Emortion = (props) => {
 
     function SendComment(e)
     {
+
         e.preventDefault();
         var form = $('#answerForm'+emortion._id).serializeArray();
         $.ajax({
@@ -85,26 +90,51 @@ const Emortion = (props) => {
             });
     }
 
-    const likeComment = () =>{
-        setNumLikes(numLikes + 1);
-    
-        var likePostObj = {
-            "_id": props.emortion._id,
-            "numLikes": props.emortion.numLikes
-        }
-        axios.post(`/api/posts/like/${props.userUid}`, likePostObj).then((res)=>{
-            console.log(res.data);
-            props.getPosts();
-        })
+    const likePost = () =>{
+        if(props.userUid!=emortion.postObjId)
+        {
+            setNumLikes(numLikes + 1);
 
+            var likePostObj = {
+                _id: props.emortion._id,
+            };
+
+            axios.post(`/api/posts/like/${props.userUid}`, likePostObj).then((res)=>{
+                props.getPosts();
+            }).catch(function(e){
+                console.log(e)
+            });
+
+        }
+    }
+
+    const dislikePost = () =>{
+        setNumLikes(numLikes + 1);
+
+        var likePostObj = {
+            _id: props.emortion._id,
+        };
+
+        axios.post(`/api/posts/dislike/${props.userUid}`, likePostObj).then((res)=>{
+            props.getPosts();
+        }).catch(function(e){
+            console.log(e)
+        });
+
+    }
+
+    function LikeAgent()
+    {
+        return (emortion.likes.includes(props.userUid)) ? <DislikeButton function={dislikePost}/> : <LikeButton function={likePost}/>;
     }
 
     function AnswerAgent()
     {
-        return (props.userUid!=emortion.postObjId & new Date(emortion.expiresAt) >= new Date())? (<div>
+        return (props.userUid!=emortion.postObjId & new Date(emortion.revealsAt) >= new Date())? (<div>
                 <form id={'answerForm'+emortion._id} onSubmit={SendComment}>
                     <input readOnly hidden name="postId" value={props.emortion._id}></input>
                     <input readOnly hidden name="userId" value={props.userUid}></input>
+                    <input readOnly hidden name="name" value={props.username}></input>
                     <input defaultValue="" required name="answer" className="form-control answer" placeholder="What do you think the Emorter is saying?"></input>
                     <span><Button  type="submit" variant="info">Evaluate</Button></span>
                 </form>
@@ -116,7 +146,7 @@ const Emortion = (props) => {
     return (
         <div>
            {/* {setReturnNo(returnNo+1)} */}
-            <div className="card">
+            <div className="card bg-light">
                 <div className="card-body">
                     <div className="blackburger-font">Emortion By {name}</div>
                     <div>
@@ -126,29 +156,28 @@ const Emortion = (props) => {
                     </div>
                     {/* {console.log(new Date().toISOString())} */}
                     <Secret />
-
-                    <span onClick={likeComment} className='like'></span> {emortion.numLikes}
-                    
-                    <Button
+                    <LikeAgent/> <span className="likeCount" >{emortion.likes.length} </span>
+                    {/*<span  className='like'></span> {emortion.numLikes}*/}
+                    <center>
+                    <Dropdown.Toggle
                         onClick={() => setOpen(!open)}
                         aria-controls="example-collapse-text"
                         aria-expanded={open}
-                        variant='link'
-                    >Show Answers
-                    </Button>
-                    
+                        variant="outline-info"
+                    > Answers
+                    </Dropdown.Toggle>
+                    </center>
                     <Collapse in={open}>
                         <div id="example-collapse-text">
                             <AnswerAgent/>
-                            <Container fluid className="text-center">
-                                <h2>All Comments</h2>
+                            <div className="text-center">
                                     {emortion.comments.map((comment, index) => {
                                         return (
                                             // <li className="text-left">{comment.answer}</li>
                                             <Comment key={index} comment={comment}/>
                                         )
                                     })}
-                            </Container>
+                            </div>
 
                         </div>
                     </Collapse>

@@ -17,7 +17,8 @@ function DemoCol(props)
                 Welcome to the Den!
 
                 <img width="90%" src={require('./dpholder.png')} className="rounded-circle" alt="Cinque Terre"/>
-               {props.username}
+               {props.username}<br/>
+               Score: {"YET"}
             </center>
         </div>
     );

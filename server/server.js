@@ -8,7 +8,8 @@ let PostModel = require("./models/post.model");
 let User = require('./models/user.model');
 const commonRoom = "commonRoom";
 
-
+var expireDays =3 ;
+var three_day = 1000 * 60 * 60 * 24* expireDays;
 // Use env port or default
 const port = process.env.PORT || 5000;
 
@@ -35,13 +36,12 @@ io.on('connection', (socket) =>{
     socket.on('addComment', (id, callback) => {
         let array = [];
         let currDateTime = new Date();
-        console.log(id)
         var id = require('mongoose').Types.ObjectId(id);
         PostModel.find({}).sort({ createdAt: -1 }).then(function(posts) {
             // array = posts;
             posts.map((post) => {
-                if(post.expiresAt > currDateTime){
-                   array.push(post); 
+                if(new Date() - post.createdAt < three_day){
+                    array.push(post);
                 }
             })
             io.to(commonRoom).emit('message', { posts: array })
@@ -55,8 +55,8 @@ io.on('connection', (socket) =>{
         PostModel.find({}).sort({ createdAt: -1 }).then(function(posts) {
             // array = posts;
             posts.map((post) => {
-                if(post.expiresAt > currDateTime){
-                   array.push(post); 
+                if(new Date() - post.createdAt < three_day){
+                    array.push(post);
                 }
             })
             io.to(commonRoom).emit('message', { user: currUser, posts: array })

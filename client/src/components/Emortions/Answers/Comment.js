@@ -7,7 +7,10 @@ const Comment = (props) => {
     const [name, setName] = useState("Anonymous");
     useEffect(()=>{
         // console.log(props.comment);
-        GetUserName(props.comment.userId)
+        if(props.comment.name)
+            setName(props.comment.name);
+        else
+            GetUserName(props.comment.userId);
        
     }, [])
 

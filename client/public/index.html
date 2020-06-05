@@ -51,5 +51,22 @@
     -->
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script typeof="text/javascript">
+      //a global script
+      window.onclick=function(e)
+      {
+        $("body").click(function(e) {
+          if (e.target.id == "popup" || $(e.target).parents("#popup").length) {
+            //alert("Inside div");
+          } else {
+            document.getElementById("myPopup").classList.remove("show");
+          }
+        });
+        //if(e.target.id!="")
+      }
+      /*function globalClick(){
+
+      }*/
+    </script>
   </body>
 </html>

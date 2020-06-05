@@ -13,4 +13,5 @@ router.post('/posts/add', postsController.add);
 router.post('/posts/answer/:id', postsController.addComments);
 router.get('/posts/diduseranswer/:userId', postsController.didUserAnswer);
 router.post('/posts/like/:userId', postsController.likePosts);
+router.post('/posts/dislike/:userId', postsController.dislikePosts);
 module.exports = router;
