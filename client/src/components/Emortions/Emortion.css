@@ -24,6 +24,11 @@
     font-size: 18px;
 }
 
+.secret-label{
+    font-family: Calibri;
+    font-weight: bolder;
+}
+
 .answer{
     width: 60%;
     display: inline;

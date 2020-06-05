@@ -6,6 +6,19 @@
 }
 .commenter{
     text-decoration: underline;
+    font-family: blackburger;
+}
+
+.answer{
+    font-family: "Ink Free";
+    font-weight:bold;
+}
+
+.likeCount{
+    font-family: blackburger;
+    color: royalblue;
+    position: relative;
+    top: 5px;
 }
 
 li{

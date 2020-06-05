@@ -58,8 +58,7 @@ const Home = (props) => {
                 <div className="col-lg-2 col-md-2 d-sm-none"></div>
             </div>
         </div>
-    );
-
+    )
 }
 
       

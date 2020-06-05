@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "./Comments.css";
 import axios from 'axios';
+import {DislikeButton, LikeButton} from "../thumbs";
 
 
 const Comment = (props) => {
@@ -27,10 +28,46 @@ const Comment = (props) => {
             });
     }
 
+    const likeComment = () =>{
+        // if(props.userUid!=emortion.postObjId)
+        // {
+        //     var likePostObj = {
+        //         _id: props.emortion._id,
+        //     };
+        //
+        //     axios.post(`/api/posts/like/${props.userUid}`, likePostObj).then((res)=>{
+        //         props.getPosts();
+        //     }).catch(function(e){
+        //         console.log(e)
+        //     });
+        //
+        // }
+    }
+
+    const dislikeComment = () =>{
+
+        var commentPostObj = {
+            comment_id: props.comment._id,
+            post_id: props.postId
+        };
+
+        axios.post(`/api/posts/dislikecomment/${props.userUid}`, commentPostObj).then((res)=>{
+            props.getPosts();
+        }).catch(function(e){
+            console.log(e)
+        });
+
+    }
+
+    function LikeAgent()
+    {
+        return (props.comment.likes.includes(props.userUid)) ? <DislikeButton function={dislikeComment}/> : <LikeButton function={likeComment}/>;
+    }
+
     return (
         <div>
             <div className="commenter">{name}</div>
-            {props.comment.answer} &nbsp; <span className='like'></span> {props.comment.numLikes}
+            <div className="answer">{props.comment.answer}</div> &nbsp; <LikeAgent/> <span className="likeCount" > {props.comment.likes.length} </span>
         </div>
     );
 

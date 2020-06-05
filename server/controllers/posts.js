@@ -147,6 +147,7 @@ const postsController = {
         //req.body._id will contain the id of the post in question.
         //req.params.userId is the userId
         var userAnswered = false;
+
         PostModel.find({"_id": req.body._id}).then(data => {
             if(data[0].comments){
                 data[0].comments.map((comment => {
@@ -157,7 +158,7 @@ const postsController = {
                 res.json(userAnswered);
             }else {
                 res.json('404: POST NOT FOUND');
-            } 
+            }
         })
     },
 
