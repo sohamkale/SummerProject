@@ -168,17 +168,36 @@ const postsController = {
     likePosts(req, res){
         //req.body._id will contain the id of the post in question.
         //req.params.userId is the userId
-
-        return PostModel.findOneAndUpdate({"_id": req.body._id},{$push:{likes:req.params.userId}}, null ,(err, data) => {
-            if (err) {
-                res.status('404');
-                res.json({ error: err });
-            } else {   
-              console.log(data);
-              res.status('200');
-              res.json(data);
-            }
-        });      
+       
+        PostModel.find({"_id": req.body._id}).then((data) => {
+            if(data[0]){
+                if(data[0].likes.includes(req.params.userId)){
+                    PostModel.findOneAndUpdate({"_id": req.body._id},{$pull:{likes:req.params.userId}}, null ,(err, data) => {
+                        if (err) {
+                            res.status('404');
+                            res.json({ error: err });
+                        } else {   
+                          console.log(data);
+                          res.status('200');
+                          res.json(data);
+                        }
+                    });
+                }else {
+                    PostModel.findOneAndUpdate({"_id": req.body._id},{$push:{likes:req.params.userId}}, null ,(err, data) => {
+                        if (err) {
+                            res.status('404');
+                            res.json({ error: err });
+                        } else {   
+                          console.log(data);
+                          res.status('200');
+                          res.json(data);
+                        }
+                    }); 
+                }             
+            }else {
+                res.json('404: POST NOT FOUND');
+            } 
+        })          
         
     },
 
@@ -186,7 +205,7 @@ const postsController = {
         //req.body._id will contain the id of the post in question.
         //req.params.userId is the userId
 
-        return PostModel.findOneAndUpdate({"_id": req.body._id},{$pull:{likes:req.params.userId}}, null ,(err, data) => {
+        PostModel.findOneAndUpdate({"_id": req.body._id},{$pull:{likes:req.params.userId}}, null ,(err, data) => {
             if (err) {
                 res.status('404');
                 res.json({ error: err });
@@ -202,25 +221,35 @@ const postsController = {
     likeComment(req, res){
         //req.body._id will contain the unique id of the comment in question.
         //req.params.userId is the userId
+        var shouldUpdate = false;
         PostModel.find({"_id": req.body.post_id}).then(function(data) {
             if(data[0].comments){
                 console.log("Inside data[0].comments");
                 for (var i = 0; i < data[0].comments.length; i++) {
                     if(data[0].comments[i]._id == req.body.comment_id){
-                        data[0].comments[i].likes.push(req.params.userId);
-                        break; 
+                        if(data[0].comments[i].likes.includes(req.params.userId)){
+                            break; 
+                        }else {
+                            shouldUpdate = true;
+                            data[0].comments[i].likes.push(req.params.userId);
+                            break; 
+                        }                        
                     }
                 }
-                PostModel.findOneAndUpdate({"_id": req.body.post_id},{$set: {comments: data[0].comments}},(err, data) => {
-                    if (err) {
-                        res.status('404');
-                        res.json({ error: "err" });
-                    } else {
-                        console.log(data);
-                        res.status('200');
-                        res.json(data);
-                    }
-                });
+                if(shouldUpdate){
+                    PostModel.findOneAndUpdate({"_id": req.body.post_id},{$set: {comments: data[0].comments}},(err, data) => {
+                        if (err) {
+                            res.status('404');
+                            res.json({ error: "err" });
+                        } else {
+                            console.log(data);
+                            res.status('200');
+                            res.json(data);
+                        }
+                    });
+                } else {
+                    res.json(data);
+                }               
             }else {
                 res.json('404: POST NOT FOUND');
             } 
