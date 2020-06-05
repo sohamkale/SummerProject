@@ -19,3 +19,10 @@ steps:
     npm install
     npm run build
   displayName: 'npm install and build'
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1(df6eceb1-d30c-4308-beda-bc8f0bfd67ea)'
+    appType: 'webApp'
+    WebAppName: 'facedit'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
