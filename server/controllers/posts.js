@@ -81,7 +81,7 @@ const postsController = {
         const userId = req.body.userId;
         const _id = new mongoose.Types.ObjectId();
         const name = req.body.name;
-        const score=0;
+        var score=0;
         var shouldAddComment = true;
         if(req.body.numLikes != null  || req.body.numLikes != ""){
             numLikes = req.body.numLikes;
@@ -89,18 +89,21 @@ const postsController = {
             numLikes = 0;
         }
         
-        // if(req.body.score != null || req.body.score != ""){
-        //     score = req.body.score;
-        // }else {
-        //     score = 0;
-        // }
-       /* score=0;
+        if(req.body.score != null || req.body.score != ""){
+            score = req.body.score;
+        }else {
+            score = 0;
+        }
+        var answerWords = answer.split(' ');
+        console.log("answerWords: ");
+        console.log(answerWords);
         PostModel.find({"_id": req.params.id}).then(data => {
             var secret = data[0].secretAnswer;
             //Do regex here//
             var secWords = secret.split(' ');
+            console.log("secretWords: ");
             console.log(secWords)
-        }).catch(err => res.status('400').json('Error: ' + err));  */
+        }).catch(err => res.status('400').json('Error: ' + err));
         
         //NEED TO CHECK IF THE STRING MATCHES WITH THE SECRET ANSWER TO DETERMINE THE SCORE
 
@@ -147,6 +150,7 @@ const postsController = {
         //req.body._id will contain the id of the post in question.
         //req.params.userId is the userId
         var userAnswered = false;
+
         PostModel.find({"_id": req.body._id}).then(data => {
             if(data[0].comments){
                 data[0].comments.map((comment => {
@@ -157,7 +161,7 @@ const postsController = {
                 res.json(userAnswered);
             }else {
                 res.json('404: POST NOT FOUND');
-            } 
+            }
         })
     },
 
@@ -193,9 +197,77 @@ const postsController = {
             }
         });
 
+    },
+
+    likeComment(req, res){
+        //req.body._id will contain the unique id of the comment in question.
+        //req.params.userId is the userId
+        PostModel.find({"_id": req.body.post_id}).then(function(data) {
+            if(data[0].comments){
+                console.log("Inside data[0].comments");
+                for (var i = 0; i < data[0].comments.length; i++) {
+                    if(data[0].comments[i]._id == req.body.comment_id){
+                        data[0].comments[i].likes.push(req.params.userId);
+                        break; 
+                    }
+                }
+                PostModel.findOneAndUpdate({"_id": req.body.post_id},{$set: {comments: data[0].comments}},(err, data) => {
+                    if (err) {
+                        res.status('404');
+                        res.json({ error: "err" });
+                    } else {
+                        console.log(data);
+                        res.status('200');
+                        res.json(data);
+                    }
+                });
+            }else {
+                res.json('404: POST NOT FOUND');
+            } 
+        })
+    },
+
+    dislikeComment(req, res){
+        //req.body._id will contain the id of the post in question.
+        //req.params.userId is the userId
+
+        // PostModel.findOneAndUpdate({"_id": req.body._id},{$pull: {comments: {likes:req.params.userId}}},(err, data) => {
+        //     if (err) {
+        //         res.status('404');
+        //         res.json({ error: "err" });
+        //     } else {
+        //         console.log(data);
+        //         res.status('200');
+        //         res.json(data);
+        //     }
+        // });
+
+        PostModel.find({"_id": req.body.post_id}).then(function(data) {
+            if(data[0].comments){
+                console.log("Inside data[0].comments");
+                for (var i = 0; i < data[0].comments.length; i++) {
+                    if(data[0].comments[i]._id == req.body.comment_id){
+                        var filteredAry = data[0].comments[i].likes.filter(function(e) { return e !== req.params.userId })
+                        data[0].comments[i].likes = filteredAry;
+                        break; 
+                    }
+                }
+                PostModel.findOneAndUpdate({"_id": req.body.post_id},{$set: {comments: data[0].comments}},(err, data) => {
+                    if (err) {
+                        res.status('404');
+                        res.json({ error: "err" });
+                    } else {
+                        console.log(data);
+                        res.status('200');
+                        res.json(data);
+                    }
+                });
+            }else {
+                res.json('404: POST NOT FOUND');
+            } 
+        })
+
     }
-
-
 }
 
 function objectify(formArray) {//serialize data function
