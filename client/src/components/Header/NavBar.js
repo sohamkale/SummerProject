@@ -33,20 +33,6 @@ const Navbarcomp = (props) => {
 
     }, []);
 
-    /*useLayoutEffect (() => {
-        if(userUid != null){
-        var db = fire.database();
-        var ref = db.ref(`${userUid}/Navbar`);
-        ref.on("value", function(userSnapshot) {
-            userSnapshot.forEach(function(snapshot) {
-                if(snapshot.key === "initials"){
-
-                    setInitials(snapshot.val());
-                }
-            });
-        });
-    }
-    }, [userUid])*/
 
     const logout = () => {
         window.location.href = "/login";
