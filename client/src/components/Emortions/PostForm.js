@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import EmojiInputBox from '../EmojiInputBox'
-import Emoji from "../Emoji"
+import EmojiInputBox from './EmojiInputBox'
+import Emoji from "./Emoji"
 import { Button } from 'react-bootstrap'
-import fire from "../../../config/Fire";
+import fire from "../../config/Fire";
 import $ from 'jquery'
 import axios from 'axios';
 
@@ -43,9 +43,9 @@ const PostForm = (props) => {
                         <center><div className="text-danger"><b id="empty_warning"></b></div></center>
                         <Emoji />
                         <div className="form-group row">
-                            <label  className="col-sm-2 col-form-label">Secret</label>
+                            <label  className="col-sm-2 col-form-label" style={{fontFamily:'Ink Free', fontWeight: 'bold', backgroundColor:'rgba(173, 216, 230, 0.4)!important;'}}>Secret</label>
                             <div className="col-sm-6">
-                                <input defaultValue="" required id="postSecret" name="secretAnswer" className="form-control"></input>
+                                <input style={{fontFamily:'Ink Free', fontWeight: 'bold'}} defaultValue="" required id="postSecret" name="secretAnswer" className="form-control"></input>
                             </div>
                             <Button size="sm" type='submit' className='d-inline' variant="secondary" className="col-sm-2">POST</Button>
                         </div>

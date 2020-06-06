@@ -9,6 +9,8 @@ router.post('/users/add', usersController.add);
 router.get('/users/:id', usersController.findName);
 
 router.get('/posts', postsController.all);
+router.get('/posts/:id', postsController.allbyid);
+
 router.post('/posts/add', postsController.add);
 router.post('/posts/answer/:id', postsController.addComments);
 router.post('/posts/diduseranswer/:userId', postsController.didUserAnswer);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "./Comments.css";
 import axios from 'axios';
-import {DislikeButton, LikeButton} from "../thumbs";
+import {DislikeButton, LikeButton} from "./thumbs";
 
 
 const Comment = (props) => {
@@ -68,7 +68,7 @@ const Comment = (props) => {
     return (
         <div>
             <div className="commenter">{props.comment.name}</div>
-            <div className="answer">{props.comment.answer}</div> &nbsp; <LikeAgent/> <span className="likeCount" > {props.comment.likes.length} </span>
+            <div className="answer">{props.comment.answer}</div> &nbsp; <LikeAgent/> <span className="likeCount" > {props.comment.likes.length} </span>  <span className="score badge badge-primary">SCORE: {props.comment.score}</span>
         </div>
     );
 

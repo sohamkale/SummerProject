@@ -79,7 +79,7 @@ const Navbarcomp = (props) => {
 
     function LoginButton()
     {
-        return (props.userUid!=null)? (<div className="text-white">{props.username} &nbsp; <input onClick={ logout } className="btn btn-outline-info my-2 my-sm-0" type="button" value="Logout"></input></div>):
+        return (props.userUid!=null)? (<div className="text-white"><a className="btn btn-link" href="/Profile">{props.username}</a> &nbsp; <input onClick={ logout } className="btn btn-outline-info my-2 my-sm-0" type="button" value="Logout"></input></div>):
             (<Nav.Link className="btn btn-outline-info my-2 my-sm-0" href="/Login">Login</Nav.Link>);
     }
 }

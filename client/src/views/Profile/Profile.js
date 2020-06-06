@@ -5,11 +5,11 @@ import PostForm from '../../components/Emortions/PostForm'
 import Emortion from "../../components/Emortions/Emortion";
 import io from 'socket.io-client';
 
-import './Home.css'
+import '../Home/Home.css'
 let socket;
 
 
-const Home = (props) => {
+const Profile = (props) => {
 
     const [currUser, setCurrUser] = useState(props.username);
     const ENDPOINT = "/";
@@ -18,17 +18,17 @@ const Home = (props) => {
 
     useEffect(() => {
         let room = "commonRoom";
-            // alert("SOCKET");
-            socket = io(ENDPOINT);
-            setsocketIO(socket);
-            socket.emit('join', {currUser, room});
-            socket.on('joinedRoom', message => {
-                console.log(message);
-                // alert(message.text);
-            });
-            socket.on('message', message => {
-                props.setPostsArray(message.posts);
-            });
+        // alert("SOCKET");
+        socket = io(ENDPOINT);
+        setsocketIO(socket);
+        socket.emit('join', {currUser, room});
+        socket.on('joinedRoom', message => {
+            console.log(message);
+            // alert(message.text);
+        });
+        socket.on('message', message => {
+            props.setPostsArray(message.posts);
+        });
 
     }, [ENDPOINT, currUser]);
 
@@ -45,9 +45,10 @@ const Home = (props) => {
         <div className="container-fluid">
             {/* {socketFunc()} */}
             <div className='row'>
-                <DemoCol message={"Welcome to the Den!"} username={props.username}/>
+                <DemoCol username={props.username}/>
                 <div className='col-md-5 col-lg-5 col-sm-12 postCol'>
-                    <PostForm getPosts={getPosts} postsArray={props.postsArray} username={props.username} userUid={props.userUid} />
+                    <center class="text-muted">Posts by {props.username}</center>
+                    {/*<PostForm getPosts={getPosts} postsArray={props.postsArray} username={props.username} userUid={props.userUid} />*/}
                     {/*The Posts for the user*/}
                     <div id='emortions'>
                         {props.postsArray.map((post,index)=>(
@@ -61,7 +62,7 @@ const Home = (props) => {
     )
 }
 
-      
-    
 
-export default Home;
+
+
+export default Profile;

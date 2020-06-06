@@ -15,13 +15,14 @@
 
 .secret
 {
-    margin: 10px;
-    margin-left: 0;
-    padding: 5px;
-    text-decoration: royalblue underline;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    /*text-decoration: royalblue underline;*/
+    background-color: rgba(	173, 216, 230, 0.4 ) !important;
     font-family: "Ink Free";
     font-weight: 900;
     font-size: 18px;
+    padding:3px !important;
 }
 
 .secret-label{

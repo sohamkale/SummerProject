@@ -5,7 +5,7 @@ import './Emortion.css'
 import axios from 'axios';
 import fire from './../../config/Fire';
 import { Button, Collapse, Dropdown, Row, Container, Col } from 'react-bootstrap'
-import Comment from "./Answers/Comment";
+import Comment from "./Comment";
 import $ from 'jquery'
 import io from "socket.io-client";
 import {LikeButton, DislikeButton} from "./thumbs";
@@ -66,7 +66,7 @@ const Emortion = (props) => {
             return (
                 <div>
                     <span className="badge badge-success">REVEALED</span>
-                    <p className="card-text secret"><span className="secret-label">SECRET</span>: {emortion.secretAnswer}</p>
+                    <p className="card-text"><span className="secret btn btn-light">SECRET: {emortion.secretAnswer}</span></p>
                 </div>
 
 
@@ -162,7 +162,7 @@ const Emortion = (props) => {
 
     function Comments()
     {
-        if(answered || emortion.postObjId==props.userUid){
+        if(answered || emortion.postObjId==props.userUid || new Date(emortion.revealsAt) <= new Date()){
             return (<div>{emortion.comments.map((comment, index) => {
                 return (
                     // <li className="text-left">{comment.answer}</li>

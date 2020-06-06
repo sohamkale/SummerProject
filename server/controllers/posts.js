@@ -27,6 +27,28 @@ const postsController = {
            ).catch(err => res.status('400').json('Error: ' + err));
     },
 
+    allbyid(req, res) {
+        let currDateTime = new Date();
+        var validPosts = [];
+        //how many days do you want the post to expire by?
+   /*     var expireDays =3 ;
+        var three_day = 1000 * 60 * 60 * 24* expireDays;*/
+
+        PostModel.find({'postObjId': req.params.id}).sort({createdAt: -1}).then(
+            posts => {
+                console.log(posts)
+                posts.map((post) => {
+                  /*  if(new Date() - post.createdAt < three_day){
+
+                    }*/
+
+                    validPosts.push(post);
+                })
+                res.json(validPosts)
+            }
+        ).catch(err => res.status('400').json('Error: ' + err));
+    },
+
     add(req, res) {
         //parse the body from front end-
         req.body = objectify(req.body);
