@@ -5,7 +5,7 @@ import './Emortion.css'
 import axios from 'axios';
 import fire from './../../config/Fire';
 import { Button, Collapse, Dropdown, Row, Container, Col } from 'react-bootstrap'
-import Comment from "./Answers/Comment";
+import Comment from "./Comment";
 import $ from 'jquery'
 import io from "socket.io-client";
 import {LikeButton, DislikeButton} from "./thumbs";
@@ -17,12 +17,13 @@ const Emortion = (props) => {
     //states and vars
     const [name, setName] = useState("anonymous");
     const [open, setOpen] = useState(false);
-    const [numLikes, setNumLikes] = useState(0);
+    const [answered, setAnswered] = useState(false);
     //const [comments, setComments] = useState(props.emortion.comments);
     //const [answer, setAnswer] = useState(null);
 
 
     useEffect(() => {
+        didUserAnswer();
         if(props.emortion.name)
             setName(props.emortion.name);
         else
@@ -38,7 +39,6 @@ const Emortion = (props) => {
 
     function SendComment(e)
     {
-
         e.preventDefault();
         var form = $('#answerForm'+emortion._id).serializeArray();
         $.ajax({
@@ -52,7 +52,9 @@ const Emortion = (props) => {
                 if(data.error){
                     alert(data.error);
                 }else {
+                    //document.getElementById('answerForm'+emortion._id).setAttribute('style',"display:none");
                     getComments(form[0].value);
+                    didUserAnswer();
                 }
                 
             }
@@ -64,7 +66,7 @@ const Emortion = (props) => {
             return (
                 <div>
                     <span className="badge badge-success">REVEALED</span>
-                    <p className="card-text secret">Secret: {emortion.secretAnswer}</p>
+                    <p className="card-text"><span className="secret btn btn-light">SECRET: {emortion.secretAnswer}</span></p>
                 </div>
 
 
@@ -90,11 +92,22 @@ const Emortion = (props) => {
             });
     }
 
+    function didUserAnswer()
+    {
+        var postObj = {
+            _id: emortion._id,
+        }
+        axios.post(`/api/posts/diduseranswer/${props.userUid}`, postObj).then((res)=>{
+            //props.getPosts();
+            setAnswered(res.data);
+        }).catch(function(e){
+            console.log(e)
+        });
+    }
+
     const likePost = () =>{
         if(props.userUid!=emortion.postObjId)
         {
-            setNumLikes(numLikes + 1);
-
             var likePostObj = {
                 _id: props.emortion._id,
             };
@@ -109,7 +122,6 @@ const Emortion = (props) => {
     }
 
     const dislikePost = () =>{
-        setNumLikes(numLikes + 1);
 
         var likePostObj = {
             _id: props.emortion._id,
@@ -130,7 +142,7 @@ const Emortion = (props) => {
 
     function AnswerAgent()
     {
-        return (props.userUid!=emortion.postObjId & new Date(emortion.revealsAt) >= new Date())? (<div>
+        if (props.userUid!=emortion.postObjId & new Date(emortion.revealsAt) >= new Date() &!answered) return (<div>
                 <form id={'answerForm'+emortion._id} onSubmit={SendComment}>
                     <input readOnly hidden name="postId" value={props.emortion._id}></input>
                     <input readOnly hidden name="userId" value={props.userUid}></input>
@@ -138,9 +150,28 @@ const Emortion = (props) => {
                     <input defaultValue="" required name="answer" className="form-control answer" placeholder="What do you think the Emorter is saying?"></input>
                     <span><Button  type="submit" variant="info">Evaluate</Button></span>
                 </form>
-            </div>):
-                (<div></div>);
+            </div>)
+            else if(props.userUid==emortion.postObjId)
+               return (<center><b className="text-success">Cannot answer own posts!</b></center>)
+                    else if (new Date(emortion.revealsAt) < new Date())
+                        return (<center><b className="text-success">Answer revealed!</b></center>);
+        else if (answered)
+            return (<center><b className="text-success">You've already answered this post!</b></center>);
+                    else return(<div></div>)
     }
+
+    function Comments()
+    {
+        if(answered || emortion.postObjId==props.userUid || new Date(emortion.revealsAt) <= new Date()){
+            return (<div>{emortion.comments.map((comment, index) => {
+                return (
+                    // <li className="text-left">{comment.answer}</li>
+                    <Comment key={index} comment={comment} postId={emortion._id} getPosts={props.getPosts} userUid={props.userUid}/>
+                )
+            })}</div>)}
+            else{
+                return (<div className="text-warning"><center><b>You haven't answered this question!</b></center></div>);}
+        }
 
     //Main
     return (
@@ -171,18 +202,14 @@ const Emortion = (props) => {
                         <div id="example-collapse-text">
                             <AnswerAgent/>
                             <div className="text-center">
-                                    {emortion.comments.map((comment, index) => {
-                                        return (
-                                            // <li className="text-left">{comment.answer}</li>
-                                            <Comment key={index} comment={comment}/>
-                                        )
-                                    })}
+                                <hr/>
+                                <Comments/>
                             </div>
 
                         </div>
                     </Collapse>
 
-                    
+
                 </div>
             </div>
             <br></br>
