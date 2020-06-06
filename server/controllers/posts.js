@@ -2,6 +2,7 @@
 
 const router = require('express').Router();
 let PostModel = require('../models/post.model');
+let UserModel = require('../models/user.model');
 const mongoose = require('mongoose');
 const express = require('../config/express');
 const postsController = {
@@ -81,7 +82,7 @@ const postsController = {
         const userId = req.body.userId;
         const _id = new mongoose.Types.ObjectId();
         const name = req.body.name;
-        var score=0;
+        var score=0, totScore = 0;
         var shouldAddComment = true;
         if(req.body.numLikes != null  || req.body.numLikes != ""){
             numLikes = req.body.numLikes;
@@ -92,31 +93,43 @@ const postsController = {
         if(req.body.score != null || req.body.score != ""){
             score = req.body.score;
         }else {
-            score = 0;
+            score = 1; //1 point for posting the comment
         }
-        var answerWords = answer.split(' ');
+
+        var removePronouns = /I |you |he |she |it |they |me |you |him |her |it |my |mine |your |yours |his |her |hers |its |who |whom |whose |what |which |another |each |everything |nobody |either |someone |who |whom |whose |that |which |myself |yourself |himself |herself |itself |this |that /ig;
+        var removeAuxVerbs = /do |does |did |has |have |had |is |am |are |was |were |be |being |been |may |must |might |should |could |would |shall |will |can /ig;
+        var ans = answer.toLowerCase();
+        var answerWords = ans.split(' ');
         console.log("answerWords: ");
         console.log(answerWords);
-        PostModel.find({"_id": req.params.id}).then(data => {
-            var secret = data[0].secretAnswer;
-            //Do regex here//
-            var secWords = secret.split(' ');
-            console.log("secretWords: ");
-            console.log(secWords)
-        }).catch(err => res.status('400').json('Error: ' + err));
+
+        UserModel.find({"userId": userId}).then(data => {
+            totScore = data[0].totScore;
+            console.log("totScore: " + totScore);
         
         //NEED TO CHECK IF THE STRING MATCHES WITH THE SECRET ANSWER TO DETERMINE THE SCORE
 
-        // PostModel.findOneAndUpdate({ "_id": req.params.id }, { $push: {comments: {_id: _id, answer: answer, userId: userId, numLikes: numLikes, score: score, name: name}} },{new: true}, (err, data) => {
-        //     if (err) {
-        //         res.status('404');
-        //         res.json({ error: 'No data with the specified id was found!' });
-        //     } else {            
-        //         res.json(data);
-        //     }
-        // });
-
         PostModel.find({"_id": req.params.id}, (err, data) => {
+
+            var secret = data[0].secretAnswer.toLowerCase();
+            //Do regex here//
+
+            var secWords = secret.split(' ');
+            console.log("secretWords: ");
+            console.log(secWords);
+            var count = 0;
+            for(var i = 0; i < secWords.length; i++){
+                if(answerWords.includes(secWords[i])){
+                    count++;
+                }
+            }
+            
+            score = Number.parseFloat((count / secWords.length) * 10).toFixed(2)
+            console.log(score);
+            var result = parseFloat(score) + parseFloat(totScore);
+            result = result.toFixed(2);
+            console.log(result);
+
             if (err) {
                 res.status('404');
                 res.json({ error: err });
@@ -138,11 +151,23 @@ const postsController = {
                             res.json(data);
                         }
                     });
+
+                    UserModel.findOneAndUpdate({"userId": userId}, { $set: {totScore: result} }, (err, data) => {
+                        if (err) {
+                            res.status('404');
+                            res.json({ error: 'No data with the specified id was found!' });
+                        } else {            
+                            res.json("Score updated");
+                        }
+                    });
                 }else if(!shouldAddComment){
                     res.json({error: 'Error: One user can post only one comment per emortion!!!'})
                 }
             }
         });
+        }).catch(err => res.status('400').json('Error: ' + err));
+
+        
         
     },
 

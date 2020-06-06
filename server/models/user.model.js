@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
     name: {type: String},
     email: {type: String, unique: true},
     currLevel: {type: Number},
+    totScore: {type: Number},
     friends: [{
         type: String
         // id: {type: String, unique: true}
