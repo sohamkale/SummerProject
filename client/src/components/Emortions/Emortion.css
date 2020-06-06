@@ -56,3 +56,10 @@
     position: relative;
     top: 5px;
 }
+.box-vis{
+}
+
+.box-invis{
+    height: 92% !important;
+    border-radius: 3px;
+}

@@ -3,6 +3,7 @@ import { Route, Switch, Redirect  } from 'react-router-dom';
 import DemoCol from '../../components/Demographics/DemoCol'
 import PostForm from '../../components/Emortions/PostForm'
 import Emortion from "../../components/Emortions/Emortion";
+import Carousel from "../../components/Emortions/carousel";
 import io from 'socket.io-client';
 
 import './Home.css'
@@ -49,11 +50,12 @@ const Home = (props) => {
                 <div className='col-md-5 col-lg-5 col-sm-12 postCol'>
                     <PostForm getPosts={getPosts} postsArray={props.postsArray} username={props.username} userUid={props.userUid} />
                     {/*The Posts for the user*/}
-                    <div id='emortions'>
+                   {/* <div id='emortions'>
                         {props.postsArray.map((post,index)=>(
                             <Emortion ENDPOINT={ENDPOINT} username={props.username} userUid={props.userUid} key={post._id}  socket={socket} getPosts={getPosts} emortion={post}/>
                         ))}
-                    </div>
+                    </div>*/}
+                    <Carousel postsArray={props.postsArray} ENDPOINT={ENDPOINT} username={props.username} userUid={props.userUid} socket={socket} getPosts={getPosts} />
                 </div>
                 <div className="col-lg-2 col-md-2 d-sm-none"></div>
             </div>

@@ -43,7 +43,7 @@ const PostForm = (props) => {
                         <center><div className="text-danger"><b id="empty_warning"></b></div></center>
                         <Emoji />
                         <div className="form-group row">
-                            <label  className="col-sm-2 col-form-label" style={{fontFamily:'Ink Free', fontWeight: 'bold', backgroundColor:'rgba(173, 216, 230, 0.4)!important;'}}>Secret</label>
+                            <label  className="col-sm-2 col-form-label" style={{fontFamily:'Ink Free', fontWeight: 'bold', backgroundColor:'rgba(173, 216, 230, 0.4)!important'}}>Secret</label>
                             <div className="col-sm-6">
                                 <input style={{fontFamily:'Ink Free', fontWeight: 'bold'}} defaultValue="" required id="postSecret" name="secretAnswer" className="form-control"></input>
                             </div>
