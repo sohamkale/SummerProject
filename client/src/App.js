@@ -6,6 +6,7 @@ import ProfileDoor from './views/Profile/ProfileDoor'
 import NavBar from "./components/Header/NavBar";
 import LoginApp from "./views/Login/LoginApp";
 import Signup from "./views/Signup/Signup";
+import Feedback from './views/Feedback/Feedback'
 import AppModal from "./components/Shared/Modal"
 import {Button} from "react-bootstrap";
 
@@ -38,6 +39,7 @@ const App = (props) => {
           {/*<Door/>*/}
           <Route exact path="/Login" component={LoginApp} />
           <Route exact path="/Signup" component={Signup} />
+          <Route exact path="/Feedback" component={Feedback} />
           <Route exact path="/Home" render={(props) => <Door {...props} userscore={userscore} username={username} userUid={userUid} />}/>
           <Route exact path="/Profile" render={(props) => <ProfileDoor userscore={userscore} {...props} username={username} userUid={userUid} />}/>
           <Route exact path="/" render={(props) => <Door {...props} username={username} userUid={userUid} />}/>

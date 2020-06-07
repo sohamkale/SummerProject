@@ -2,11 +2,14 @@ const express = require('express');
 const router = express.Router();
 const postsController = require('../controllers/posts')
 const usersController = require('../controllers/users')
+const feedbackController = require('../controllers/feedback')
 
 
 router.get('/users', usersController.all);
 router.post('/users/add', usersController.add);
 router.get('/users/:id', usersController.find);
+
+router.post('/feedback',feedbackController.add);
 
 router.get('/posts', postsController.all);
 router.get('/posts/:id', postsController.allbyid);

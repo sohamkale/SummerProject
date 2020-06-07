@@ -56,3 +56,6 @@
 .emoji-mart-category-list{
   margin-left: -25px!important;
 }
+.emoji-mart-search{
+  display: none;
+}

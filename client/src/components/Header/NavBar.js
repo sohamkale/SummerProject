@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from "react"
+import { useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/Navbar';
@@ -9,7 +10,6 @@ import * as ReactBootStrap from "react-bootstrap";
 import axios from "axios";
 import $ from "jquery";
 import './NavBar.css'
-
 
 const Navbarcomp = (props) => {
     useEffect(() => {
@@ -54,6 +54,9 @@ const Navbarcomp = (props) => {
             <ul className="navbar-nav mr-auto">
                 <li className="nav-item active">
                     <a className="nav-link" href="/Home">Den <span className="sr-only">(current)</span></a>
+                </li>
+                <li className="nav-item active">
+                    <a className="nav-link" href="/Feedback">Feedback <span className="sr-only">(current)</span></a>
                 </li>
             </ul>
             <LoginButton/>
