@@ -98,7 +98,7 @@ const postsController = {
             //need to add comments Array here
         })
         newPost.save().then(() => {
-            UserModel.findOneAndUpdate({"userId": userId}, {$push: {posts: newPost._id}}, (err, data) => {
+            UserModel.findOneAndUpdate({"userId": userId}, {$push: {posts: newPost._id.toString()}}, (err, data) => {
                 if (err) {
                     res.status('404').json({error: 'No data with the specified id was found!'});
                 } else {
