@@ -3,7 +3,7 @@ import {Route, Switch, Redirect} from 'react-router-dom';
 import DemoCol from '../../components/Demographics/DemoCol'
 import PostForm from '../../components/Emortions/PostForm'
 import Emortion from "../../components/Emortions/Emortion";
-import Carousel from "../../components/Emortions/Carousel";
+import CarouselComponent from "../../components/Emortions/CarouselComponent";
 import {
     isMobile, isBrowser
 } from "react-device-detect";
@@ -55,7 +55,7 @@ const Home = (props) => {
                 </div>
             ) :
             (
-                <Carousel postsArray={props.postsArray} ENDPOINT={ENDPOINT} username={props.username}
+                <CarouselComponent postsArray={props.postsArray} ENDPOINT={ENDPOINT} username={props.username}
                           userUid={props.userUid} socket={socket} getPosts={getPosts}/>
             )
     }
