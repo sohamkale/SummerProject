@@ -222,7 +222,13 @@ const Emortion = (props) => {
     );
     function EdgeElement(arg){
 
-        if(arg.beginOEnd==1)
+        return ( <div className="col-1">
+            <div className="card bg-light box-invis">
+                <div className="card-body">
+                </div>
+            </div>
+        </div>)
+       /* if(arg.beginOEnd==1)
         {
             return (props.index!=props.size-1) ?
 
@@ -244,7 +250,7 @@ const Emortion = (props) => {
                         </div>
                     </div>
                 </div>):(<div></div>)
-        }
+        }*/
     }
 
 }
