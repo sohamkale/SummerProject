@@ -97,7 +97,18 @@ const postsController = {
             'comments': [] //{type: String}
             //need to add comments Array here
         })
-        newPost.save().then(() => res.json(newPost)).catch(err => res.status('400').json('Error: ' + err));
+        newPost.save().then(() => {
+            UserModel.findOneAndUpdate({"userId": userId}, {$push: {posts: newPost._id}}, (err, data) => {
+                if (err) {
+                    res.status('404').json({error: 'No data with the specified id was found!'});
+                } else {
+                    console.log('POST adding done');
+                    res.json(newPost);
+                    // res.json("Score updated and comment added");
+                } 
+            });
+            
+        }).catch(err => res.status('400').json('Error: ' + err));
     },
 
     addComments(req, res) {
@@ -189,14 +200,14 @@ const postsController = {
                             }
                         });
 
-                        UserModel.findOneAndUpdate({"userId": userId}, {$set: {totScore: result}}, (err, data) => {
+                        UserModel.findOneAndUpdate({"userId": userId}, {$set: {totScore: result}, $push: {comments: _id.toString()}}, (err, data) => {
                             if (err) {
                                 console.log('3')
                                 res.status('404');
                                 res.json({error: 'No data with the specified id was found!'});
                             } else {
                                 console.log('jjjj done')
-                                res.json("Score updated");
+                                res.json("Score updated and comment added");
                             }
                         });
                     } else if (!shouldAddComment) {

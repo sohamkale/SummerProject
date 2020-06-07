@@ -22,7 +22,11 @@ add(req, res) {
         'name': name,
         'email': email,
         'currLevel': currLevel,
-        'friends': friendsList
+        'totScore': 0,
+        'friends': friendsList,
+        'comments': [],
+        'posts': [],
+        'profileImage': "null"
             //need to add comments and posts that the user has made that haven't been expired (need to think if its necessary)
     })
     
