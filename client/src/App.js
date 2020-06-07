@@ -13,13 +13,14 @@ const App = (props) => {
     const [username, setUserName] = useState(null);
     const [useremail, setUserEmail] = useState(null);
     const [userUid, setUserUid] = useState(null);
-    const [modalShow, setModalShow] = useState(false);
+/*    const [modalShow, setModalShow] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
-    const [modalBody, setModalBody] = useState("");
+    const [modalBody, setModalBody] = useState("");*/
 
   return (
       <div>
           <NavBar username={username} setUserName={setUserName} userUid={userUid} setUserUid={setUserUid} setUserEmail={setUserEmail}/>
+{/*
 
           <AppModal
               show={modalShow}
@@ -27,10 +28,11 @@ const App = (props) => {
               title={modalTitle}
               body={modalBody}
           />
+*/}
 
-          <Button variant="primary" onClick={() => {setModalShow(true); setModalTitle("Modal Title"); setModalBody('ModalBody')}}>
+        {/*  <Button variant="primary" onClick={() => {setModalShow(true); setModalTitle("Modal Title"); setModalBody('ModalBody')}}>
               Modal Test
-          </Button>
+          </Button>*/}
 
           {/*<Door/>*/}
           <Route exact path="/Login" component={LoginApp} />

@@ -13,7 +13,7 @@ function CarouselComponent(props)
 
         <Carousel interval={6000} controls={false}>
             {props.postsArray.map((post,index)=>(
-                <Carousel.Item>
+                <Carousel.Item key={index}>
                     <Emortion ENDPOINT={props.ENDPOINT} username={props.username} userUid={props.userUid} key={post._id}  socket={props.socket} getPosts={props.getPosts} emortion={post} index={index} size={props.postsArray.length}/>
                     {/*  <div><br/><br/><br/><br/></div>
                             <div className="carousel-caption d-none d-md-block text-black-50">
