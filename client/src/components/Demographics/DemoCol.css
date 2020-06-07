@@ -10,8 +10,8 @@
     }
   }
 
-.dp{
-    width: 90%;
+.dp:hover{
+    opacity: .8;
 }
 
 * {box-sizing: border-box}
@@ -24,13 +24,12 @@
 
 /* The overlay effect - lays on top of the container and over the image */
 .overlay {
-    position: absolute;
-    bottom: 0;
+    position: relative;
+    bottom: 20px;
+    width: 80%;
     background: rgb(0, 0, 0);
     background: rgba(0, 0, 0, 0.5); /* Black see-through */
     color: #f1f1f1;
-    width: 84%;
-    height: 100%;
     transition: .5s ease;
     opacity:0;
     color: white;

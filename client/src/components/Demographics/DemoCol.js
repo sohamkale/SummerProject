@@ -29,14 +29,15 @@ function DemoCol(props)
                 <br></br>
                 <center className="blackburger-font">
                     {props.message}
-
-                    <div className="container">
+                    <form>
+                    <div onClick={trig} className="container">
                         <input type="file" id="imgupload" style={{display:"none"}}/>
-                        <img onClick={trig} width="100%" src={require('./dpholder.png')} className="rounded-circle" />
-                            <div id="imgC" className="overlay rounded-circle">CHANGE</div>
+                        <img width="100%" src={require('./dpholder.png')} className="rounded-circle dp" />
+                            <div  className="overlay rounded-circle">CHANGE</div>
                     </div>
                     {props.username}<br/>
                     Score: {props.userscore}
+                    </form>
                 </center>
             </div>)
     }
@@ -44,12 +45,11 @@ function DemoCol(props)
     return (
         <ProfileImage/>
     );
-
+    function trig()
+    {
+        { $('#imgupload').trigger('click'); };
+    }
 
 }
-function trig()
-{
-    var x= document.getElementById('imgupload');
-    console.log(x);//.dispatchEvent(new Event('click'));
-}
+
 export default DemoCol;
