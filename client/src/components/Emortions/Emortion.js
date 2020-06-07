@@ -33,7 +33,7 @@ const Emortion = (props) => {
 
 
     const getComments = (postId) => {
-        props.getPosts();
+       props.getPosts();
     }
 
     function SendComment(e)
@@ -165,7 +165,7 @@ const Emortion = (props) => {
             return (<div>{emortion.comments.map((comment, index) => {
                 return (
                     // <li className="text-left">{comment.answer}</li>
-                    <Comment key={index} comment={comment} postId={emortion._id} getPosts={props.getPosts} userUid={props.userUid}/>
+                    <Comment getComments={getComments} key={index} comment={comment} postId={emortion._id} getPosts={props.getPosts} userUid={props.userUid}/>
                 )
             })}</div>)}
             else{

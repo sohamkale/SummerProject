@@ -20,7 +20,7 @@ const App = (props) => {
 
   return (
       <div>
-          <NavBar setUserScore={setUserScore} username={username} setUserName={setUserName} userUid={userUid} setUserUid={setUserUid} setUserEmail={setUserEmail}/>
+          <NavBar userscore={userscore} setUserScore={setUserScore} username={username} setUserName={setUserName} userUid={userUid} setUserUid={setUserUid} setUserEmail={setUserEmail}/>
 {/*
 
           <AppModal

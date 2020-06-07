@@ -36,8 +36,7 @@ const Comment = (props) => {
         };
 
         axios.post(`/api/posts/likeComment/${props.userUid}`, commentPostObj).then((res)=>{
-            console.log('sss')
-            props.getPosts();
+            props.getComments();
         }).catch(function(e){
             console.log(e)
         });
@@ -52,7 +51,7 @@ const Comment = (props) => {
 
         axios.post(`/api/posts/dislikeComment/${props.userUid}`, commentPostObj).then((res)=>{
             console.log('asdasd')
-            props.getPosts();
+            props.getComments();
         }).catch(function(e){
             console.log(e)
         });

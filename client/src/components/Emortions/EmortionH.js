@@ -34,6 +34,7 @@ const Emortion = (props) => {
 
     const getComments = (postId) => {
         props.getPosts();
+        setOpen(open);
     }
 
     function SendComment(e) {
