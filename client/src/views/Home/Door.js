@@ -33,7 +33,7 @@ function Door(props)
         return(<center><br/><div className="loader"></div></center>)
     }
 
-    return (props.userUid!=null) ? (<Home postsArray={postsArray} setPostsArray={setPostsArray} username={props.username} userUid={props.userUid}/>): (<Loading/>)
+    return (props.userUid!=null) ? (<Home userscore={props.userscore} postsArray={postsArray} setPostsArray={setPostsArray} username={props.username} userUid={props.userUid}/>): (<Loading/>)
 
 }
 

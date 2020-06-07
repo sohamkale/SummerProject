@@ -3,7 +3,7 @@ import {Route, Switch, Redirect} from 'react-router-dom';
 import DemoCol from '../../components/Demographics/DemoCol'
 import PostForm from '../../components/Emortions/PostForm'
 import Emortion from "../../components/Emortions/Emortion";
-import Carousel from "../../components/Emortions/carousel";
+import Carousel from "../../components/Emortions/Carousel";
 import {
     isMobile, isBrowser
 } from "react-device-detect";
@@ -65,7 +65,7 @@ const Home = (props) => {
         <div className="container-fluid">
             {/* {socketFunc()} */}
             <div className='row'>
-                <DemoCol message={"Welcome to the Den!"} username={props.username}/>
+                <DemoCol userscore={props.userscore} message={"Welcome to the Den!"} username={props.username}/>
                 <div className='col-md-5 col-lg-5 col-sm-12 postCol'>
                     <PostForm getPosts={getPosts} postsArray={props.postsArray} username={props.username}
                               userUid={props.userUid}/>

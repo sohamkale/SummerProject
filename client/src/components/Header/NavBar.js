@@ -23,8 +23,9 @@ const Navbarcomp = (props) => {
                 $.ajax({
                     url: '/api/users/'+user.uid,
                     type: 'GET',
-                    success: function (res) {
-                        props.setUserName(res);
+                    success: function (user) {
+                        props.setUserScore(user.totScore);
+                        props.setUserName(user.name);
                     }
                 });
             }

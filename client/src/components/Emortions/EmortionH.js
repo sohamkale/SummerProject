@@ -15,7 +15,7 @@ const Emortion = (props) => {
 
     //console.log(props)
     //states and vars
-    const [name, setName] = useState("anonymous");
+    // const [name, setName] = useState("anonymous");
     const [open, setOpen] = useState(false);
     const [answered, setAnswered] = useState(false);
     //const [comments, setComments] = useState(props.emortion.comments);
@@ -24,17 +24,16 @@ const Emortion = (props) => {
 
     useEffect(() => {
         didUserAnswer();
-        if (props.emortion.name)
-            setName(props.emortion.name);
-        else
-            GetUserName(emortion.postObjId);
+        // if (props.emortion.name)
+        //     setName(props.emortion.name);
+        // else
+        //     GetUserName(emortion.userId);
 
     }, []);
 
 
     const getComments = (postId) => {
-        var username = props.userUid;
-        props.socket.emit('addComment', postId, () => props.setPostsArray([]));
+        props.getPosts();
     }
 
     function SendComment(e) {
@@ -79,18 +78,18 @@ const Emortion = (props) => {
         );
     }
 
-    function GetUserName(userId) {
-        axios.get('/api/users/' + userId)
-            .then((res) => {
-                if (res.data) {
-                    //console.log("data is "+res.data)
-                    setName(res.data);
-                } else {
-                    //console.log(res)
-                    setName("Not Found");
-                }
-            });
-    }
+    // function GetUserName(userId) {
+    //     axios.get('/api/users/' + userId)
+    //         .then((res) => {
+    //             if (res.data) {
+    //                 //console.log("data is "+res.data)
+    //                 setName(res.data.name);
+    //             } else {
+    //                 //console.log(res)
+    //                 setName("Not Found");
+    //             }
+    //         });
+    // }
 
     function didUserAnswer() {
         var postObj = {
@@ -105,7 +104,7 @@ const Emortion = (props) => {
     }
 
     const likePost = () => {
-        if (props.userUid != emortion.postObjId) {
+        if (props.userUid != emortion.userId) {
             var likePostObj = {
                 _id: props.emortion._id,
             };
@@ -139,7 +138,7 @@ const Emortion = (props) => {
     }
 
     function AnswerAgent() {
-        if (props.userUid != emortion.postObjId & new Date(emortion.revealsAt) >= new Date() & !answered) return (<div>
+        if (props.userUid != emortion.userId & new Date(emortion.revealsAt) >= new Date() & !answered) return (<div>
             <form id={'answerForm' + emortion._id} onSubmit={SendComment}>
                 <input readOnly hidden name="postId" value={props.emortion._id}></input>
                 <input readOnly hidden name="userId" value={props.userUid}></input>
@@ -149,7 +148,7 @@ const Emortion = (props) => {
                 <span><Button type="submit" variant="info">Evaluate</Button></span>
             </form>
         </div>)
-        else if (props.userUid == emortion.postObjId)
+        else if (props.userUid == emortion.userId)
             return (<center><b className="text-success">Cannot answer own posts!</b></center>)
         else if (new Date(emortion.revealsAt) < new Date())
             return (<center><b className="text-success">Answer revealed!</b></center>);
@@ -159,7 +158,7 @@ const Emortion = (props) => {
     }
 
     function Comments() {
-        if (answered || emortion.postObjId == props.userUid || new Date(emortion.revealsAt) <= new Date()) {
+        if (answered || emortion.userId == props.userUid || new Date(emortion.revealsAt) <= new Date()) {
             return (<div>{emortion.comments.map((comment, index) => {
                 return (
                     // <li className="text-left">{comment.answer}</li>
@@ -182,7 +181,7 @@ const Emortion = (props) => {
                 {/* {setReturnNo(returnNo+1)} */}
                 <div className="card bg-light">
                     <div className="card-body">
-                        <div className="blackburger-font">Emortion By {name}</div>
+                        <div className="blackburger-font">Emortion By {emortion.name}</div>
                         <div>
                             {emortion.message.emojiArray.map((position, index) => (
                                 <Emoticon key={index} position={position}/>

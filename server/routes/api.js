@@ -6,7 +6,7 @@ const usersController = require('../controllers/users')
 
 router.get('/users', usersController.all);
 router.post('/users/add', usersController.add);
-router.get('/users/:id', usersController.findName);
+router.get('/users/:id', usersController.find);
 
 router.get('/posts', postsController.all);
 router.get('/posts/:id', postsController.allbyid);

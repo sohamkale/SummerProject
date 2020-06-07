@@ -31,7 +31,7 @@ function ProfileDoor(props)
         return(<center><br/><div className="loader"></div></center>)
     }
 
-    return (props.userUid!=null) ? (<Profile postsArray={postsArray} setPostsArray={setPostsArray} username={props.username} userUid={props.userUid}/>): (<Loading/>)
+    return (props.userUid!=null) ? (<Profile userscore={props.userscore} postsArray={postsArray} setPostsArray={setPostsArray} username={props.username} userUid={props.userUid}/>): (<Loading/>)
 
 }
 

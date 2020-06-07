@@ -5,7 +5,6 @@ import {DislikeButton, LikeButton} from "./thumbs";
 
 
 const Comment = (props) => {
-    //const [name, setName] = useState("Anonymous");
     useEffect(()=>{
         // console.log(props.comment);
         // if(props.comment.name)

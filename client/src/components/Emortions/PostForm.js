@@ -27,6 +27,7 @@ const PostForm = (props) => {
                     <div className="blackburger-font">TELL ME AN EMORTION!</div>
                     <form id='thePost' onSubmit={submit}>
                         <input readOnly hidden name="userId" value={props.userUid ? props.userUid: ""}></input>
+                        <input readOnly hidden name="username" value={props.username ? props.username: ""}></input>
                         <label htmlFor="type" className='form-check-label'>Type: &nbsp; </label>
                         <select id="postType" name='type' className='form-control-sm'>
                             <option>Timer</option>
