@@ -1,11 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import axios from "axios";
-import Home from './Home'
-import './Home.css'
-import LoginApp from '../Login/LoginApp'
+import Profile from './Profile'
 import fire from "../../config/Fire";
 
-function Door(props)
+function ProfileDoor(props)
 {
     const [postsArray, setPostsArray] = useState([]);
 
@@ -14,13 +12,13 @@ function Door(props)
         fire.auth().onAuthStateChanged((user) => {
             if(!user){
                 //alert("Please sign in or create an account to continue!!");
-                 window.location.href = "/login";
+                window.location.href = "/login";
             }
             else {
-                axios.get('/api/posts')
+                axios.get('/api/posts/'+user.uid)
                     .then((res)=>{
                         if(res.data.length > 0){
-                           setPostsArray(res.data);
+                            setPostsArray(res.data);
                         }
                     });
             }
@@ -33,8 +31,8 @@ function Door(props)
         return(<center><br/><div className="loader"></div></center>)
     }
 
-    return (props.userUid!=null) ? (<Home userscore={props.userscore} postsArray={postsArray} setPostsArray={setPostsArray} username={props.username} userUid={props.userUid}/>): (<Loading/>)
+    return (props.userUid!=null) ? (<Profile userscore={props.userscore} postsArray={postsArray} setPostsArray={setPostsArray} username={props.username} userUid={props.userUid}/>): (<Loading/>)
 
 }
 
-export default Door;
+export default ProfileDoor;

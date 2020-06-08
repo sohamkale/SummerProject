@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from "react"
+import { useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/Navbar';
@@ -9,7 +10,6 @@ import * as ReactBootStrap from "react-bootstrap";
 import axios from "axios";
 import $ from "jquery";
 import './NavBar.css'
-
 
 const Navbarcomp = (props) => {
     useEffect(() => {
@@ -23,8 +23,9 @@ const Navbarcomp = (props) => {
                 $.ajax({
                     url: '/api/users/'+user.uid,
                     type: 'GET',
-                    success: function (res) {
-                        props.setUserName(res);
+                    success: function (user) {
+                        props.setUserScore(user.totScore);
+                        props.setUserName(user.name);
                     }
                 });
             }
@@ -33,20 +34,6 @@ const Navbarcomp = (props) => {
 
     }, []);
 
-    /*useLayoutEffect (() => {
-        if(userUid != null){
-        var db = fire.database();
-        var ref = db.ref(`${userUid}/Navbar`);
-        ref.on("value", function(userSnapshot) {
-            userSnapshot.forEach(function(snapshot) {
-                if(snapshot.key === "initials"){
-
-                    setInitials(snapshot.val());
-                }
-            });
-        });
-    }
-    }, [userUid])*/
 
     const logout = () => {
         window.location.href = "/login";
@@ -66,7 +53,10 @@ const Navbarcomp = (props) => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
                 <li className="nav-item active">
-                    <a className="nav-link" href="#">Den <span className="sr-only">(current)</span></a>
+                    <a className="nav-link" href="/Home">Den <span className="sr-only">(current)</span></a>
+                </li>
+                <li className="nav-item active">
+                    <a className="nav-link" href="/Feedback">Feedback <span className="sr-only">(current)</span></a>
                 </li>
             </ul>
             <LoginButton/>
@@ -79,7 +69,8 @@ const Navbarcomp = (props) => {
 
     function LoginButton()
     {
-        return (props.userUid!=null)? (<div className="text-white">{props.username} &nbsp; <input onClick={ logout } className="btn btn-outline-info my-2 my-sm-0" type="button" value="Logout"></input></div>):
+        return (props.userUid!=null)? (<div className="text-white"><a className="btn btn-link" href="/Profile">{props.username}&nbsp;<span className="badge badge-primary">Score: {props.userscore}</span></a>
+                 &nbsp; <input onClick={ logout } className="btn btn-outline-info my-2 my-sm-0" type="button" value="Logout"></input></div>):
             (<Nav.Link className="btn btn-outline-info my-2 my-sm-0" href="/Login">Login</Nav.Link>);
     }
 }

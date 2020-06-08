@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import EmojiInputBox from '../EmojiInputBox'
-import Emoji from "../Emoji"
+import EmojiInputBox from './EmojiInputBox'
+import Emoji from "./Emoji"
 import { Button } from 'react-bootstrap'
-import fire from "../../../config/Fire";
+import fire from "../../config/Fire";
 import $ from 'jquery'
 import axios from 'axios';
 
@@ -27,6 +27,7 @@ const PostForm = (props) => {
                     <div className="blackburger-font">TELL ME AN EMORTION!</div>
                     <form id='thePost' onSubmit={submit}>
                         <input readOnly hidden name="userId" value={props.userUid ? props.userUid: ""}></input>
+                        <input readOnly hidden name="username" value={props.username ? props.username: ""}></input>
                         <label htmlFor="type" className='form-check-label'>Type: &nbsp; </label>
                         <select id="postType" name='type' className='form-control-sm'>
                             <option>Timer</option>
@@ -43,9 +44,9 @@ const PostForm = (props) => {
                         <center><div className="text-danger"><b id="empty_warning"></b></div></center>
                         <Emoji />
                         <div className="form-group row">
-                            <label  className="col-sm-2 col-form-label">Secret</label>
+                            <label  className="col-sm-2 col-form-label" style={{fontFamily:'Ink Free', fontWeight: 'bold', fontSize: '12px', backgroundColor:'rgba(173, 216, 230, 0.4)!important'}}>SECRET</label>
                             <div className="col-sm-6">
-                                <input defaultValue="" required id="postSecret" name="secretAnswer" className="form-control"></input>
+                                <input style={{fontFamily:'Ink Free', fontWeight: 'bold'}} defaultValue="" required id="postSecret" name="secretAnswer" className="form-control"></input>
                             </div>
                             <Button size="sm" type='submit' className='d-inline' variant="secondary" className="col-sm-2">POST</Button>
                         </div>
