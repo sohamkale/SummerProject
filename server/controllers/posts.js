@@ -27,14 +27,14 @@ const postsController = {
         ).catch(err => res.status('400').json('Error: ' + err));
     },
 
-    allbyid(req, res) {
+    allPostsByUserId(req, res) {
         let currDateTime = new Date();
         var validPosts = [];
         //how many days do you want the post to expire by?
         /*     var expireDays =3 ;
              var three_day = 1000 * 60 * 60 * 24* expireDays;*/
 
-        PostModel.find({'userId': req.params.id}).sort({createdAt: -1}).then(
+        PostModel.find({'userId': req.params.userId}).sort({createdAt: -1}).then(
             posts => {
                 console.log(posts)
                 posts.map((post) => {
@@ -45,6 +45,15 @@ const postsController = {
                     validPosts.push(post);
                 })
                 res.json(validPosts)
+            }
+        ).catch(err => res.status('400').json('Error: ' + err));
+    },
+
+    getPost(req, res) {
+        PostModel.find({'_id': req.params._id}).sort({createdAt: -1}).then(
+            posts => {
+                console.log(posts)
+                res.json(posts);  
             }
         ).catch(err => res.status('400').json('Error: ' + err));
     },
@@ -361,7 +370,41 @@ const postsController = {
             }
         })
 
-    }
+    },
+    getComment(req, res) {
+        PostModel.aggregate([
+        {$unwind : "$comments"},
+        { $match : {"comments._id" : new mongoose.Types.ObjectId(req.params._id) } },
+        {$project : {
+        _id : "$comments._id",
+        answer: "$comments.answer",
+        userId: "$comments.userId",
+        likes: "$comments.likes",
+        score: "$comments.score",
+        name: "$comments.name"}}
+        ], function(err, comment) {
+        console.log(comment);
+        res.json(comment);
+        });
+        },
+        
+        getCommentByUser(req, res) {
+        PostModel.aggregate([
+        {$unwind : "$comments"},
+        { $match : {"comments.userId" : req.params._id } },
+        {$project : {
+        _id : "$comments._id",
+        answer: "$comments.answer",
+        userId: "$comments.userId",
+        likes: "$comments.likes",
+        score: "$comments.score",
+        name: "$comments.name"}}
+        ], function(err, comment) {
+        console.log(comment);
+        res.json(comment);
+        });
+        }
+   
 }
 
 function objectify(formArray) {//serialize data function

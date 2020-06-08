@@ -31,6 +31,22 @@ add(req, res) {
 
 find(req, res) {
     User.find({"userId": req.params.id}).then(users => res.json(users[0])).catch(err => res.status('400').json('Error: ' + err));
+},
+
+addProfileImage(req, res){
+    const profileImageUrl = req.body.url;
+    console.log(profileImageUrl);
+
+    User.findOneAndUpdate({"userId": req.params.userId}, {profileImage: profileImageUrl.toString()}, (err, data) => {
+        if (err) {
+            console.log('3')
+            res.status('404');
+            res.json({error: 'No data with the specified id was found!'});
+        } else {
+            console.log(data);
+            res.json(data);
+        }
+    });
 }
 }
 module.exports = usersController;

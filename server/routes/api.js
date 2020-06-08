@@ -8,11 +8,13 @@ const feedbackController = require('../controllers/feedback')
 router.get('/users', usersController.all);
 router.post('/users/add', usersController.add);
 router.get('/users/:id', usersController.find);
+router.post('/users/addProfileImage/:userId', usersController.addProfileImage);
 
 router.post('/feedback',feedbackController.add);
 
 router.get('/posts', postsController.all);
-router.get('/posts/:id', postsController.allbyid);
+router.get('/posts/:_id', postsController.getPost);
+router.get('/postsByUser/:userId', postsController.allPostsByUserId);
 
 router.post('/posts/add', postsController.add);
 router.post('/posts/answer/:id', postsController.addComments);
@@ -21,5 +23,8 @@ router.post('/posts/like/:userId', postsController.likePosts);
 router.post('/posts/dislike/:userId', postsController.dislikePosts);
 router.post('/posts/likeComment/:userId', postsController.likeComment);
 router.post('/posts/dislikeComment/:userId', postsController.dislikeComment);
+
+router.get('/posts/comments/:_id', postsController.getComment);
+router.get('/posts/commentsByUser/:_id', postsController.getCommentByUser);
 
 module.exports = router;
