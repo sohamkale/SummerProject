@@ -35,7 +35,7 @@ function DemoCol(props)
         realUploadBtn.click();
         realUploadBtn.addEventListener('change', () => {
         if(realUploadBtn.value){
-            alert(realUploadBtn.value);
+
             const uploadTask = storage.ref(`images/${props.user.userId}/profileImage/${"image"}`).put(realUploadBtn.files[0]);
         
             uploadTask.on("state_changed", snapshot => {
