@@ -5,9 +5,9 @@ import {Picker} from 'emoji-mart'
 import {useMediaPredicate} from "react-media-hook";
 
 function Emoji() {
-    const isMobile = useMediaPredicate("(max-width: 767px)");
+/*    const isMobile = useMediaPredicate("(max-width: 767px)");
     const isTablet = useMediaPredicate("(min-width: 768px)");
-    const isDesktop = useMediaPredicate("(min-width: 1025px)");
+    const isDesktop = useMediaPredicate("(min-width: 1025px)");*/
 
     return (
         <div>
@@ -25,7 +25,7 @@ function Emoji() {
 
     function PickerFunc() {
         return <Picker id="picker" style={{position: "relative", width: "100%", height: "100%"}}
-                       onClick={AppendEmoji}  /*include={["flags","foods"]}*/ /*exclude={["recent","smileys","foods","Search","people"]}*/ />
+                       onClick={AppendEmoji} /* include={["flags","foods","search"]}*/ /*exclude={["recent","smileys","foods","Search","people"]}*/ />
         /*   if(isMobile){
              return <Picker style={{ width: '90vw', position: 'absolute', top: '2vh', right: '-23vw'}} onClick={AppendEmoji}  /!*include={["flags"]}*!/ exclude={["recent"]} />
            }else if(isTablet){

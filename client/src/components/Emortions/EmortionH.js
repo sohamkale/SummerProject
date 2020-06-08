@@ -164,7 +164,7 @@ const Emortion = (props) => {
             return (<div>{emortion.comments.map((comment, index) => {
                 return (
                     // <li className="text-left">{comment.answer}</li>
-                    <Comment key={index} comment={comment} postId={emortion._id} getPosts={props.getPosts}
+                    <Comment getComments={getComments} key={index} comment={comment} postId={emortion._id} getPosts={props.getPosts}
                              user={props.user}/>
                 )
             })}</div>)
