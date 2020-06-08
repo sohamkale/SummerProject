@@ -3,6 +3,8 @@
 const router = require('express').Router();
 let PostModel = require('../models/post.model');
 let UserModel = require('../models/user.model');
+let NotificationModel = require('../models/notification.model');
+
 const mongoose = require('mongoose');
 const express = require('../config/express');
 const postsController = {
@@ -185,6 +187,19 @@ const postsController = {
                                 res.status('404');
                                 res.json({error: 'No data with the specified id was found!'});
                             } else {
+                                //send notification to the user!!
+                                const newNotif = new NotificationModel(
+                                    {
+                                        'userId': data.userId,
+                                        'postedById':  userId,
+                                        'postedByName': name,
+                                        'seen':false,
+                                        'message': name+' answered your Emortion and scored '+score,
+                                        'postId':data._id,
+                                        'commentId': _id,
+                                    }
+                                );
+                                newNotif.save().then(() => console.log('done sending notification')).catch(err => console.log(err));
                                 //res.json(data);
                             }
                         });
@@ -195,7 +210,7 @@ const postsController = {
                                 res.status('404');
                                 res.json({error: 'No data with the specified id was found!'});
                             } else {
-                                console.log('jjjj done')
+
                                 res.json("Score updated");
                             }
                         });
@@ -240,7 +255,6 @@ const postsController = {
                             res.status('404');
                             res.json({error: err});
                         } else {
-                            console.log(data);
                             res.status('200');
                             res.json(data);
                         }
@@ -251,7 +265,19 @@ const postsController = {
                             res.status('404');
                             res.json({error: err});
                         } else {
-                            console.log(data);
+                            //send notification to the user!!
+                            const newNotif = new NotificationModel(
+                                {
+                                    'userId': data.userId,
+                                    'postedById':  req.params.id,
+                                    'postedByName': req.body.name,
+                                    'seen':false,
+                                    'message': req.body.name+' liked your post',
+                                    'postId':data._id,
+                                    //'commentId': _id,
+                                }
+                            );
+                            newNotif.save().then(() => console.log('done sending notification')).catch(err => console.log(err));
                             res.status('200');
                             res.json(data);
                         }
@@ -287,7 +313,6 @@ const postsController = {
         var shouldUpdate = false;
         PostModel.find({"_id": req.body.post_id}).then(function (data) {
             if (data[0].comments) {
-                console.log("Inside data[0].comments");
                 for (var i = 0; i < data[0].comments.length; i++) {
                     if (data[0].comments[i]._id == req.body.comment_id) {
                         if (data[0].comments[i].likes.includes(req.params.userId)) {
@@ -295,6 +320,19 @@ const postsController = {
                         } else {
                             shouldUpdate = true;
                             data[0].comments[i].likes.push(req.params.userId);
+                            //send notification to the user!!
+                            const newNotif = new NotificationModel(
+                                {
+                                    'userId': data.userId,
+                                    'postedById':  req.params.id,
+                                    'postedByName': req.body.name,
+                                    'seen':false,
+                                    'message': req.body.name+' liked your Comment.',
+                                    'postId':data._id,
+                                    'commentId': req.body.comment_id,
+                                }
+                            );
+                            newNotif.save().then(() => console.log('done sending notification')).catch(err => console.log(err));
                             break;
                         }
                     }

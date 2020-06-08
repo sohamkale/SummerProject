@@ -6,11 +6,10 @@ import NavBar from "./components/Header/NavBar";
 import LoginApp from "./views/Login/LoginApp";
 import Signup from "./views/Signup/Signup";
 import Feedback from './views/Feedback/Feedback'
-
 const App = (props) => {
     const [user, setUser] = useState(null);
 
-/*    const [modalShow, setModalShow] = useState(false);
+/*  const [modalShow, setModalShow] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
     const [modalBody, setModalBody] = useState("");*/
 

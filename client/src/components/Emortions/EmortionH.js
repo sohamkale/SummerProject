@@ -108,6 +108,7 @@ const Emortion = (props) => {
         if (props.user.userId != emortion.userId) {
             var likePostObj = {
                 _id: props.emortion._id,
+                name: props.user.name
             };
 
             axios.post(`/api/posts/like/${props.user.userId}`, likePostObj).then((res) => {

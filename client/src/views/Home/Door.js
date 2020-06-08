@@ -50,12 +50,12 @@ function Door(props)
     {
         return(<center><br/><div className="loader"></div></center>)
     }
-    if(location == "/Home"|| location =="/home")
+    if(location == "/Home"|| location =="/home" || location=='')
         return (props.user) ? (<Home user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
     else if (location =="/Profile"||location=="/profile")
         return (props.user) ? (<Profile user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
     else //Not Found Page
-        return <NotFound/>
+        return <Loading/>
 }
 
 export default Door;

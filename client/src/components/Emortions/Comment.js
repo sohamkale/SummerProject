@@ -32,7 +32,8 @@ const Comment = (props) => {
         {
             var commentPostObj = {
             comment_id: props.comment._id,
-            post_id: props.postId
+            post_id: props.postId,
+                name:props.user.name
         };
 
         axios.post(`/api/posts/likeComment/${props.user.userId}`, commentPostObj).then((res)=>{
