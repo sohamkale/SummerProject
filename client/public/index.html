@@ -59,14 +59,18 @@
           if (e.target.id == "popup" || $(e.target).parents("#popup").length) {
             //alert("Inside div");
           } else {
-            document.getElementById("myPopup").classList.remove("show");
+            try{
+              document.getElementById("myPopup").classList.remove("show");
+            }catch{}
           }
         });
         //if(e.target.id!="")
       }
-      /*function globalClick(){
-
-      }*/
+      function ShowModal(txt){
+        $('#warningModal').modal("show");
+      }
     </script>
+    <!--&lt;!&ndash;AddSense&ndash;&gt;
+    <script data-ad-client="ca-pub-2371705643909578" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
   </body>
 </html>
