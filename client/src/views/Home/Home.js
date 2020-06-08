@@ -45,7 +45,10 @@ const Home = (props) => {
         socket.emit('addPosts', {currUser}, () => props.setPostsArray([]));
     }
 
+
     function DeviceView() {
+        if(props.postsArray==null||props.postsArray.length==0)
+            return (<center><div className="btn btn-warning font-weight-bold">There are no posts for you in the storage :(</div></center>)
         return (isBrowser) ? (
                 <div id='emortions'>
                     {props.postsArray.map((post, index) => (
@@ -65,8 +68,8 @@ const Home = (props) => {
             {/* {socketFunc()} */}
             <div className='row'>
                 <DemoCol user={props.user} message={"Welcome to the Den!"}/>
-                <div className='col-md-5 col-lg-5 col-sm-12 postCol'>
-                    <PostForm getPosts={getPosts} postsArray={props.postsArray} user={props.user}/>
+                <div className={'col-md-5 col-lg-5 col-sm-12 postCol'}>
+                    <div className={props.postClass}><PostForm getPosts={getPosts} postsArray={props.postsArray} user={props.user}/></div>
                     <DeviceView/>
                 </div>
                 <div className="col-lg-2 col-md-2 d-sm-none"></div>

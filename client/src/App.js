@@ -6,6 +6,8 @@ import NavBar from "./components/Header/NavBar";
 import LoginApp from "./views/Login/LoginApp";
 import Signup from "./views/Signup/Signup";
 import Feedback from './views/Feedback/Feedback'
+import './font.css'
+import Users from "./views/Users/Users";
 const App = (props) => {
     const [user, setUser] = useState(null);
 
@@ -36,6 +38,8 @@ const App = (props) => {
           <Route exact path="/Feedback" component={Feedback} />
           <Route exact path="/Home" render={(props) => <Door {...props} user={user} />}/>
           <Route exact path="/Profile" render={(props) => <Door user={user} />}/>
+          <Route exact path="/Posts/:id" render={(props) => <Door user={user} />}/>
+          <Route exact path="/Users" render={(props) => <Users user={user} />}/>
           <Route exact path="/" render={(props) => <Door {...props} user={user} />}/>
           {/*<Route component={NotFound}/>*/}
 
