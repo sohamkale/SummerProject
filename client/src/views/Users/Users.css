@@ -21,7 +21,7 @@
 
 /* The overlay effect - lays on top of the container and over the image */
 .overlay {
-    position: absolute;
+    position: relative;
     bottom: 0;
     background: rgb(0, 0, 0);
     background: rgba(0, 0, 0, 0.5); /* Black see-through */
@@ -35,6 +35,7 @@
     padding: 20px;
     text-align: center;
     z-index: 2;
+    margin-top: -10%;
 }
 
 /* When you mouse over the container, fade in the overlay title */
@@ -46,3 +47,11 @@
 /*    margin-bottom: 10px!important;*/
 /*    overflow: hidden;*/
 /*}*/
+
+.image-name{
+    background-color: #343a40!important;
+    border-radius: 10px;
+    width: 80%;
+    margin-bottom: 20px;
+    z-index: 2;
+}

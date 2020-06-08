@@ -19,8 +19,9 @@ function Users(props) {
         var url=properties.user.profileImage;
         return (<div className="col-2">
                 <a href={'./profile/'+properties.user.userId}><div className="img-container">
-                    <img src={(url === null || url === "null") ? require('./dpholder.png') : url} alt="Avatar" className="image"/>
-                    <div className="overlay">{properties.user.name}</div>
+                    <img data-toggle="tooltip" title={properties.user.name} src={(url === null || url === "null") ? require('./dpholder.png') : url} alt="Avatar" className="image"/>
+                    {/*<div className="overlay">{properties.user.name}</div>*/}
+                    <center><div className="image-name text-white">{properties.user.name}</div></center>
                 </div></a>
             </div>
         )
