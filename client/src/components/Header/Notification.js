@@ -14,29 +14,36 @@ function Notification(props) {
         {
             axios.get('/api/notifications/'+props.user.userId)
                 .then((res)=>{
-                    setNotifications(res.data);
+                    //setNotifications(res.data);
+                    var arr=[];
                     var count =0;
                     res.data.forEach((item,index)=>{
                         if(!item.seen)
-                            count++
+                        {
+                            count++;
+                            arr.push(item);
+                        }
                     })
                     setNotifCounts(count);
+                    setNotifications(arr);
                 });
         }
     }, [props.user]);
 
     if(props.user)
         return (
-        <div className="popup my-4 notifBox my-sm-0 ml-lg-3" id="popup">
+        <div className="popup my-4 notifBox my-sm-0 ml-lg-3" id="notif">
             <div className="" onClick={showNotifications}>
                 <img src={require('./notification.png')} width="25px" height="auto" alt=""/>
-                <NotifBadge/>
+                <NotifBadge />
             </div>
             <div className='popuptext' id='notifications'>
                 <div className="notificationBox">
-                    {notifications.map((notif) =>
+                    {
+                        notifications.map((notif) =>
                         <a href={"/Posts/"+notif.postId} key={notif._id} className={"notification"}>{notif.message}</a>
                     )}
+                    <center><a href={"/notifications"} className={"notification"} style={{textDecoration: 'underline'}}>See All Notifications</a></center>
                 </div>
             </div>
             {/* <span className="popuptext" id="myPopup">Popup text...</span> */}

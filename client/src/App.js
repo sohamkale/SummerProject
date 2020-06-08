@@ -41,6 +41,7 @@ const App = (props) => {
           <Route exact path="/Profile/:id" render={(props) => <Door user={user} />}/>
           <Route exact path="/Posts/:id" render={(props) => <Door user={user} />}/>
           <Route exact path="/Users" render={(props) => <Users user={user} />}/>
+          <Route exact path="/Notifications" render={(props) => <Door user={user} />}/>
           <Route exact path="/" render={(props) => <Door {...props} user={user} />}/>
           {/*<Route component={NotFound}/>*/}
 

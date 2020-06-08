@@ -31,7 +31,7 @@ const notificationController = {
     all(req,res)
     {
         var validPosts=[];
-        NotificationModel.find({'userId':req.params.id}).then(
+        NotificationModel.find({'userId':req.params.id}).sort({'createdAt':-1}).then(
             notifs => {
                 notifs.map((notif) => {
                     validPosts.push(notif);

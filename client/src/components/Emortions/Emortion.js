@@ -72,7 +72,8 @@ const Emortion = (props) => {
             );
         else return (
             <div>
-                <span className="badge badge-warning">Answer reveals at {new Date(emortion.revealsAt).toLocaleTimeString()} or when Answered</span>
+                <span className="badge badge-warning">Answer reveals at {new Date(emortion.revealsAt).toLocaleTimeString()}</span>
+                <span className="badge badge-warning">or when answered</span>
             </div>
         );
     }

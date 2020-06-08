@@ -60,6 +60,14 @@
           } else {
             try{
               document.getElementById("myPopup").classList.remove("show");
+
+            }catch{}
+          }
+          if (e.target.id == "notif" || $(e.target).parents("#notif").length) {
+            //alert("Inside div");
+          } else {
+            try{
+              document.getElementById("notifications").classList.remove("show");
             }catch{}
           }
         });

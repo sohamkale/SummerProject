@@ -6,6 +6,7 @@ import './Home.css'
 import fire from "../../config/Fire";
 import Profile from "../Profile/Profile";
 import ProfileV from "../Profile/ProfileV";
+import AllNotifications from '../Notifications/AllNotifications';
 import NotFound from "../../components/Shared/NotFound";
 
 function Door(props)
@@ -103,6 +104,8 @@ function Door(props)
     }
     else if (location.includes("/posts"))
         return (props.user) ? (<Home postClass="d-none" user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
+    else if (location==("/notifications"))
+        return (props.user) ? (<AllNotifications postClass="d-none" user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
     else //Not Found Page
     {
         console.log(location)
