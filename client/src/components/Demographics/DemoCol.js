@@ -14,7 +14,7 @@ function DemoCol(props)
         if(props.user){
             setUrl(props.user.profileImage);
         }
-    }, []);
+    }, props);
 
     const imageClick = e => {
         window.location="/profile";
@@ -59,6 +59,20 @@ function DemoCol(props)
     // alert("image clicked");
     }
 
+    function ChangeOption()
+    {
+            var location=useLocation().pathname;
+            return (location.toLowerCase()==="/profile")?(
+                <div className="container">
+                    <input type="file" onChange={onImageChange} id="imgUpload" style={{display:"none"}}/>
+                    <img width="100%" onClick={changeImage} src={(url === null || url === "null") ? require('./dpholder.png') : url} className="rounded-circle dp" />
+                    <div  className="overlay rounded-circle">CHANGE</div>
+                </div>
+               ):( <div className="container">
+                <img width="100%" src={(props.user.profileImage === null || props.user.profileImage === "null") ? require('./dpholder.png') : props.user.profileImage} className="rounded-circle dp" />
+            </div>)
+    }
+
     function ProfileImage()
     {
         var location =useLocation().pathname;
@@ -77,11 +91,8 @@ function DemoCol(props)
                 <center className="blackburger-font">
                     {props.message}
                     <form>
-                    <div className="container">
-                        <input type="file" onChange={onImageChange} id="imgUpload" style={{display:"none"}}/>
-                        <img width="100%" onClick={changeImage} src={(url === null || url === "null") ? require('./dpholder.png') : url} className="rounded-circle dp" />
-                            <div  className="overlay rounded-circle">CHANGE</div>
-                    </div>
+                        <ChangeOption/>
+
                     {props.user.name}<br/>
                     Score: {props.user.totScore}
                     </form>

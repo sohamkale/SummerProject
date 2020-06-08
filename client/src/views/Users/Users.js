@@ -18,10 +18,10 @@ function Users(props) {
     function User(properties) {
         var url=properties.user.profileImage;
         return (<div className="col-2">
-                <div className="img-container">
+                <a href={'./profile/'+properties.user.userId}><div className="img-container">
                     <img src={(url === null || url === "null") ? require('./dpholder.png') : url} alt="Avatar" className="image"/>
                     <div className="overlay">{properties.user.name}</div>
-                </div>
+                </div></a>
             </div>
         )
     }

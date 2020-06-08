@@ -38,6 +38,7 @@ const App = (props) => {
           <Route exact path="/Feedback" component={Feedback} />
           <Route exact path="/Home" render={(props) => <Door {...props} user={user} />}/>
           <Route exact path="/Profile" render={(props) => <Door user={user} />}/>
+          <Route exact path="/Profile/:id" render={(props) => <Door user={user} />}/>
           <Route exact path="/Posts/:id" render={(props) => <Door user={user} />}/>
           <Route exact path="/Users" render={(props) => <Users user={user} />}/>
           <Route exact path="/" render={(props) => <Door {...props} user={user} />}/>
