@@ -67,7 +67,7 @@ function DemoCol(props)
                 <br></br>
                 <center className="blackburger-font">
                     {props.message}
-                    <img width="90%" onClick={imageClick} src={(url === null) ? require('./dpholder.png') : url} className="rounded-circle" alt="Cinque Terre"/>
+                    <img width="90%" onClick={imageClick} src={(url === null || url === "null") ? require('./dpholder.png') : url} className="rounded-circle" alt="Cinque Terre"/>
                     {props.user.name}<br/>
                     Score: {props.user.userscore}
                 </center>
@@ -79,7 +79,7 @@ function DemoCol(props)
                     <form>
                     <div className="container">
                         <input type="file" onChange={onImageChange} id="imgUpload" style={{display:"none"}}/>
-                        <img width="100%" onClick={changeImage} src={(url === null) ? require('./dpholder.png') : url} className="rounded-circle dp" />
+                        <img width="100%" onClick={changeImage} src={(url === null || url === "null") ? require('./dpholder.png') : url} className="rounded-circle dp" />
                             <div  className="overlay rounded-circle">CHANGE</div>
                     </div>
                     {props.user.name}<br/>
