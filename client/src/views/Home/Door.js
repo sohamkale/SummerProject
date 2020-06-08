@@ -32,7 +32,7 @@ function Door(props)
                 }
                 else if ((location =="/Profile"||location=="/profile"))
                 {
-                    axios.get('/api/posts/'+user.uid)
+                    axios.get('/api/postsByUser/'+user.uid)
                         .then((res)=>{
                             if(res.data.length > 0){
                                 console.log(res)

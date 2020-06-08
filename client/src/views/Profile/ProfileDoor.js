@@ -15,7 +15,7 @@ function ProfileDoor(props)
                 window.location.href = "/login";
             }
             else {
-                axios.get('/api/posts/'+user.uid)
+                axios.get('/api/postsByUser/'+user.uid)
                     .then((res)=>{
                         if(res.data.length > 0){
                             setPostsArray(res.data);
