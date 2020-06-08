@@ -2,26 +2,21 @@ import React, {useEffect, useState} from 'react';
 import { Route, Switch, Redirect  } from 'react-router-dom';
 import NotFound from "./components/Shared/NotFound";
 import Door from './views/Home/Door'
-import ProfileDoor from './views/Profile/ProfileDoor'
 import NavBar from "./components/Header/NavBar";
 import LoginApp from "./views/Login/LoginApp";
 import Signup from "./views/Signup/Signup";
 import Feedback from './views/Feedback/Feedback'
-import AppModal from "./components/Shared/Modal"
-import {Button} from "react-bootstrap";
 
 const App = (props) => {
-    const [username, setUserName] = useState(null);
-    const [useremail, setUserEmail] = useState(null);
-    const [userUid, setUserUid] = useState(null);
-    const [userscore, setUserScore] = useState(0);
+    const [user, setUser] = useState(null);
+
 /*    const [modalShow, setModalShow] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
     const [modalBody, setModalBody] = useState("");*/
 
   return (
       <div>
-          <NavBar userscore={userscore} setUserScore={setUserScore} username={username} setUserName={setUserName} userUid={userUid} setUserUid={setUserUid} setUserEmail={setUserEmail}/>
+          <NavBar user={user} setUser={setUser}/>
 {/*
 
           <AppModal
@@ -40,9 +35,9 @@ const App = (props) => {
           <Route exact path="/Login" component={LoginApp} />
           <Route exact path="/Signup" component={Signup} />
           <Route exact path="/Feedback" component={Feedback} />
-          <Route exact path="/Home" render={(props) => <Door {...props} userscore={userscore} username={username} userUid={userUid} />}/>
-          <Route exact path="/Profile" render={(props) => <ProfileDoor userscore={userscore} {...props} username={username} userUid={userUid} />}/>
-          <Route exact path="/" render={(props) => <Door {...props} username={username} userUid={userUid} />}/>
+          <Route exact path="/Home" render={(props) => <Door {...props} user={user} />}/>
+          <Route exact path="/Profile" render={(props) => <Door user={user} />}/>
+          <Route exact path="/" render={(props) => <Door {...props} user={user} />}/>
           {/*<Route component={NotFound}/>*/}
 
       </div>

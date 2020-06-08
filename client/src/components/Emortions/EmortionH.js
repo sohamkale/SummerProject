@@ -96,7 +96,7 @@ const Emortion = (props) => {
         var postObj = {
             _id: emortion._id,
         }
-        axios.post(`/api/posts/diduseranswer/${props.userUid}`, postObj).then((res) => {
+        axios.post(`/api/posts/diduseranswer/${props.user.userId}`, postObj).then((res) => {
             //props.getPosts();
             setAnswered(res.data);
         }).catch(function (e) {
@@ -105,12 +105,12 @@ const Emortion = (props) => {
     }
 
     const likePost = () => {
-        if (props.userUid != emortion.userId) {
+        if (props.user.userId != emortion.userId) {
             var likePostObj = {
                 _id: props.emortion._id,
             };
 
-            axios.post(`/api/posts/like/${props.userUid}`, likePostObj).then((res) => {
+            axios.post(`/api/posts/like/${props.user.userId}`, likePostObj).then((res) => {
                 props.getPosts();
             }).catch(function (e) {
                 console.log(e)
@@ -125,7 +125,7 @@ const Emortion = (props) => {
             _id: props.emortion._id,
         };
 
-        axios.post(`/api/posts/dislike/${props.userUid}`, likePostObj).then((res) => {
+        axios.post(`/api/posts/dislike/${props.user.userId}`, likePostObj).then((res) => {
             props.getPosts();
         }).catch(function (e) {
             console.log(e)
@@ -134,22 +134,22 @@ const Emortion = (props) => {
     }
 
     function LikeAgent() {
-        return (emortion.likes.includes(props.userUid)) ? <DislikeButton function={dislikePost}/> :
+        return (emortion.likes.includes(props.user.userId)) ? <DislikeButton function={dislikePost}/> :
             <LikeButton function={likePost}/>;
     }
 
     function AnswerAgent() {
-        if (props.userUid != emortion.userId & new Date(emortion.revealsAt) >= new Date() & !answered) return (<div>
+        if (props.user.userId != emortion.userId & new Date(emortion.revealsAt) >= new Date() & !answered) return (<div>
             <form id={'answerForm' + emortion._id} onSubmit={SendComment}>
                 <input readOnly hidden name="postId" value={props.emortion._id}></input>
-                <input readOnly hidden name="userId" value={props.userUid}></input>
-                <input readOnly hidden name="name" value={props.username}></input>
+                <input readOnly hidden name="userId" value={props.user.userId}></input>
+                <input readOnly hidden name="name" value={props.user.name}></input>
                 <input defaultValue="" required name="answer" className="form-control answer"
                        placeholder="What do you think the Emorter is saying?"></input>
                 <span><Button type="submit" variant="info">Evaluate</Button></span>
             </form>
         </div>)
-        else if (props.userUid == emortion.userId)
+        else if (props.user.userId == emortion.userId)
             return (<center><b className="text-success">Cannot answer own posts!</b></center>)
         else if (new Date(emortion.revealsAt) < new Date())
             return (<center><b className="text-success">Answer revealed!</b></center>);
@@ -159,12 +159,12 @@ const Emortion = (props) => {
     }
 
     function Comments() {
-        if (answered || emortion.userId == props.userUid || new Date(emortion.revealsAt) <= new Date()) {
+        if (answered || emortion.userId == props.user.userId || new Date(emortion.revealsAt) <= new Date()) {
             return (<div>{emortion.comments.map((comment, index) => {
                 return (
                     // <li className="text-left">{comment.answer}</li>
                     <Comment key={index} comment={comment} postId={emortion._id} getPosts={props.getPosts}
-                             userUid={props.userUid}/>
+                             user={props.user}/>
                 )
             })}</div>)
         } else {
@@ -229,29 +229,26 @@ const Emortion = (props) => {
                 </div>
             </div>
         </div>)
-       /* if(arg.beginOEnd==1)
-        {
-            return (props.index!=props.size-1) ?
-
-                ( <div className="col-1">
-                    <div className="card bg-light box-invis">
-                        <div className="card-body">
-                        </div>
-                    </div>
-                </div>):(<div></div>)
-        }
-        else if(arg.beginOEnd==0)
-        {
-            return (props.index!=0) ?
-
-                ( <div className="col-1">
-                    <div className="card bg-light box-invis">
-                        <div className="card-body">
-
-                        </div>
-                    </div>
-                </div>):(<div></div>)
-        }*/
+        /* if(arg.beginOEnd==1)
+         {
+             return (props.index!=props.size-1) ?
+                 ( <div className="col-1">
+                     <div className="card bg-light box-invis">
+                         <div className="card-body">
+                         </div>
+                     </div>
+                 </div>):(<div></div>)
+         }
+         else if(arg.beginOEnd==0)
+         {
+             return (props.index!=0) ?
+                 ( <div className="col-1">
+                     <div className="card bg-light box-invis">
+                         <div className="card-body">
+                         </div>
+                     </div>
+                 </div>):(<div></div>)
+         }*/
     }
 
 }

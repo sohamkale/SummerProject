@@ -16,7 +16,7 @@ let socket;
 
 const Home = (props) => {
 
-    const [currUser, setCurrUser] = useState(props.username);
+    const [currUser, setCurrUser] = useState(props.user.name);
     const ENDPOINT = "/";
     const [socketIO, setsocketIO] = useState(null);
 
@@ -49,14 +49,13 @@ const Home = (props) => {
         return (isBrowser) ? (
                 <div id='emortions'>
                     {props.postsArray.map((post, index) => (
-                        <Emortion ENDPOINT={ENDPOINT} username={props.username} userUid={props.userUid} key={post._id}
+                        <Emortion ENDPOINT={ENDPOINT} user={props.user} key={post._id}
                                   socket={socket} getPosts={getPosts} emortion={post}/>
                     ))}
                 </div>
             ) :
             (
-                <CarouselComponent postsArray={props.postsArray} ENDPOINT={ENDPOINT} username={props.username}
-                          userUid={props.userUid} socket={socket} getPosts={getPosts}/>
+                <CarouselComponent postsArray={props.postsArray} ENDPOINT={ENDPOINT} user={props.user} socket={socket} getPosts={getPosts}/>
             )
     }
 
@@ -65,10 +64,9 @@ const Home = (props) => {
         <div className="container-fluid">
             {/* {socketFunc()} */}
             <div className='row'>
-                <DemoCol userscore={props.userscore} message={"Welcome to the Den!"} username={props.username}/>
+                <DemoCol user={props.user} message={"Welcome to the Den!"}/>
                 <div className='col-md-5 col-lg-5 col-sm-12 postCol'>
-                    <PostForm getPosts={getPosts} postsArray={props.postsArray} username={props.username}
-                              userUid={props.userUid}/>
+                    <PostForm getPosts={getPosts} postsArray={props.postsArray} user={props.user}/>
                     <DeviceView/>
                 </div>
                 <div className="col-lg-2 col-md-2 d-sm-none"></div>

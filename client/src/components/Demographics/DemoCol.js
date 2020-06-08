@@ -21,8 +21,8 @@ function DemoCol(props)
                     {props.message}
 
                     <img width="90%" src={require('./dpholder.png')} className="rounded-circle" alt="Cinque Terre"/>
-                    {props.username}<br/>
-                    Score: {props.userscore}
+                    {props.user.name}<br/>
+                    Score: {props.user.userscore}
                 </center>
             </div>):
             (<div className='DemoCol col-lg-2 col-md-2'>
@@ -35,8 +35,8 @@ function DemoCol(props)
                         <img width="100%" src={require('./dpholder.png')} className="rounded-circle dp" />
                             <div  className="overlay rounded-circle">CHANGE</div>
                     </div>
-                    {props.username}<br/>
-                    Score: {props.userscore}
+                    {props.user.name}<br/>
+                    Score: {props.user.totScore}
                     </form>
                 </center>
             </div>)

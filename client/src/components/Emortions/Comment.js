@@ -28,14 +28,14 @@ const Comment = (props) => {
     }
 
     const likeComment = () =>{
-        if(props.comment.userId!=props.userUid)
+        if(props.comment.userId!=props.user.userId)
         {
             var commentPostObj = {
             comment_id: props.comment._id,
             post_id: props.postId
         };
 
-        axios.post(`/api/posts/likeComment/${props.userUid}`, commentPostObj).then((res)=>{
+        axios.post(`/api/posts/likeComment/${props.user.userId}`, commentPostObj).then((res)=>{
             props.getComments();
         }).catch(function(e){
             console.log(e)
@@ -49,7 +49,7 @@ const Comment = (props) => {
             post_id: props.postId
         };
 
-        axios.post(`/api/posts/dislikeComment/${props.userUid}`, commentPostObj).then((res)=>{
+        axios.post(`/api/posts/dislikeComment/${props.user.userId}`, commentPostObj).then((res)=>{
             console.log('asdasd')
             props.getComments();
         }).catch(function(e){
@@ -60,7 +60,7 @@ const Comment = (props) => {
 
     function LikeAgent()
     {
-        return (props.comment.likes.includes(props.userUid)) ? <DislikeButton function={dislikeComment}/> : <LikeButton function={likeComment}/>;
+        return (props.comment.likes.includes(props.user.userId)) ? <DislikeButton function={dislikeComment}/> : <LikeButton function={likeComment}/>;
     }
 
     return (

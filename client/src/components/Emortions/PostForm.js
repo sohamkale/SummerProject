@@ -10,6 +10,7 @@ const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:5000'
 
 const PostForm = (props) => {
     const [hasArrived, setHasArrived] = useState(false);
+    console.log(props)
     useEffect(() => {
 
     }, []);
@@ -19,15 +20,14 @@ const PostForm = (props) => {
 
     }, [props]);
 
-
     return (
         <div>
             <div className="card bg-light mb-3">
                 <div className="card-body">
                     <div className="blackburger-font">TELL ME AN EMORTION!</div>
                     <form id='thePost' onSubmit={submit}>
-                        <input readOnly hidden name="userId" value={props.userUid ? props.userUid: ""}></input>
-                        <input readOnly hidden name="username" value={props.username ? props.username: ""}></input>
+                        <input readOnly hidden name="userId" value={props.user.userId ? props.user.userId: ""}></input>
+                        <input readOnly hidden name="username" value={props.user.name ? props.user.name: ""}></input>
                         <label htmlFor="type" className='form-check-label'>Type: &nbsp; </label>
                         <select id="postType" name='type' className='form-control-sm'>
                             <option>Timer</option>

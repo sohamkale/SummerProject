@@ -11,7 +11,7 @@ let socket;
 
 const Profile = (props) => {
 
-    const [currUser, setCurrUser] = useState(props.username);
+    const [currUser, setCurrUser] = useState(props.user.name);
     const ENDPOINT = "/";
     const [socketIO, setsocketIO] = useState(null);
 
@@ -45,14 +45,14 @@ const Profile = (props) => {
         <div className="container-fluid">
             {/* {socketFunc()} */}
             <div className='row'>
-                <DemoCol username={props.username}/>
+                <DemoCol user={props.user}/>
                 <div className='col-md-5 col-lg-5 col-sm-12 postCol'>
-                    <center className="text-muted">Posts by {props.username}</center>
+                    <center className="text-muted">Posts by {props.user.name}</center>
                     {/*<PostForm getPosts={getPosts} postsArray={props.postsArray} username={props.username} userUid={props.userUid} />*/}
                     {/*The Posts for the user*/}
                     <div id='emortions'>
                         {props.postsArray.map((post,index)=>(
-                            <Emortion ENDPOINT={ENDPOINT} username={props.username} userUid={props.userUid} key={post._id}  socket={socket} getPosts={getPosts} emortion={post}/>
+                            <Emortion ENDPOINT={ENDPOINT} user={props.user} key={post._id}  socket={socket} getPosts={getPosts} emortion={post}/>
                         ))}
                     </div>
                 </div>
