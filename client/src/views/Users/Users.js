@@ -17,7 +17,7 @@ function Users(props) {
 
     function User(properties) {
         var url=properties.user.profileImage;
-        return (<div className="col-lg-2 col-md-4 col-sm-6">
+        return (<div className="col-lg-2 col-md-12 col-sm-6">
                 <a href={'./profile/'+properties.user.userId}><div className="img-container">
                     <img data-toggle="tooltip" title={properties.user.name} src={(url === null || url === "null") ? require('./dpholder.png') : url} alt="Avatar" className="image"/>
                     {/*<div className="overlay">{properties.user.name}</div>*/}
@@ -32,11 +32,13 @@ function Users(props) {
             <center>
                 <div className="btn mb-3 btn-secondary font-weight-bold">Users of EmoteIt</div>
             </center>
+            <center>
             <div className="row">
                 {users.map((user) =>
                         <User user={user}/>
                 )}
             </div>
+            </center>
         </div>
     )
 }
