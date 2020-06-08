@@ -29,6 +29,27 @@ const postsController = {
         ).catch(err => res.status('400').json('Error: ' + err));
     },
 
+    Sortedall(req, res) {
+        let currDateTime = new Date();
+        var validPosts = [];
+        //how many days do you want the post to expire by?
+        var expireDays = 3;
+        var three_day = 1000 * 60 * 60 * 24 * expireDays;
+
+        console.log("In Server side before getting posts: ");
+        console.log();
+        PostModel.find().sort({userId:1,createdAt:-1}).then(
+            posts => {
+                posts.map((post) => {
+                    if (new Date() - post.createdAt < three_day) {
+                        validPosts.push(post);
+                    }
+                })
+                res.json(validPosts)
+            }
+        ).catch(err => res.status('400').json('Error: ' + err));
+    },
+
     allPostsByUserId(req, res) {
         let currDateTime = new Date();
         var validPosts = [];
@@ -55,7 +76,7 @@ const postsController = {
         PostModel.find({'_id': req.params._id}).sort({createdAt: -1}).then(
             posts => {
                 console.log(posts)
-                res.json(posts);  
+                res.json(posts);
             }
         ).catch(err => res.status('400').json('Error: ' + err));
     },
@@ -200,11 +221,11 @@ const postsController = {
                                 const newNotif = new NotificationModel(
                                     {
                                         'userId': data.userId,
-                                        'postedById':  userId,
+                                        'postedById': userId,
                                         'postedByName': name,
-                                        'seen':false,
-                                        'message': name+' answered your Emortion and scored '+score,
-                                        'postId':data._id,
+                                        'seen': false,
+                                        'message': name + ' answered your Emortion and scored ' + score,
+                                        'postId': data._id,
                                         'commentId': _id,
                                     }
                                 );
@@ -229,8 +250,10 @@ const postsController = {
                     }
                 }
             });
-        }).catch(err => {res.status('400').json('Error: ' + err)
-        console.log('err '+err.message)});
+        }).catch(err => {
+            res.status('400').json('Error: ' + err)
+            console.log('err ' + err.message)
+        });
     },
 
     didUserAnswer(req, res) {
@@ -278,11 +301,11 @@ const postsController = {
                             const newNotif = new NotificationModel(
                                 {
                                     'userId': data.userId,
-                                    'postedById':  req.params.id,
+                                    'postedById': req.params.id,
                                     'postedByName': req.body.name,
-                                    'seen':false,
-                                    'message': req.body.name+' liked your post',
-                                    'postId':data._id,
+                                    'seen': false,
+                                    'message': req.body.name + ' liked your post',
+                                    'postId': data._id,
                                     //'commentId': _id,
                                 }
                             );
@@ -333,11 +356,11 @@ const postsController = {
                             const newNotif = new NotificationModel(
                                 {
                                     'userId': data.userId,
-                                    'postedById':  req.params.id,
+                                    'postedById': req.params.id,
                                     'postedByName': req.body.name,
-                                    'seen':false,
-                                    'message': req.body.name+' liked your Comment.',
-                                    'postId':data._id,
+                                    'seen': false,
+                                    'message': req.body.name + ' liked your Comment.',
+                                    'postId': data._id,
                                     'commentId': req.body.comment_id,
                                 }
                             );
@@ -411,38 +434,46 @@ const postsController = {
     },
     getComment(req, res) {
         PostModel.aggregate([
-        {$unwind : "$comments"},
-        { $match : {"comments._id" : new mongoose.Types.ObjectId(req.params._id) } },
-        {$project : {
-        _id : "$comments._id",
-        answer: "$comments.answer",
-        userId: "$comments.userId",
-        likes: "$comments.likes",
-        score: "$comments.score",
-        name: "$comments.name"}}
-        ], function(err, comment) {
-        console.log(comment);
-        res.json(comment);
+            {$unwind: "$comments"},
+            {$match: {"comments._id": new mongoose.Types.ObjectId(req.params._id)}},
+            {
+                $project: {
+                    _id: "$comments._id",
+                    answer: "$comments.answer",
+                    userId: "$comments.userId",
+                    likes: "$comments.likes",
+                    score: "$comments.score",
+                    name: "$comments.name"
+                }
+            }
+        ], function (err, comment) {
+            console.log(comment);
+            res.json(comment);
         });
-        },
-        
-        getCommentByUser(req, res) {
+    },
+
+    getCommentByUser(req, res) {
         PostModel.aggregate([
-        {$unwind : "$comments"},
-        { $match : {"comments.userId" : req.params._id } },
-        {$project : {
-        _id : "$comments._id",
-        answer: "$comments.answer",
-        userId: "$comments.userId",
-        likes: "$comments.likes",
-        score: "$comments.score",
-        name: "$comments.name"}}
-        ], function(err, comment) {
-        console.log(comment);
-        res.json(comment);
+            {$unwind: "$comments"},
+            {$match: {"comments.userId": req.params._id}},
+            {
+                $project: {
+                    _id: "$comments._id",
+                    answer: "$comments.answer",
+                    userId: "$comments.userId",
+                    likes: "$comments.likes",
+                    score: "$comments.score",
+                    name: "$comments.name",
+                    postId: "$_id",
+                    message: "$message"
+                }
+            }
+        ], function (err, comment) {
+            console.log(comment);
+            res.json(comment);
         });
-        }
-   
+    }
+
 }
 
 function objectify(formArray) {//serialize data function

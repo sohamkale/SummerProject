@@ -52,7 +52,7 @@ const Home = (props) => {
     function DeviceView() {
         if(props.postsArray==null||props.postsArray.length==0)
             return (<center><div className="btn btn-warning font-weight-bold w-100">There are no posts for you in the storage :(</div></center>)
-        return (isBrowser) ? (
+       /* return (isBrowser) ? (
                 <div id='emortions'>
                     {props.postsArray.map((post, index) => (
                         <Emortion ENDPOINT={ENDPOINT} user={props.user} key={post._id}
@@ -62,7 +62,10 @@ const Home = (props) => {
             ) :
             (
                 <CarouselComponent postsArray={props.postsArray} ENDPOINT={ENDPOINT} user={props.user} socket={socket} getPosts={getPosts}/>
-            )
+            )*/
+       return(
+           <CarouselComponent postsArray={props.postsArray} ENDPOINT={ENDPOINT} user={props.user} socket={socket} getPosts={getPosts}/>
+       );
     }
 
     return (
@@ -71,7 +74,7 @@ const Home = (props) => {
             {/* {socketFunc()} */}
             <div className='row'>
                 <DemoCol user={props.user} message={"Welcome to the Den!"}/>
-                <div className={'col-md-5 col-lg-5 col-sm-12 postCol'}>
+                <div className={'col-md-6 col-lg-6 col-sm-12 postCol'}>
                     <div className={props.postClass}><PostForm getPosts={getPosts} postsArray={props.postsArray} user={props.user}/></div>
                     <DeviceView/>
                 </div>

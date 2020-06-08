@@ -32,6 +32,8 @@ const Emortion = (props) => {
     }, []);
 
 
+
+
     const getComments = (postId) => {
         props.getPosts();
         setOpen(open);
@@ -114,7 +116,6 @@ const Emortion = (props) => {
             axios.post(`/api/posts/like/${props.user.userId}`, likePostObj).then((res) => {
                 props.getPosts();
             }).catch(function (e) {
-                console.log(e)
             });
 
         }
@@ -184,6 +185,7 @@ const Emortion = (props) => {
                 <div className="card bg-light">
                     <div className="card-body">
                         <div className="blackburger-font">Emortion By {emortion.name}</div>
+                        <p className="text-muted">{new Date(emortion.createdAt).toLocaleString()}</p>
                         <div>
                             {emortion.message.emojiArray.map((position, index) => (
                                 <Emoticon key={index} position={position}/>

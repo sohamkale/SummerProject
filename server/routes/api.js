@@ -14,6 +14,7 @@ router.post('/users/addProfileImage/:userId', usersController.addProfileImage);
 router.post('/feedback',feedbackController.add);
 
 router.get('/posts', postsController.all);
+router.get('/sortedposts', postsController.Sortedall);
 router.get('/posts/:_id', postsController.getPost);
 router.get('/postsByUser/:userId', postsController.allPostsByUserId);
 

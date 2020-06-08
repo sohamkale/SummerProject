@@ -41,7 +41,10 @@ function Notification(props) {
                 <div className="notificationBox">
                     {
                         notifications.map((notif) =>
-                        <a href={"/Posts/"+notif.postId} key={notif._id} className={"notification"}>{notif.message}</a>
+                       <a href={"/Posts/"+notif.postId} key={notif._id} className={"notification"}>{notif.message}
+                           <p className="text-muted">{new Date(notif.createdAt).toLocaleString()}</p>
+                       </a>
+
                     )}
                     <center><a href={"/notifications"} className={"notification"} style={{textDecoration: 'underline'}}>See All Notifications</a></center>
                 </div>

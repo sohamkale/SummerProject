@@ -181,6 +181,7 @@ const Emortion = (props) => {
             <div className="card bg-light">
                 <div className="card-body">
                     <div className="blackburger-font">Emortion By {emortion.name}</div>
+                    <p className="text-muted">{new Date(emortion.createdAt).toLocaleString()}</p>
                     <div>
                         {emortion.message.emojiArray.map((position, index) => (
                             <Emoticon key={index} position={position} />

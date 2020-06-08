@@ -26,8 +26,13 @@ function AllNotifications(props) {
                     <div className="notificationBigBox">
                         {
                             notifications.map((notif) =>
-                                <a href={"/Posts/" + notif.postId} key={notif._id}
-                                   className={"Bignotification"}>{notif.message}</a>
+                                <div>
+                                    <a href={"/Posts/" + notif.postId} key={notif._id}
+                                   className={"Bignotification"}>{notif.message}
+                                        <p className="text-muted">{new Date(notif.createdAt).toLocaleString()}</p>
+                                    </a>
+
+                                </div>
                             )}
                         {/*<center><a href={"/notifications"} className={"notification"}*/}
                         {/*           style={{textDecoration: 'underline'}}>See All Notifications</a></center>*/}

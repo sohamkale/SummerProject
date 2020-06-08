@@ -3,9 +3,12 @@ import { Route, Switch, Redirect  } from 'react-router-dom';
 import DemoCol from '../../components/Demographics/DemoCol'
 import PostForm from '../../components/Emortions/PostForm'
 import Emortion from "../../components/Emortions/Emortion";
+import Emoticon from "../../components/Emortions/Emoticon";
 import io from 'socket.io-client';
+import axios from 'axios'
 
 import '../Home/Home.css'
+import {Collapse, Dropdown} from "react-bootstrap";
 let socket;
 
 
@@ -14,6 +17,7 @@ const Profile = (props) => {
     const [currUser, setCurrUser] = useState(props.user.name);
     const ENDPOINT = "/";
     const [socketIO, setsocketIO] = useState(null);
+    const [comments, setComments] = useState([]);
 
 
     useEffect(() => {
@@ -33,13 +37,31 @@ const Profile = (props) => {
     }, [ENDPOINT, currUser]);
 
     useEffect(() => {
-
-    }, []);
+        axios.get('/api/posts/commentsByUser/'+props.user.userId).then((res)=>{
+            setComments(res.data);
+        })
+    }, [props]);
 
     const getPosts = () => {
         socket.emit('addPosts', {currUser,userId:props.user.userId}, () => props.setPostsArray([]));
     }
 
+    function CommentsByCard(properties)
+    {
+        return(  <div className="card bg-light mb-2">
+            <div className="card-body">
+                <div className="blackburger-font text-sm-left" style={{fontSize:'14px'}}>Emortion: </div>
+                <div>
+                    {properties.comment.message.emojiArray.map((position, index) => (
+                        <Emoticon key={index} position={position} />
+                    ))}
+                </div>
+                <div className="text-sm-left" style={{fontWeight:'bold',fontFamily:'Ink Free'}}>Answered: {properties.comment.answer}</div>
+                <a href={"/posts/"+properties.comment.postId}>Go To Post</a>
+            </div>
+        </div>);
+
+    }
     return (
 
         <div className="container-fluid">
@@ -56,7 +78,12 @@ const Profile = (props) => {
                         ))}
                     </div>
                 </div>
-                <div className="col-lg-2 col-md-2 d-sm-none"></div>
+                <div className="col-lg-3 col-md-3 col-sm-12">
+                    <div className="btn btn-secondary w-100 mb-3">Answers by {props.user.name}</div>
+                    {comments.map((comment,index)=>(
+                        <CommentsByCard user={props.user} key={comment._id} comment={comment}/>
+                    ))}
+                </div>
             </div>
         </div>
     )
