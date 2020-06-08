@@ -48,7 +48,7 @@ const Profile = (props) => {
             <div className='row'>
                 <DemoCol user={props.userv}/>
                 <div className='col-md-5 col-lg-5 col-sm-12 postCol'>
-                    <center className="text-muted">Posts by {props.userv.name}</center>
+                    <div className="btn btn-secondary w-100 mb-3">Posts by {props.userv.name}</div>
                     {/*<PostForm getPosts={getPosts} postsArray={props.postsArray} username={props.uservname} userUid={props.uservUid} />*/}
                     {/*The Posts for the user*/}
                     <div id='emortions'>

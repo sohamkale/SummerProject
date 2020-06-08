@@ -51,7 +51,7 @@ const Home = (props) => {
 
     function DeviceView() {
         if(props.postsArray==null||props.postsArray.length==0)
-            return (<center><div className="btn btn-warning font-weight-bold">There are no posts for you in the storage :(</div></center>)
+            return (<center><div className="btn btn-warning font-weight-bold w-100">There are no posts for you in the storage :(</div></center>)
         return (isBrowser) ? (
                 <div id='emortions'>
                     {props.postsArray.map((post, index) => (

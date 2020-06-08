@@ -25,7 +25,8 @@ function Notification(props) {
         }
     }, [props.user]);
 
-    return (
+    if(props.user)
+        return (
         <div className="popup my-4 notifBox my-sm-0 ml-lg-3" id="popup">
             <div className="" onClick={showNotifications}>
                 <img src={require('./notification.png')} width="25px" height="auto" alt=""/>
@@ -40,7 +41,8 @@ function Notification(props) {
             </div>
             {/* <span className="popuptext" id="myPopup">Popup text...</span> */}
         </div>
-    );
+    )
+            else return (<div></div>);
 
     function NotifBadge() {
         return (notifCounts > 0) ? (<span className="badge badge-danger notif-count">{notifCounts}</span>) : (<span></span>)
