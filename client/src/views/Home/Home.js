@@ -42,7 +42,10 @@ const Home = (props) => {
     }, []);
 
     const getPosts = () => {
-        socket.emit('addPosts', {currUser}, () => props.setPostsArray([]));
+        if(props.postsArray.length==1)
+            socket.emit('addPosts', {currUser, userId: props.postsArray[0]._id,OnePost:true}, () => props.setPostsArray([]));
+        else
+            socket.emit('addPosts', {currUser}, () => props.setPostsArray([]));
     }
 
 

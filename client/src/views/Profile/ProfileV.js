@@ -11,7 +11,7 @@ let socket;
 
 const Profile = (props) => {
 
-    const [currUser, setCurrUser] = useState(props.user.name);
+    const [currUser, setCurrUser] = useState(props.userv.name);
     const ENDPOINT = "/";
     const [socketIO, setsocketIO] = useState(null);
 
@@ -36,8 +36,9 @@ const Profile = (props) => {
 
     }, []);
 
+
     const getPosts = () => {
-        socket.emit('addPosts', {currUser,userId:props.user.userId}, () => props.setPostsArray([]));
+        socket.emit('addPosts', {currUser, userId:props.userv.userId}, () => props.setPostsArray([]));
     }
 
     return (
@@ -45,10 +46,10 @@ const Profile = (props) => {
         <div className="container-fluid">
             {/* {socketFunc()} */}
             <div className='row'>
-                <DemoCol user={props.user}/>
+                <DemoCol user={props.userv}/>
                 <div className='col-md-5 col-lg-5 col-sm-12 postCol'>
-                    <center className="text-muted">Posts by {props.user.name}</center>
-                    {/*<PostForm getPosts={getPosts} postsArray={props.postsArray} username={props.username} userUid={props.userUid} />*/}
+                    <center className="text-muted">Posts by {props.userv.name}</center>
+                    {/*<PostForm getPosts={getPosts} postsArray={props.postsArray} username={props.uservname} userUid={props.uservUid} />*/}
                     {/*The Posts for the user*/}
                     <div id='emortions'>
                         {props.postsArray.map((post,index)=>(

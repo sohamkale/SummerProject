@@ -5,6 +5,7 @@ import {useLocation, useParams } from 'react-router-dom'
 import './Home.css'
 import fire from "../../config/Fire";
 import Profile from "../Profile/Profile";
+import ProfileV from "../Profile/ProfileV";
 import NotFound from "../../components/Shared/NotFound";
 
 function Door(props)
@@ -13,6 +14,8 @@ function Door(props)
     const [profileUser, setProfileUser]= useState(null);
     var location = useLocation().pathname.toLocaleLowerCase();
     var paramId = useParams().id;
+    
+
 
     useEffect(() => {
 
@@ -86,7 +89,7 @@ function Door(props)
         if(!profileUser)
             return (props.user) ? (<Profile user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
         else
-            return (props.user) ? (<Profile user={profileUser} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
+            return (props.user) ? (<ProfileV user={props.user} userv={profileUser} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
         /*else
         {
             axios.get('/api/users/' + paramId)

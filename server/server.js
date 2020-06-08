@@ -49,18 +49,45 @@ io.on('connection', (socket) =>{
 
     });
     
-    socket.on('addPosts', ({currUser,postId}, callback) => {
+    socket.on('addPosts', ({currUser,userId,OnePost}, callback) => {
         let array = [];
         let currDateTime = new Date();
-        PostModel.find({}).sort({ createdAt: -1 }).then(function(posts) {
-            // array = posts;
-            posts.map((post) => {
-                if(new Date() - post.createdAt < three_day){
-                    array.push(post);
-                }
-            })
-            io.to(commonRoom).emit('message', { user: currUser, posts: array })
-        } )
+        if(OnePost)
+        {
+            PostModel.find({'_id':userId}).sort({ createdAt: -1 }).then(function(posts) {
+                // array = posts;
+                posts.map((post) => {
+                    if(new Date() - post.createdAt < three_day){
+                        array.push(post);
+                    }
+                })
+                io.to(commonRoom).emit('message', { user: currUser, posts: array })
+            } )
+        }
+        else if(userId)
+        {
+            PostModel.find({'userId':userId}).sort({ createdAt: -1 }).then(function(posts) {
+                // array = posts;
+                posts.map((post) => {
+                    if(new Date() - post.createdAt < three_day){
+                        array.push(post);
+                    }
+                })
+                io.to(commonRoom).emit('message', { user: currUser, posts: array })
+            } )
+        }
+        else{
+            PostModel.find({}).sort({ createdAt: -1 }).then(function(posts) {
+                // array = posts;
+                posts.map((post) => {
+                    if(new Date() - post.createdAt < three_day){
+                        array.push(post);
+                    }
+                })
+                io.to(commonRoom).emit('message', { user: currUser, posts: array })
+            } )
+        }
+
     })
 })
 
