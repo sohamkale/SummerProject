@@ -7,7 +7,6 @@ import fire from './../../config/Fire';
 import { Button, Collapse, Dropdown, Row, Container, Col } from 'react-bootstrap'
 import Comment from "./Comment";
 import $ from 'jquery'
-import io from "socket.io-client";
 import {LikeButton, DislikeButton} from "./thumbs";
 
 const Emortion = (props) => {

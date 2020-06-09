@@ -2,16 +2,18 @@ import React, {useEffect, useState} from 'react'
 import './NavBar.css'
 import axios from 'axios'
 import fire from "../../config/Fire";
-
-
+// import socket from "../../config/socketConfig";
+import io from 'socket.io-client';
 function Notification(props) {
     const [notifCounts, setNotifCounts] = useState(0);
     const [notifications, setNotifications] = useState([]);
-
+    const ENDPOINT = "/";
+    
 
     useEffect(() => {
         if(props.user)
         {
+            // alert("IN notification");
             axios.get('/api/notifications/'+props.user.userId)
                 .then((res)=>{
                     //setNotifications(res.data);
@@ -27,8 +29,16 @@ function Notification(props) {
                     setNotifCounts(count);
                     setNotifications(arr);
                 });
+                
+                if(props.socket){
+                    props.socket.on('notification', message => {
+                        // alert(message.message);
+                        console.log(message.message);
+                    });
+                }
+                
         }
-    }, [props.user]);
+    }, [props.user, props.socket]);
 
     if(props.user)
         return (

@@ -7,42 +7,36 @@ import CarouselComponent from "../../components/Emortions/CarouselComponent";
 import {
     isMobile, isBrowser
 } from "react-device-detect";
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 
 import './Home.css'
 
-let socket;
+// let socket;
 
 
 const Home = (props) => {
 
     const [currUser, setCurrUser] = useState(props.user.name);
+    const [currUserUid, setCurrUserUid] = useState(props.user.userId);
     const ENDPOINT = "/";
-    const [socketIO, setsocketIO] = useState(null);
+    // const [socketIO, setsocketIO] = useState(null);
 
 
     useEffect(() => {
         let room = "commonRoom";
-        // alert("SOCKET");
-        socket = io(ENDPOINT);
-        setsocketIO(socket);
-        socket.emit('join', {currUser, room});
-        socket.on('joinedRoom', message => {
-            console.log(message);
-            // alert(message.text);
-        });
-        socket.on('message', message => {
-            props.setPostsArray(message.posts);
-        });
-
-    }, [ENDPOINT, currUser]);
+        if(props.socket){
+            props.socket.on('message', message => {
+                props.setPostsArray(message.posts);
+            });
+        }
+    }, [props.socket]);
 
 
     const getPosts = () => {
         if(props.postsArray.length==1)
-            socket.emit('addPosts', {currUser, userId: props.postsArray[0]._id,OnePost:true}, () => props.setPostsArray([]));
+            props.socket.emit('addPosts', {currUser, userId: props.postsArray[0]._id,OnePost:true}, () => props.setPostsArray([]));
         else
-            socket.emit('addPosts', {currUser}, () => props.setPostsArray([]));
+            props.socket.emit('addPosts', {currUser}, () => props.setPostsArray([]));
     }
 
 
@@ -65,7 +59,7 @@ const Home = (props) => {
                     <div id='emortions'>
                         {props.postsArray.map((post, index) => (
                             <Emortion ENDPOINT={ENDPOINT} user={props.user} key={post._id}
-                                      socket={socket} getPosts={getPosts} emortion={post}/>
+                                      socket={props.socket} getPosts={getPosts} emortion={post}/>
                         ))}
                     </div>
                 </div>

@@ -24,9 +24,18 @@ var io = require('socket.io')(http);
 io.on('connection', (socket) =>{
     // io.emit('message', "Hell0");
     
-        console.log('a user is connected in server');
-    socket.on('join', ({currUser, room}) => {
+        //console.log('a user is connected in server');
+    socket.on('join', ({currUser, room, currUserUid}) => {
+        console.log('a user is connected in server ' + currUser);
         socket.join(room);
+         io.in(commonRoom).clients((err , clients) => {
+                clients.map((client) => {
+                    console.log(client);
+                    //io.to(client).emit('notification', { message: "You have a notification" });// clients will be array of socket ids , currently available in given room
+    
+                })
+            });
+        // socket.join(currUserUid);
         socket.emit('joinedRoom', { user: 'admin', text: `${currUser}, welcome to room ${room}.`});
         socket.broadcast.to(room).emit('joinedRoom', { user: 'admin', text: `${currUser} has joined!` });
         // io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) }); //not required
@@ -44,7 +53,14 @@ io.on('connection', (socket) =>{
                     array.push(post);
                 }
             })
-            io.to(commonRoom).emit('message', { posts: array })
+            io.to(commonRoom).emit('message', { posts: array });
+            // io.in(commonRoom).clients((err , clients) => {
+            //     clients.map((client) => {
+            //         console.log(client);
+            //         io.to(client).emit('notification', { message: "You have a notification" });// clients will be array of socket ids , currently available in given room
+    
+            //     })
+            // });
         } ).catch(err => console.log(err.message));
 
     });
@@ -61,7 +77,14 @@ io.on('connection', (socket) =>{
                         array.push(post);
                     }
                 })
-                io.to(commonRoom).emit('message', { user: currUser, posts: array })
+                io.to(commonRoom).emit('message', { user: currUser, posts: array });
+                io.in(commonRoom).clients((err , clients) => {
+                    clients.map((client) => {
+                        console.log(client);
+                        io.to(client).emit('notification', { message: "You have a notification" });// clients will be array of socket ids , currently available in given room
+        
+                    })
+                });
             } )
         }
         else if(userId)
@@ -73,7 +96,14 @@ io.on('connection', (socket) =>{
                         array.push(post);
                     }
                 })
-                io.to(commonRoom).emit('message', { user: currUser, posts: array })
+                io.to(commonRoom).emit('message', { user: currUser, posts: array });
+                io.in(commonRoom).clients((err , clients) => {
+                    clients.map((client) => {
+                        console.log(client);
+                        io.to(client).emit('notification', { message: "You have a notification" });// clients will be array of socket ids , currently available in given room
+        
+                    })
+                });
             } )
         }
         else{
@@ -84,7 +114,14 @@ io.on('connection', (socket) =>{
                         array.push(post);
                     }
                 })
-                io.to(commonRoom).emit('message', { user: currUser, posts: array })
+                io.to(commonRoom).emit('message', { user: currUser, posts: array });
+                io.in(commonRoom).clients((err , clients) => {
+                    clients.map((client) => {
+                        console.log(client);
+                        io.to(client).emit('notification', { message: "You have a notification" });// clients will be array of socket ids , currently available in given room
+        
+                    })
+                });
             } )
         }
 

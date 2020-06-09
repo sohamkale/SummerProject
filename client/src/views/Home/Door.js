@@ -82,7 +82,7 @@ function Door(props)
     }
 
     if(location == "/home"||location=='')
-        return (props.user) ? (<Home user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
+        return (props.user) ? (<Home user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} socket={props.socket}/>): (<Loading/>)
     else if (location =="/profile")
         return (props.user) ? (<Profile user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
     else if (location.includes("/profile"))
@@ -103,7 +103,7 @@ function Door(props)
 
     }
     else if (location.includes("/posts"))
-        return (props.user) ? (<Home postClass="d-none" user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
+        return (props.user) ? (<Home postClass="d-none" user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} socket={props.socket}/>): (<Loading/>)
     else if (location==("/notifications"))
         return (props.user) ? (<AllNotifications postClass="d-none" user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
     else //Not Found Page

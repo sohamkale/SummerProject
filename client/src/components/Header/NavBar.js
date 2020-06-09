@@ -51,7 +51,7 @@ const Navbarcomp = (props) => {
     <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
        <img className="logo" src={require('./logo.png')} width="60px" height="auto" alt=""/>
 
-        <Notification user={props.user}/>
+        <Notification user={props.user} socket={props.socket}/>
 
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

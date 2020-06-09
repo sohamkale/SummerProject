@@ -8,16 +8,33 @@ import Signup from "./views/Signup/Signup";
 import Feedback from './views/Feedback/Feedback'
 import './font.css'
 import Users from "./views/Users/Users";
+import io from 'socket.io-client';
+let socket;
 const App = (props) => {
     const [user, setUser] = useState(null);
-
+    const ENDPOINT = "/";
+    const [socketIO, setsocketIO] = useState(null);
+    
 /*  const [modalShow, setModalShow] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
     const [modalBody, setModalBody] = useState("");*/
-
+    useEffect(() => {
+        if(user){
+            let room = "commonRoom";
+            socket = io(ENDPOINT);
+            setsocketIO(socket);
+            let currUser = user.name;
+            let currUserUid = user.userId;
+            socket.emit('join', {currUser, room, currUserUid});
+            socket.on('joinedRoom', message => {
+                console.log(message);
+                // alert(message.text);
+            });
+    }
+    }, [ENDPOINT, user]);
   return (
       <div>
-          <NavBar user={user} setUser={setUser}/>
+          <NavBar user={user} setUser={setUser} socket={socket}/>
 {/*
 
           <AppModal
@@ -36,7 +53,7 @@ const App = (props) => {
           <Route exact path="/Login" component={LoginApp} />
           <Route exact path="/Signup" component={Signup} />
           <Route exact path="/Feedback" component={Feedback} />
-          <Route exact path="/Home" render={(props) => <Door {...props} user={user} />}/>
+          <Route exact path="/Home" render={(props) => <Door {...props} user={user} socket={socket} />}/>
           <Route exact path="/Profile" render={(props) => <Door user={user} />}/>
           <Route exact path="/Profile/:id" render={(props) => <Door user={user} />}/>
           <Route exact path="/Posts/:id" render={(props) => <Door user={user} />}/>
