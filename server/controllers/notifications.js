@@ -1,5 +1,5 @@
 let NotificationModel = require('../models/notification.model');
-
+const mongoose = require('mongoose');
 const notificationController = {
     add(req,res){
         const newNotif = new NotificationModel(
@@ -17,13 +17,27 @@ const notificationController = {
     },
     seen(req,res)
     {
-        NotificationModel.findOneAndUpdate({'_id':req.params.id},{'seen':true},null,(data,err)=>{
+
+        // NotificationModel.findOne({'_id': new mongoose.Types.ObjectId(req.params._id)},(data,err)=>{
+        //     if(err)
+        //     {
+        //         console.log(err)
+        //         res.status('404').json(err.message);
+        //     }
+        //     else{
+        //         console.log(data);
+        //         res.json(data);
+        //     }
+        // });
+
+        NotificationModel.findOneAndUpdate({'_id': new mongoose.Types.ObjectId(req.params._id)},{'seen':true},null,(err, data)=>{
             if(err)
             {
                 console.log(err)
                 res.status('404').json(err.message);
             }
             else{
+                console.log(data);
                 res.json(data);
             }
         });

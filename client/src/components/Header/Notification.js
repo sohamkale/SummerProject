@@ -55,6 +55,29 @@ function Notification(props) {
         }
     }, [props.user, props.socket]);
 
+    function notificationSeen(notif) {
+        // alert("notification seen");
+       
+        axios.post('/api/notifications/'+ notif._id)
+            .then((res)=>{
+                axios.get('/api/notifications/'+props.user.userId)
+                        .then((res)=>{
+                            //setNotifications(res.data);
+                            var arr=[];
+                            var count =0;
+                            res.data.forEach((item,index)=>{
+                                if(!item.seen)
+                                {
+                                    count++;
+                                    arr.push(item);
+                                }
+                            })
+                            setNotifCounts(count);
+                            setNotifications(arr);
+                        });
+        });
+    }
+
     if(props.user)
         return (
         <div className="popup my-4 notifBox my-sm-0 ml-lg-3" id="notif">
@@ -66,7 +89,8 @@ function Notification(props) {
                 <div className="notificationBox">
                     {
                         notifications.map((notif) =>
-                       <a href={"/Posts/"+notif.postId} key={notif._id} className={"notification"}>{notif.message}
+
+                       <a  onClick={() => notificationSeen(notif)}  href={"/Posts/"+notif.postId} key={notif._id} className={"notification"}>{notif.message}
                            <p className="text-muted">{new Date(notif.createdAt).toLocaleString()}</p>
                        </a>
 
