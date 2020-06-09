@@ -15,24 +15,39 @@ function Notification(props) {
         {
             // alert("IN notification");
             axios.get('/api/notifications/'+props.user.userId)
-                .then((res)=>{
-                    //setNotifications(res.data);
-                    var arr=[];
-                    var count =0;
-                    res.data.forEach((item,index)=>{
-                        if(!item.seen)
-                        {
-                            count++;
-                            arr.push(item);
-                        }
-                    })
-                    setNotifCounts(count);
-                    setNotifications(arr);
-                });
+                        .then((res)=>{
+                            //setNotifications(res.data);
+                            var arr=[];
+                            var count =0;
+                            res.data.forEach((item,index)=>{
+                                if(!item.seen)
+                                {
+                                    count++;
+                                    arr.push(item);
+                                }
+                            })
+                            setNotifCounts(count);
+                            setNotifications(arr);
+                        });
                 
                 if(props.socket){
                     props.socket.on('notification', message => {
                         // alert(message.message);
+                        axios.get('/api/notifications/'+props.user.userId)
+                        .then((res)=>{
+                            //setNotifications(res.data);
+                            var arr=[];
+                            var count =0;
+                            res.data.forEach((item,index)=>{
+                                if(!item.seen)
+                                {
+                                    count++;
+                                    arr.push(item);
+                                }
+                            })
+                            setNotifCounts(count);
+                            setNotifications(arr);
+                        });
                         console.log(message.message);
                     });
                 }
