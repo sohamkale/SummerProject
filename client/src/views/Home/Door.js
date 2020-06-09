@@ -29,7 +29,7 @@ function Door(props)
                 //GET POSTS DEPENDING ON WHICH POST YOU ARE IN
                 if(location == "/home")
                 {
-                    axios.get('/api/sortedposts')
+                    axios.get('/api/posts')
                         .then((res)=>{
                             if(res.data.length > 0){
                                 setPostsArray(res.data);

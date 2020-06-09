@@ -37,9 +37,6 @@ const Home = (props) => {
 
     }, [ENDPOINT, currUser]);
 
-    useEffect(() => {
-
-    }, []);
 
     const getPosts = () => {
         if(props.postsArray.length==1)
@@ -49,23 +46,11 @@ const Home = (props) => {
     }
 
 
-    function DeviceView() {
+    function NoPosts() {
         if(props.postsArray==null||props.postsArray.length==0)
-            return (<center><div className="btn btn-warning font-weight-bold w-100">There are no posts for you in the storage :(</div></center>)
-       /* return (isBrowser) ? (
-                <div id='emortions'>
-                    {props.postsArray.map((post, index) => (
-                        <Emortion ENDPOINT={ENDPOINT} user={props.user} key={post._id}
-                                  socket={socket} getPosts={getPosts} emortion={post}/>
-                    ))}
-                </div>
-            ) :
-            (
-                <CarouselComponent postsArray={props.postsArray} ENDPOINT={ENDPOINT} user={props.user} socket={socket} getPosts={getPosts}/>
-            )*/
-       return(
-           <CarouselComponent postsArray={props.postsArray} ENDPOINT={ENDPOINT} user={props.user} socket={socket} getPosts={getPosts}/>
-       );
+            return (<center><div className="btn btn-warning font-weight-bold w-100">There are no posts in the storage :(</div></center>)
+        else
+            return (<div className='d-none'></div>)
     }
 
     return (
@@ -76,7 +61,13 @@ const Home = (props) => {
                 <DemoCol user={props.user} message={"Welcome to the Den!"}/>
                 <div className={'col-md-6 col-lg-6 col-sm-12 postCol'}>
                     <div className={props.postClass}><PostForm getPosts={getPosts} postsArray={props.postsArray} user={props.user}/></div>
-                    <DeviceView/>
+                    <NoPosts/>
+                    <div id='emortions'>
+                        {props.postsArray.map((post, index) => (
+                            <Emortion ENDPOINT={ENDPOINT} user={props.user} key={post._id}
+                                      socket={socket} getPosts={getPosts} emortion={post}/>
+                        ))}
+                    </div>
                 </div>
                 <div className="col-lg-2 col-md-2 d-sm-none"></div>
             </div>

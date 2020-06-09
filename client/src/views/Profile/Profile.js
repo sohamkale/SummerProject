@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Switch, Redirect  } from 'react-router-dom';
 import DemoCol from '../../components/Demographics/DemoCol'
-import PostForm from '../../components/Emortions/PostForm'
 import Emortion from "../../components/Emortions/Emortion";
 import Emoticon from "../../components/Emortions/Emoticon";
 import io from 'socket.io-client';
@@ -62,6 +61,19 @@ const Profile = (props) => {
         </div>);
 
     }
+    function NoComments() {
+        if(comments==null||comments.length==0)
+            return (<center><div className="btn btn-warning font-weight-bold w-100">There are no comments in the storage :(</div></center>)
+        else
+            return (<div className='d-none'></div>)
+    }
+
+    function NoPosts() {
+        if(props.postsArray==null||props.postsArray.length==0)
+            return (<center><div className="btn btn-warning font-weight-bold w-100">There are no posts in the storage :(</div></center>)
+        else
+            return (<div className='d-none'></div>)
+    }
     return (
 
         <div className="container-fluid">
@@ -70,6 +82,7 @@ const Profile = (props) => {
                 <DemoCol user={props.user}/>
                 <div className='col-md-5 col-lg-5 col-sm-12 postCol'>
                     <div className="btn btn-secondary w-100 mb-3">Posts by {props.user.name}</div>
+                    <NoPosts/>
                     {/*<PostForm getPosts={getPosts} postsArray={props.postsArray} username={props.username} userUid={props.userUid} />*/}
                     {/*The Posts for the user*/}
                     <div id='emortions'>
@@ -80,6 +93,7 @@ const Profile = (props) => {
                 </div>
                 <div className="col-lg-3 col-md-3 col-sm-12">
                     <div className="btn btn-secondary w-100 mb-3">Answers by {props.user.name}</div>
+                    <NoComments/>
                     {comments.map((comment,index)=>(
                         <CommentsByCard user={props.user} key={comment._id} comment={comment}/>
                     ))}

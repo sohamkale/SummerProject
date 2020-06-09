@@ -62,7 +62,19 @@ const Profile = (props) => {
         </div>);
 
     }
+    function NoPosts() {
+        if(props.postsArray==null||props.postsArray.length==0)
+            return (<center><div className="btn btn-warning font-weight-bold w-100">There are no posts in the storage :(</div></center>)
+        else
+            return (<div className='d-none'></div>)
+    }
 
+    function NoComments() {
+        if(comments==null||comments.length==0)
+            return (<center><div className="btn btn-warning font-weight-bold w-100">There are no comments in the storage :(</div></center>)
+        else
+            return (<div className='d-none'></div>)
+    }
     return (
 
         <div className="container-fluid">
@@ -71,6 +83,7 @@ const Profile = (props) => {
                 <DemoCol user={props.userv}/>
                 <div className='col-md-5 col-lg-5 col-sm-12 postCol'>
                     <div className="btn btn-secondary w-100 mb-3">Posts by {props.userv.name}</div>
+                    <NoPosts/>
                     {/*<PostForm getPosts={getPosts} postsArray={props.postsArray} username={props.uservname} userUid={props.uservUid} />*/}
                     {/*The Posts for the user*/}
                     <div id='emortions'>
@@ -81,6 +94,7 @@ const Profile = (props) => {
                 </div>
                 <div className="col-lg-3 col-md-3 col-sm-12">
                     <div className="btn btn-secondary w-100 mb-3">Answers by {props.user.name}</div>
+                    <NoComments/>
                     {comments.map((comment,index)=>(
                         <CommentsByCard user={props.user} key={comment._id} comment={comment}/>
                     ))}
