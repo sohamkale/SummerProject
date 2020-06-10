@@ -51,16 +51,25 @@
 
 .notification{
     /*border-top: 0.5px solid lightgrey;*/
-    border-bottom: .5px solid lightgrey;
+
     color: darkgoldenrod;
-    background-color: antiquewhite;
-    padding: 5px;
+    /*padding: 5px;*/
     border-radius: 6px;
     font-family: "MV Boli";
-    display: block;
 }
 .notification:hover{
     opacity: 0.8;
     font-weight: bold;
 }
+
+.notifBackground
+{
+    background-color: antiquewhite;
+    border-bottom: .5px solid lightgrey;
+}
+
+.btn-x{
+    margin-top: -14px!important;
+}
+
 

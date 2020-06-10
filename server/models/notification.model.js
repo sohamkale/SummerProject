@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const notificationSchema = new mongoose.Schema({
-//type, number of likes, string array of answers - no. likes, no. of points
-    userId: {type: String},   //should be unique or not?
+//type, number of likes, string array of answers - no. likes, no. of points// we dont need these
+    userId: {type: String},   //should be unique or not? not unique
     postedById: {type:String},
     postedByName: {type:String},
     seen:{type:Boolean},

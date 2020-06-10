@@ -7,14 +7,9 @@ function AllNotifications(props) {
 
     useEffect(() => {
         if (props.user) {
-            axios.get('/api/notifications/' + props.user.userId)
+            axios.get('/api/allnotifications/' + props.user.userId)
                 .then((res) => {
                     setNotifications(res.data);
-                    var count = 0;
-                    res.data.forEach((item, index) => {
-                        if (!item.seen)
-                            count++
-                    })
                 });
         }
     }, [props.user]);

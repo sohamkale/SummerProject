@@ -54,6 +54,18 @@ const notificationController = {
             }
         ).catch(err => res.status('400').json('Error: ' + err));
     },
+    notseen(req,res)
+    {
+        var validPosts=[];
+        NotificationModel.find({'userId':req.params.id, 'seen':false}).sort({'createdAt':-1}).then(
+            notifs => {
+                notifs.map((notif) => {
+                    validPosts.push(notif);
+                })
+                res.json(validPosts)
+            }
+        ).catch(err => res.status('400').json('Error: ' + err));
+    }
 };
 
 function objectify(formArray) {//serialize data function

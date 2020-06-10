@@ -27,7 +27,8 @@ router.post('/posts/likeComment/:userId', postsController.likeComment);
 router.post('/posts/dislikeComment/:userId', postsController.dislikeComment);
 
 router.post('/notifications', notificationController.add);
-router.get('/notifications/:id', notificationController.all);
+router.get('/notifications/:id', notificationController.notseen);
+router.get('/allnotifications/:id', notificationController.all);
 router.post('/notifications/:_id', notificationController.seen);
 
 router.get('/posts/comments/:_id', postsController.getComment);

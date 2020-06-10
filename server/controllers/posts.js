@@ -75,7 +75,6 @@ const postsController = {
     getPost(req, res) {
         PostModel.find({'_id': req.params._id}).sort({createdAt: -1}).then(
             posts => {
-                console.log(posts)
                 res.json(posts);
             }
         ).catch(err => res.status('400').json('Error: ' + err));
@@ -343,24 +342,27 @@ const postsController = {
         //req.body._id will contain the unique id of the comment in question.
         //req.params.userId is the userId
         var shouldUpdate = false;
+        var commentIndex=-1;
         PostModel.find({"_id": req.body.post_id}).then(function (data) {
             if (data[0].comments) {
                 for (var i = 0; i < data[0].comments.length; i++) {
                     if (data[0].comments[i]._id == req.body.comment_id) {
+                        commentIndex=i;
                         if (data[0].comments[i].likes.includes(req.params.userId)) {
                             break;
                         } else {
                             shouldUpdate = true;
                             data[0].comments[i].likes.push(req.params.userId);
                             //send notification to the user!!
+                            console.log(data)
                             const newNotif = new NotificationModel(
                                 {
-                                    'userId': data.userId,
+                                    'userId': data[0].comments[commentIndex].userId,
                                     'postedById': req.params.id,
                                     'postedByName': req.body.name,
                                     'seen': false,
                                     'message': req.body.name + ' liked your Comment.',
-                                    'postId': data._id,
+                                    'postId': data[0]._id,
                                     'commentId': req.body.comment_id,
                                 }
                             );
@@ -375,7 +377,6 @@ const postsController = {
                             res.status('404');
                             res.json({error: "err"});
                         } else {
-                            console.log(data);
                             res.status('200');
                             res.json(data);
                         }
