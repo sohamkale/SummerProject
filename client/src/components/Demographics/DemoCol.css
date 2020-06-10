@@ -1,15 +1,54 @@
 .DemoCol{
     /*background-color: azure;*/
-    width: 30%;
+    position: relative;
     /* margin: 15px;; */
 }
-
-@media only screen and (max-width: 700px) {
+.overlay{
+    /*display: none;*/
+  display: none;
+}
+@media only screen and (max-width: 720px) {
     .DemoCol {
       display: none;
     }
+
   }
 
-.dp{
-    width: 90%;
+
+@media only screen and (min-width: 720px) {
+    .DemoVer {
+        display: none;
+    }
+}
+
+.dp:hover{
+    opacity: .8;
+}
+
+* {box-sizing: border-box}
+
+/* Container needed to position the overlay. Adjust the width as needed */
+.container {
+    position: relative;
+}
+
+
+/* The overlay effect - lays on top of the container and over the image */
+.overlay {
+    position: relative;
+    bottom: 20px;
+    width: 80%;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.5); /* Black see-through */
+    color: #f1f1f1;
+    transition: .5s ease;
+    opacity:0;
+    color: white;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* When you mouse over the container, fade in the overlay title */
+.container:hover .overlay {
+    opacity: 0.35;
 }

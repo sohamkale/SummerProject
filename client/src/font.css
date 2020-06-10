@@ -1,11 +1,11 @@
 @font-face {
     font-family: gloogun;
-    src: url('./gloogun.TTF');
+    src: url('gloogun.TTF');
 }
 
 @font-face {
     font-family: blackburger;
-    src: url('./blackburger.ttf');
+    src: url('blackburger.ttf');
 }
 
 .blackburger-font{

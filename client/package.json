@@ -9,6 +9,7 @@
     "jquery": "^3.5.1",
     "react": "^16.10.1",
     "react-bootstrap": "^1.0.1",
+    "react-device-detect": "^1.12.1",
     "react-dom": "^16.10.1",
     "react-media-hook": "^0.4.7",
     "react-responsive": "^8.0.3",

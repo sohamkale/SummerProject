@@ -1,13 +1,22 @@
 import React, {useEffect, useState} from 'react'
 import axios from "axios";
 import Home from './Home'
+import {useLocation, useParams } from 'react-router-dom'
 import './Home.css'
-import LoginApp from '../Login/LoginApp'
 import fire from "../../config/Fire";
+import Profile from "../Profile/Profile";
+import ProfileV from "../Profile/ProfileV";
+import AllNotifications from '../Notifications/AllNotifications';
+import NotFound from "../../components/Shared/NotFound";
 
 function Door(props)
 {
     const [postsArray, setPostsArray] = useState([]);
+    const [profileUser, setProfileUser]= useState(null);
+    var location = useLocation().pathname.toLocaleLowerCase();
+    var paramId = useParams().id;
+    
+
 
     useEffect(() => {
 
@@ -17,12 +26,51 @@ function Door(props)
                  window.location.href = "/login";
             }
             else {
-                axios.get('/api/posts')
-                    .then((res)=>{
-                        if(res.data.length > 0){
-                           setPostsArray(res.data);
-                        }
-                    });
+                //GET POSTS DEPENDING ON WHICH POST YOU ARE IN
+                if(location == "/home")
+                {
+                    axios.get('/api/posts')
+                        .then((res)=>{
+                            if(res.data.length > 0){
+                                setPostsArray(res.data);
+                            }
+                        });
+                }
+                else if ((location.includes("/profile")))
+                {
+                    if(!paramId){
+                        axios.get('/api/postsByUser/'+user.uid)
+                            .then((res)=>{
+                                if(res.data.length > 0){
+                                    setPostsArray(res.data);
+                                }
+                            });
+                    }
+                    else if (paramId)
+                    {
+                        axios.get('/api/users/' + paramId)
+                            .then((res)=>{
+                                setProfileUser(res.data)
+                            });
+                        axios.get('/api/postsByUser/'+paramId)
+                            .then((res)=>{
+                                if(res.data.length > 0){
+                                    setPostsArray(res.data);
+                                }
+                            });
+                    }
+
+                }
+                else if (location.includes("/posts"))
+                {
+                    axios.get('/api/posts/'+paramId)
+                        .then((res)=>{
+                            if(res.data.length > 0){
+                                setPostsArray(res.data);
+                            }
+                        });
+                }
+
             }
         })
 
@@ -33,8 +81,36 @@ function Door(props)
         return(<center><br/><div className="loader"></div></center>)
     }
 
-    return (props.userUid!=null) ? (<Home postsArray={postsArray} setPostsArray={setPostsArray} username={props.username} userUid={props.userUid}/>): (<Loading/>)
+    if(location == "/home"||location=='')
+        return (props.user) ? (<Home user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} socket={props.socket}/>): (<Loading/>)
+    else if (location =="/profile")
+        return (props.user) ? (<Profile user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
+    else if (location.includes("/profile"))
+    {
+        if(!profileUser)
+            return (props.user) ? (<Profile user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
+        else
+            return (props.user) ? (<ProfileV user={props.user} userv={profileUser} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
+        /*else
+        {
+            axios.get('/api/users/' + paramId)
+                .then((res)=>{
+                  setProfileUser(res.data)
+                });
 
+            return (profileUser) ? (<Profile user={profileUser} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
+        }*/
+
+    }
+    else if (location.includes("/posts"))
+        return (props.user) ? (<Home postClass="d-none" user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} socket={props.socket}/>): (<Loading/>)
+    else if (location==("/notifications"))
+        return (props.user) ? (<AllNotifications postClass="d-none" user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
+    else //Not Found Page
+    {
+        console.log(location)
+        return <Loading/>
+    }
 }
 
 export default Door;

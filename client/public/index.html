@@ -30,7 +30,6 @@
     <title>React App</title>
     <link href="https://fonts.googleapis.com/css2?family=Sofia&family=Spartan:wght@400;700&display=swap" rel="stylesheet"></link>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous"></link>
-    <link rel="stylesheet" href="./font.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous"></link>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -59,14 +58,26 @@
           if (e.target.id == "popup" || $(e.target).parents("#popup").length) {
             //alert("Inside div");
           } else {
-            document.getElementById("myPopup").classList.remove("show");
+            try{
+              document.getElementById("myPopup").classList.remove("show");
+
+            }catch{}
+          }
+          if (e.target.id == "notif" || $(e.target).parents("#notif").length) {
+            //alert("Inside div");
+          } else {
+            try{
+              document.getElementById("notifications").classList.remove("show");
+            }catch{}
           }
         });
         //if(e.target.id!="")
       }
-      /*function globalClick(){
-
-      }*/
+      function ShowModal(txt){
+        $('#warningModal').modal("show");
+      }
     </script>
+    <!--&lt;!&ndash;AddSense&ndash;&gt;
+    <script data-ad-client="ca-pub-2371705643909578" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
   </body>
 </html>
