@@ -311,6 +311,21 @@ const postsController = {
                             newNotif.save().then(() => console.log('done sending notification')).catch(err => console.log(err));
                             res.status('200');
                             res.json(data);
+
+                            UserModel.find({"userId": data.userId}, (err, data) => {
+                                if(err){
+                                    console.log(err);
+                                }else{
+                                    let userScore = data[0].totScore;
+                                    userScore = userScore + 1;
+                                    UserModel.findOneAndUpdate({"userId": data[0].userId}, {totScore: userScore.toFixed(2)}, null, (err, data)=>{
+                                        if(err) {
+                                            console.log(err);
+                                        }
+                                    })
+                                }
+                            
+                            })
                         }
                     });
                 }
@@ -333,6 +348,21 @@ const postsController = {
                 console.log(data);
                 res.status('200');
                 res.json(data);
+
+                UserModel.find({"userId": data.userId}, (err, data) => {
+                    if(err){
+                        console.log(err);
+                    }else{
+                        let userScore = data[0].totScore;
+                        userScore = userScore - 1;
+                        UserModel.findOneAndUpdate({"userId": data[0].userId}, {totScore: userScore.toFixed(2)}, null, (err, data)=>{
+                            if(err) {
+                                console.log(err);
+                            }
+                        })
+                    }
+                
+                })
             }
         });
 
@@ -343,11 +373,13 @@ const postsController = {
         //req.params.userId is the userId
         var shouldUpdate = false;
         var commentIndex=-1;
+        let userUID;
         PostModel.find({"_id": req.body.post_id}).then(function (data) {
             if (data[0].comments) {
                 for (var i = 0; i < data[0].comments.length; i++) {
                     if (data[0].comments[i]._id == req.body.comment_id) {
                         commentIndex=i;
+                        userUID = data[0].comments[i].userId;
                         if (data[0].comments[i].likes.includes(req.params.userId)) {
                             break;
                         } else {
@@ -366,6 +398,21 @@ const postsController = {
                                     'commentId': req.body.comment_id,
                                 }
                             );
+                            
+                            UserModel.find({"userId": userUID}, (err, data) => {
+                                if(err){
+                                    console.log(err);
+                                }else{
+                                    let userScore = data[0].totScore;
+                                    userScore = userScore + 2;
+                                    UserModel.findOneAndUpdate({"userId": userUID}, {totScore: userScore.toFixed(2)}, null, (err, data)=>{
+                                        if(err) {
+                                            console.log(err);
+                                        }
+                                    })
+                                }
+                            
+                            })
                             newNotif.save().then(() => console.log('done sending notification')).catch(err => console.log(err));
                             break;
                         }
@@ -406,6 +453,7 @@ const postsController = {
         // });
 
         PostModel.find({"_id": req.body.post_id}).then(function (data) {
+            let userUID;
             if (data[0].comments) {
                 console.log("Inside data[0].comments");
                 for (var i = 0; i < data[0].comments.length; i++) {
@@ -413,6 +461,7 @@ const postsController = {
                         var filteredAry = data[0].comments[i].likes.filter(function (e) {
                             return e !== req.params.userId
                         })
+                        userUID = data.comments[i].userId;
                         data[0].comments[i].likes = filteredAry;
                         break;
                     }
@@ -425,6 +474,21 @@ const postsController = {
                         console.log(data);
                         res.status('200');
                         res.json(data);
+
+                        
+                        UserModel.find({"userId": userUID}, (err, data) => {
+                            if(err){
+                                console.log(err);
+                            }else{
+                                let userScore = data[0].totScore;
+                                userScore = userScore - 2;
+                                UserModel.findOneAndUpdate({"userId": userUID}, {$set: {totScore: userScore.toFixed(2)}}, null, (err, data)=>{
+                                    if(err) {
+                                        console.log(err);
+                                    }
+                                })
+                            }
+                        })
                     }
                 });
             } else {
