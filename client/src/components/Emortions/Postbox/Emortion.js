@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Emoticon from '../Postform/Emoticon'
 import './Emortion.css'
 import axios from 'axios';
-import { Button, Collapse, Dropdown, Row, Container, Col } from 'react-bootstrap'
+import { Button, Collapse, Dropdown } from 'react-bootstrap'
 import Comment from "./Answers/Comment";
 import $ from 'jquery'
 import {LikeButton, DislikeButton} from "../thumbs";
@@ -15,18 +15,27 @@ const Emortion = (props) => {
     // const [name, setName] = useState("anonymous");
     const [open, setOpen] = useState(false);
     const [answered, setAnswered] = useState(false);
+    const [showCount, setShowCount] = useState(8);
+    const [img, setImg] = useState(require('../../Shared/dpholder.png'));
+
     //const [comments, setComments] = useState(props.emortion.comments);
     //const [answer, setAnswer] = useState(null);
 
 
     useEffect(() => {
         didUserAnswer();
+        axios.get(`/api/users/${emortion.userId}`).then((res)=>{
+            if(res.data.profileImage!=null|| res.data.profileImage!="null")
+                setImg(res.data.profileImage)
+        }).catch(function(e){
+            console.log(e)
+        });
         // if(props.emortion.name)
         //     setName(props.emortion.name);
         // else
         //     GetUserName(emortion.userId);
 
-    }, []);
+    }, [props.emortion]);
 
 
     const getComments = (postId) => {
@@ -64,8 +73,6 @@ const Emortion = (props) => {
                     <span className="badge badge-success">REVEALED</span>
                     <p className="card-text"><span className="secret btn btn-light">SECRET: {emortion.secretAnswer}</span></p>
                 </div>
-
-
             );
         else return (
             <div>
@@ -177,7 +184,7 @@ const Emortion = (props) => {
             {/* {setReturnNo(returnNo+1)} */}
             <div className="card bg-light">
                 <div className="card-body">
-                    <div className="blackburger-font">Emortion By {emortion.name}</div>
+                    <div className="blackburger-font"><img src={img} width="50px;" className="rounded-circle"/> Emortion By {emortion.name}</div>
                     <p className="text-muted">{new Date(emortion.createdAt).toLocaleString()}</p>
                     <div>
                         {emortion.message.emojiArray.map((position, index) => (

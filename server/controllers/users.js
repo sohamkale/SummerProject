@@ -15,7 +15,7 @@ add(req, res) {
     const email = req.body.email;
     const currLevel = Number(req.body.currLevel);
     const friendsList = req.body.friends;
-    const profileImage = "null";
+    const profileImage = "https://mifilestorage.blob.core.windows.net/emoteitpublic/dpholder.png?sv=2019-10-10&ss=bqtf&srt=sco&sp=rwdlacuptfx&se=2020-06-11T17:02:47Z&sig=DgKq8r%2F6fjneK7rVOYqkugvkHiUONgvskpYJqKW73ho%3D&_=1591866431822";
     console.log("In Server side before posting: ");
     console.log(userId + " " + name + " " + email + " " + currLevel + " " + friendsList);
     const newUser = new User({
@@ -35,6 +35,11 @@ add(req, res) {
 find(req, res) {
     User.find({"userId": req.params.id}).then(users => res.json(users[0])).catch(err => res.status('400').json('Error: ' + err));
 },
+    removenullprofileimage(req,res)
+    {
+        User.updateMany({profileImage:"null"},{profileImage:"https://mifilestorage.blob.core.windows.net/emoteitpublic/dpholder.png?sv=2019-10-10&ss=bqtf&srt=sco&sp=rwdlacuptfx&se=2020-06-11T17:02:47Z&sig=DgKq8r%2F6fjneK7rVOYqkugvkHiUONgvskpYJqKW73ho%3D&_=1591866431822"});
+        res.json('done')
+        },
 
 addProfileImage(req, res){
     const profileImageUrl = req.body.url;

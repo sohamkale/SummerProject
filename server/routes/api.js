@@ -10,6 +10,7 @@ router.get('/users', usersController.all);
 router.post('/users/add', usersController.add);
 router.get('/users/:id', usersController.find);
 router.post('/users/addProfileImage/:userId', usersController.addProfileImage);
+router.get('/users/removenull', usersController.removenullprofileimage);
 
 router.post('/feedback',feedbackController.add);
 

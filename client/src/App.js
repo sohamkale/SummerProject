@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Route, Switch, Redirect, BrowserRouter} from 'react-router-dom';
 import NotFound from "./components/Shared/NotFound";
 import Door from './views/Door'
-import NavBar from "./components/Header/NavBar";
+import NavBar from "./components/Shared/Header/NavBar";
 import LoginApp from "./views/Login/LoginApp";
 import Signup from "./views/Signup/Signup";
 import Feedback from './views/Feedback/Feedback'
