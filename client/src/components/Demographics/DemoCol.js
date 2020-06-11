@@ -1,12 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import { useLocation } from 'react-router-dom'
 import './DemoCol.css'
-import fire from "../../config/Fire";
 import axios from 'axios';
-import $ from 'jquery'
 import {storage} from "../../config/Fire";
-import Emoticon from "../Emortions/Emoticon";
-import {Collapse, Dropdown} from "react-bootstrap";
+
 function DemoCol(props)
 {
     const [image, setImage] = useState(null);

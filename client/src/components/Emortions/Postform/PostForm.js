@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react'
 import EmojiInputBox from './EmojiInputBox'
 import Emoji from "./Emoji"
 import { Button } from 'react-bootstrap'
-import fire from "../../config/Fire";
 import $ from 'jquery'
-import axios from 'axios';
 
 const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:5000';
 

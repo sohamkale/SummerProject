@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Switch, Redirect  } from 'react-router-dom';
 import DemoCol from '../../components/Demographics/DemoCol'
-import Emortion from "../../components/Emortions/Emortion";
-import Emoticon from "../../components/Emortions/Emoticon";
+import Emortion from "../../components/Emortions/Postbox/Emortion";
+import Emoticon from "../../components/Emortions/Postform/Emoticon";
 import io from 'socket.io-client';
 import axios from 'axios'
 

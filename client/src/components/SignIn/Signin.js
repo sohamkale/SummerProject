@@ -25,11 +25,9 @@ const Signin = (props) => {
             </div>
 
             <button className="btn btn-lg btn-primary btn-block text-uppercase" onClick={props.login} type="submit">Sign in</button>
+            <a className="btn btn-lg btn-primary btn-block text-uppercase" href="/Signup">Sign up</a>
           </form>
-            <form className="form-signin" action='Signup'>
-              <hr className="my-2"/>
-            <button className="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign up</button>
-            </form>
+          <center><a className="btn btn-link text-uppercase" href="/ResetPass">Reset Password</a></center>
 
         </div>
       </div>

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Switch, Redirect  } from 'react-router-dom';
 import DemoCol from '../../components/Demographics/DemoCol'
-import PostForm from '../../components/Emortions/PostForm'
-import Emortion from "../../components/Emortions/Emortion";
+import PostForm from '../../components/Emortions/Postform/PostForm'
+import Emortion from "../../components/Emortions/Postbox/Emortion";
 import io from 'socket.io-client';
 
 import '../Home/Home.css'
-import Emoticon from "../../components/Emortions/Emoticon";
+import Emoticon from "../../components/Emortions/Postform/Emoticon";
 import axios from "axios";
 let socket;
 

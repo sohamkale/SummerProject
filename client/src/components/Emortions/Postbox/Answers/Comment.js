@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "./Comments.css";
 import axios from 'axios';
-import {DislikeButton, LikeButton} from "./thumbs";
+import {DislikeButton, LikeButton} from "../../thumbs";
 
 
 const Comment = (props) => {

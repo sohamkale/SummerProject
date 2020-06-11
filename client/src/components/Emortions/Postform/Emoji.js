@@ -13,7 +13,7 @@ function Emoji() {
         <div>
             <div className="popup" id="popup">
                 <div className="" onClick={myFunction}>
-                    <img src={require('./emoji.png')} width='30px;'></img>
+                    <img src={require('../emoji.png')} width='30px;'></img>
                 </div>
                 <div className='popuptext' id='myPopup'>
                     <div className="col-12"><PickerFunc/></div>

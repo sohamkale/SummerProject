@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useState } from "react"
 import Nav from 'react-bootstrap/Nav';
 import fire from "./../../config/Fire";
-import Notification from './Notification'
+import Notification from './Notification/Notification'
 import $ from "jquery";
 import './NavBar.css'
 

@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {Route, Switch, Redirect} from 'react-router-dom';
 import DemoCol from '../../components/Demographics/DemoCol'
-import PostForm from '../../components/Emortions/PostForm'
-import Emortion from "../../components/Emortions/Emortion";
-import CarouselComponent from "../../components/Emortions/CarouselComponent";
+import PostForm from '../../components/Emortions/Postform/PostForm'
+import Emortion from "../../components/Emortions/Postbox/Emortion";
+import CarouselComponent from "../../components/Emortions/Postbox/CarouselComponent";
 import {
     isMobile, isBrowser
 } from "react-device-detect";
