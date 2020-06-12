@@ -9,13 +9,27 @@ const usersController = {
     User.find().then(users => res.json(users)).catch(err => res.status('400').json('Error: ' + err));
 },
 
+    removenull(req,res){
+        User.find({profileImage:"https://mifilestorage.blob.core.windows.net/emoteitpublic/dpholder.png?sv=2019-10-10&ss=bqtf&srt=sco&sp=rwdlacuptfx&se=2020-06-11T17:02:47Z&sig=DgKq8r%2F6fjneK7rVOYqkugvkHiUONgvskpYJqKW73ho%3D&_=1591866431822"}).then(
+            users=> {users.forEach(
+                (item,index)=>{
+                    item.profileImage="https://mifilestorage.blob.core.windows.net/emoteitpublic/dpholder.png";
+                    console.log(item.name)
+                    User.updateOne({_id:item._id},item);
+                }
+            );
+            res.json('done')
+        }
+        ).catch(err => res.status('400').json('Error: ' + err));
+    },
+
 add(req, res) {
     const userId = req.body.userId;
     const name = req.body.name;
     const email = req.body.email;
     const currLevel = Number(req.body.currLevel);
     const friendsList = req.body.friends;
-    const profileImage = "https://mifilestorage.blob.core.windows.net/emoteitpublic/dpholder.png?sv=2019-10-10&ss=bqtf&srt=sco&sp=rwdlacuptfx&se=2020-06-11T17:02:47Z&sig=DgKq8r%2F6fjneK7rVOYqkugvkHiUONgvskpYJqKW73ho%3D&_=1591866431822";
+    const profileImage = "https://mifilestorage.blob.core.windows.net/emoteitpublic/dpholder.png";
     console.log("In Server side before posting: ");
     console.log(userId + " " + name + " " + email + " " + currLevel + " " + friendsList);
     const newUser = new User({
@@ -35,11 +49,6 @@ add(req, res) {
 find(req, res) {
     User.find({"userId": req.params.id}).then(users => res.json(users[0])).catch(err => res.status('400').json('Error: ' + err));
 },
-    removenullprofileimage(req,res)
-    {
-        User.updateMany({profileImage:"null"},{profileImage:"https://mifilestorage.blob.core.windows.net/emoteitpublic/dpholder.png?sv=2019-10-10&ss=bqtf&srt=sco&sp=rwdlacuptfx&se=2020-06-11T17:02:47Z&sig=DgKq8r%2F6fjneK7rVOYqkugvkHiUONgvskpYJqKW73ho%3D&_=1591866431822"});
-        res.json('done')
-        },
 
 addProfileImage(req, res){
     const profileImageUrl = req.body.url;

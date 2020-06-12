@@ -3,14 +3,15 @@ import './Users.css'
 import axios from "axios";
 
 function Users(props) {
+    const [allUsers, setAllUsers] = useState([])
     const [users, setUsers] = useState([])
 
     useEffect(() => {
         if (props.user) {
             axios.get('/api/users')
                 .then((res) => {
+                    setAllUsers (res.data);
                     setUsers(res.data);
-                    console.log(res.data)
                 });
         }
     }, [props.user]);
@@ -27,10 +28,21 @@ function Users(props) {
         )
     }
 
+    function Search(e)
+    {
+        var val = allUsers.filter(
+            user => {
+                return (user.name.toLowerCase()).includes(e.target.value.toLocaleLowerCase());
+            });
+       setUsers(val);
+    }
+
     return (
         <div className="container-fluid">
             <center>
                 <div className="btn mb-3 btn-secondary font-weight-bold">Users of EmoteIt</div>
+               <div> <input type="search" className="form-control-sm" placeholder="Search Someone!!" onChange={Search}/></div>
+                <br/>
             </center>
             <center>
             <div className="row">

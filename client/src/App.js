@@ -44,12 +44,12 @@ const App = (props) => {
                     <Route exact path="/Signup" component={Signup}/>
                     <Route exact path="/Feedback" component={Feedback}/>
                     <Route exact path="/Home" render={(props) => <Door {...props} user={user} socket={socket}/>}/>
-                    <Route exact path="/Profile" render={(props) => <Door user={user}/>}/>
-                    <Route exact path="/Profile/:id" render={(props) => <Door user={user}/>}/>
-                    <Route exact path="/Posts/:id" render={(props) => <Door user={user}/>}/>
-                    <Route exact path="/Users" render={(props) => <Users user={user}/>}/>
-                    <Route exact path="/Notifications" render={(props) => <Door user={user}/>}/>
-                    <Route exact path="/ResetPass" render={(props) => <ResetPassword user={user}/>}/>
+                    <Route exact path="/Profile" render={(props) => <Door user={user}  socket={socket}/>}/>
+                    <Route exact path="/Profile/:id" render={(props) => <Door user={user}  socket={socket}/>}/>
+                    <Route exact path="/Posts/:id" render={(props) => <Door user={user}  socket={socket}/>}/>
+                    <Route exact path="/Users" render={(props) => <Users user={user}  socket={socket}/>} />
+                    <Route exact path="/Notifications" render={(props) => <Door user={user}  socket={socket}/>}/>
+                    <Route exact path="/ResetPass" render={(props) => <ResetPassword user={user}  socket={socket}/>}/>
                     <Route exact path="/" render={(props) => <Door {...props} user={user} socket={socket}/>}/>
                     <Route path="/404" component={NotFound}/>
                     <Redirect to="/404"/>

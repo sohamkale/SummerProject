@@ -34,14 +34,22 @@ const Home = (props) => {
 
 
     const getPosts = () => {
-        if (props.postsArray.length == 1)
+
+        console.log(props)
+        if (props.postsArray.length == 1 & props.socket!=null)
+        {
+
             props.socket.emit('addPosts', {
                 currUser,
                 userId: props.postsArray[0]._id,
                 OnePost: true
-            }, () => props.setPostsArray([]));
-        else
+            }, () => props.setPostsArray([]));}
+        else if(props.socket!=null)
             props.socket.emit('addPosts', {currUser}, () => props.setPostsArray([]));
+        else
+        {
+            console.log('no socket')
+        }
     }
 
 

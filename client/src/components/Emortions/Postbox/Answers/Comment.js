@@ -5,7 +5,7 @@ import {DislikeButton, LikeButton} from "../../thumbs";
 
 
 const Comment = (props) => {
-    const [img, setImg] = useState(require('../../../Shared/dpholder.png'));
+    const [img, setImg] = useState(null);
 
     useEffect(()=>{
         axios.get(`/api/users/${props.comment.userId}`).then((res)=>{
@@ -14,7 +14,7 @@ const Comment = (props) => {
         }).catch(function(e){
             console.log(e)
         });
-       
+
     }, [props.comment])
 
     function GetUserName(userId) {
@@ -54,7 +54,6 @@ const Comment = (props) => {
         };
 
         axios.post(`/api/posts/dislikeComment/${props.user.userId}`, commentPostObj).then((res)=>{
-            console.log('asdasd')
             props.getComments();
         }).catch(function(e){
             console.log(e)
@@ -66,6 +65,8 @@ const Comment = (props) => {
     {
         return (props.comment.likes.includes(props.user.userId)) ? <DislikeButton function={dislikeComment}/> : <LikeButton function={likeComment}/>;
     }
+
+
 
     return (
         <div>

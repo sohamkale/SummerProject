@@ -83,13 +83,13 @@ function Door(props)
     if(location == "/home"||location=='/')
         return (props.user) ? (<Home user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} socket={props.socket}/>): (<Loading/>)
     else if (location =="/profile")
-        return (props.user) ? (<Profile user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
+        return (props.user) ? (<Profile user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} socket={props.socket}/>): (<Loading/>)
     else if (location.includes("/profile"))
     {
         if(!profileUser)
-            return (props.user) ? (<Profile user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
+            return (props.user) ? (<Profile user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} socket={props.socket} />): (<Loading/>)
         else
-            return (props.user) ? (<ProfileV user={props.user} userv={profileUser} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
+            return (props.user) ? (<ProfileV user={props.user} userv={profileUser} postsArray={postsArray} setPostsArray={setPostsArray} socket={props.socket}/>): (<Loading/>)
         /*else
         {
             axios.get('/api/users/' + paramId)
@@ -104,7 +104,7 @@ function Door(props)
     else if (location.includes("/posts"))
         return (props.user) ? (<Home postClass="d-none" user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} socket={props.socket}/>): (<Loading/>)
     else if (location==("/notifications"))
-        return (props.user) ? (<NotificationIndex postClass="d-none" user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
+        return (props.user) ? (<NotificationIndex postClass="d-none" user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} socket={props.socket}/>): (<Loading/>)
     else //Not Found Page
     {
         console.log(location)

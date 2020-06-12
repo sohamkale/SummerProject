@@ -168,7 +168,8 @@ const Emortion = (props) => {
     function Comments()
     {
         if(answered || emortion.userId==props.user.userId || new Date(emortion.revealsAt) <= new Date()){
-            return (<div>{emortion.comments.map((comment, index) => {
+            return (<div>{
+                emortion.comments.map((comment, index) => {
                 return (
                     // <li className="text-left">{comment.answer}</li>
                     <Comment getComments={getComments} key={index} comment={comment} postId={emortion._id} getPosts={props.getPosts} user={props.user}/>
