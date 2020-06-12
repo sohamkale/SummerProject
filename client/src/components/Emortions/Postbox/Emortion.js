@@ -82,19 +82,6 @@ const Emortion = (props) => {
         );
     }
 
-    // function GetUserName(userId) {
-    //     axios.get('/api/users/' + userId)
-    //         .then((res) => {
-    //             if (res.data) {
-    //                 //console.log("data is "+res.data)
-    //                 setName(res.data.name);
-    //             }
-    //             else {
-    //                 //console.log(res)
-    //                 setName("Not Found");
-    //             }
-    //         });
-    // }
 
     function didUserAnswer()
     {
@@ -185,7 +172,7 @@ const Emortion = (props) => {
             {/* {setReturnNo(returnNo+1)} */}
             <div className="card bg-light">
                 <div className="card-body">
-                    <div className="blackburger-font"><img src={img} width="50px;" className="rounded-circle"/> Emortion By {emortion.name}</div>
+                    <div className="blackburger-font" style={{fontSize: '100%'}}><img src={img} width="50px;" className="rounded-circle"/> Emortion By {emortion.name}</div>
                     <p className="text-muted">{new Date(emortion.createdAt).toLocaleString()}</p>
                     <div>
                         {emortion.message.emojiArray.map((position, index) => (

@@ -49,7 +49,7 @@ const Navbarcomp = (props) => {
 
 <div>
     <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-       <img className="logo" src={require('../logo.png')} width="60px" height="auto" alt=""/>
+       <a href="/Home"><img className="logo" src={require('../logo.png')} width="60px" height="auto" alt=""/></a>
 
         <Notification user={props.user} socket={props.socket}/>
 

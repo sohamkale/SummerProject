@@ -78,7 +78,7 @@ const Home = (props) => {
             {/* {socketFunc()} */}
             <div className='row'>
                 <DemoCol user={props.user} message={"Welcome to the Den!"}/>
-                <div className={'col-md-6 col-lg-6 col-sm-12 postCol'}>
+                <div className='col-md-6 col-lg-6 col-sm-12 p-sm-0'>
                     <div className={props.postClass}><PostForm getPosts={getPosts} postsArray={props.postsArray}
                                                                user={props.user}/></div>
                     <div id='emortions'>

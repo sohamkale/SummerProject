@@ -94,7 +94,7 @@ const Profile = (props) => {
                     </div>
                 </div>
                 <div className="col-lg-3 col-md-3 col-sm-12">
-                    <div className="btn btn-secondary w-100 mb-3">Answers by {props.user.name}</div>
+                    <div className="btn btn-secondary w-100 mb-3">Answers by {props.userv.name}</div>
                     <NoComments/>
                     {comments.map((comment,index)=>(
                         <CommentsByCard user={props.user} key={comment._id} comment={comment}/>
