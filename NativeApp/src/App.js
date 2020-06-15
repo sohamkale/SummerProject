@@ -9,76 +9,37 @@
  */
 
 /**Import written app  files**/
+import 'react-native-gesture-handler';
 import React, {useState} from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import Navbar from './components/Shared/Header/Navbar';
 import DemoCol from './components/DemoCol/DemoCol'
+import Home from './view/Home/Home'
+import Login from './view/Login/Login'
 
 
 import {
   SafeAreaView,
   StyleSheet,
+    ImageBackground,
   ScrollView,
   View,
   Text,
   StatusBar,
 } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const App: () => React$Node = () => {
-  const [user, setUser] = useState(null);
-  return (
-    <>
-      {/*<StatusBar barStyle="dark-content" />*/}
-      <SafeAreaView>
-        <Navbar user={user} />
-        <DemoCol />
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  backgroundImage: {
+    flex: 1,
+    width: null,
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
+
   highlight: {
     fontWeight: '700',
   },
   footer: {
-      color: Colors.dark,
     fontSize: 12,
     fontWeight: '600',
     padding: 4,
@@ -86,5 +47,38 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
 });
+
+const Stack = createStackNavigator();
+
+function App() {
+  const [user, setUser] = useState(null);
+  return (
+      <NavigationContainer>
+        <Navbar/>
+        <Stack.Navigator initialRouteName="Login" headerMode="none">
+          <Stack.Screen name="Login" component={Login} initialParams={{user: user}}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+
+  );
+}
+
+/*const App: () => React$Node = () => {
+  const [user, setUser] = useState(null);
+  return (
+      <NavigationContainer>
+      {/!*<StatusBar barStyle="dark-content" />*!/}
+      <SafeAreaView>
+
+          <Stack.Navigator initialRouteName="Login">
+            <Stack.Screen name="Login" component={Login}
+                options={{ title: 'Login Screen' }}/>
+          </Stack.Navigator>
+      </SafeAreaView>
+    </ImageBackground>
+      </NavigationContainer>
+  );
+};*/
+
 
 export default App;

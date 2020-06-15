@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 import {ScrollView, SafeAreaView, Text, StyleSheet, Image, View, TouchableOpacity} from 'react-native';
 import BootstrapStyleSheet from 'react-native-bootstrap-styles';
 import Button from 'react-native-bootstrap-buttons';
+import fire from '../../../config/Fire'
 import axios from 'axios';
 
 /**STYLES**/
@@ -54,15 +55,6 @@ const Navbar = (props) => {
     function handleHamburger()
     {setOpen(!open);}
 
-    useEffect(() => {
-        axios.get(``).then((res)=>{
-            if(res.data!=null)
-                props.user=res.data;
-        }).catch(function(e){
-            console.log(e)
-        });
-
-    }, []);
 
     const [open, setOpen] = useState(false);
 
@@ -75,6 +67,7 @@ const Navbar = (props) => {
                 <Button buttonType="link" label="Den" />
                 <Button buttonType="link" label="Users" />
                 <Button buttonType="link" label="Feedback" />
+                <LogoutButton/>
             </View>
         );
         }
@@ -83,15 +76,37 @@ const Navbar = (props) => {
         }
     }
 
+    function handleLogout()
+    {
+        fire.auth().signOut().then(function() {
+            props.setUser(null);
+        }).catch(function(error) {
+            // An error happened.
+        });
+    }
+
+    function HamburgerButton()
+    {
+       return (props.user!=null) ? (
+           <TouchableOpacity style={[s.hamburgertouch]} activeOpacity={0.5} onPress={handleHamburger} >
+               <Image style={[s.hamburger]} source={require('./hamburger.png')}/>
+           </TouchableOpacity>
+       ) : (<></>)
+
+    }
+
+    function LogoutButton()
+    {
+        return (props.user!=null) ? (<Button buttonType={'link'} label={'Logout'}></Button> ):(<></>);
+    }
+
     return (
         <View>
             <View style={[s.bgDark, s.navbar]}>
                 <View style={s.container}>
                     {/*<Text style={[s.text, s.textWhite]}>Hello Card!</Text>*/}
                     <Image style={[s.logo]} source={require('../../logo.png')}/>
-                    <TouchableOpacity style={[s.hamburgertouch]} activeOpacity={0.5} onPress={handleHamburger} >
-                        <Image style={[s.hamburger]} source={require('./hamburger.png')}/>
-                    </TouchableOpacity>
+                    <HamburgerButton/>
                 </View>
             </View>
             <Collapsable/>
