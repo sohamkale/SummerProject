@@ -8,9 +8,11 @@
  * @flow strict-local
  */
 
-import React from 'react';
 /**Import written app  files**/
+import React, {useState} from 'react';
 import Navbar from './components/Shared/Header/Navbar';
+import DemoCol from './components/DemoCol/DemoCol'
+
 
 import {
   SafeAreaView,
@@ -30,11 +32,13 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 const App: () => React$Node = () => {
+  const [user, setUser] = useState(null);
   return (
     <>
       {/*<StatusBar barStyle="dark-content" />*/}
       <SafeAreaView>
-        <Navbar/>
+        <Navbar user={user} />
+        <DemoCol />
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
@@ -74,7 +78,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   footer: {
-    color: Colors.dark,
+      color: Colors.dark,
     fontSize: 12,
     fontWeight: '600',
     padding: 4,

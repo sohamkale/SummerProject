@@ -1,9 +1,9 @@
 // @flow
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {ScrollView, SafeAreaView, Text, StyleSheet, Image, View, TouchableOpacity} from 'react-native';
 import BootstrapStyleSheet from 'react-native-bootstrap-styles';
 import Button from 'react-native-bootstrap-buttons';
-
+import axios from 'axios';
 
 /**STYLES**/
 const
@@ -49,10 +49,20 @@ const s = styles = bootstrapStyleSheet.create();
 /**END OF STYLE**/
 
 /**MAIN**/
-const Navbar = () => {
+const Navbar = (props) => {
     /**FUNCTIONS**/
     function handleHamburger()
     {setOpen(!open);}
+
+    useEffect(() => {
+        axios.get(``).then((res)=>{
+            if(res.data!=null)
+                props.user=res.data;
+        }).catch(function(e){
+            console.log(e)
+        });
+
+    }, []);
 
     const [open, setOpen] = useState(false);
 
