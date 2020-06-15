@@ -1,7 +1,8 @@
 // @flow
 import React, {useState} from 'react';
-import {ScrollView, SafeAreaView, Text, StyleSheet, Image, View, Button} from 'react-native';
+import {ScrollView, SafeAreaView, Text, StyleSheet, Image, View, TouchableOpacity} from 'react-native';
 import BootstrapStyleSheet from 'react-native-bootstrap-styles';
+import Button from 'react-native-bootstrap-buttons';
 
 
 /**STYLES**/
@@ -26,7 +27,6 @@ const classes = {
         width: 35,
         height: 30,
         margin: 15,
-        marginLeft: 'auto'
     },
     container: {
         flex: 1,
@@ -35,6 +35,12 @@ const classes = {
     },
     btnLink: {
         margin: 20
+    },
+    hamburgertouch:{
+        marginLeft: 'auto'
+    },
+    navbar:{
+        height:65
     }
 };
 
@@ -45,23 +51,40 @@ const s = styles = bootstrapStyleSheet.create();
 /**MAIN**/
 const Navbar = () => {
     /**FUNCTIONS**/
+    function handleHamburger()
+    {setOpen(!open);}
+
     const [open, setOpen] = useState(false);
+
+    function Collapsable()
+    {
+        if(open)
+        {
+            return(
+            <View style={s.bgDark}>
+                <Button buttonType="link" label="Den" />
+                <Button buttonType="link" label="Users" />
+                <Button buttonType="link" label="Feedback" />
+            </View>
+        );
+        }
+        else{
+            return(<View></View>);
+        }
+    }
 
     return (
         <View>
-            <View style={[s.bgDark, s.navbar, s.h45]}>
+            <View style={[s.bgDark, s.navbar]}>
                 <View style={s.container}>
                     {/*<Text style={[s.text, s.textWhite]}>Hello Card!</Text>*/}
                     <Image style={[s.logo]} source={require('../../logo.png')}/>
-                    <Image style={[s.hamburger]} source={require('./hamburger.png')}/>
+                    <TouchableOpacity style={[s.hamburgertouch]} activeOpacity={0.5} onPress={handleHamburger} >
+                        <Image style={[s.hamburger]} source={require('./hamburger.png')}/>
+                    </TouchableOpacity>
                 </View>
             </View>
-            {/*Opened Item*/}
-            <ScrollView style={s.bgDark}>
-                <Button style={[s.btnLink]} title="Den" />
-                <Button style={[s.btnLink]} title="Users"/>
-                <Button style={[s.btnLink]} title="Feedback"/>
-            </ScrollView>
+            <Collapsable/>
         </View>
     );
 };
