@@ -2,9 +2,11 @@
 import React, {useState, useEffect} from 'react';
 import {ScrollView, SafeAreaView, Text, StyleSheet, Image, View, TouchableOpacity} from 'react-native';
 import BootstrapStyleSheet from 'react-native-bootstrap-styles';
+import RNRestart from 'react-native-restart'; // Import package from node modules
 import Button from 'react-native-bootstrap-buttons';
+
 import fire from '../../../config/Fire'
-import axios from 'axios';
+import axios from 'axios';``
 
 /**STYLES**/
 const
@@ -79,7 +81,10 @@ const Navbar = (props) => {
     function handleLogout()
     {
         fire.auth().signOut().then(function() {
+            setOpen(false);
             props.setUser(null);
+            // Immediately reload the React Native Bundle
+            RNRestart.Restart();
         }).catch(function(error) {
             // An error happened.
         });
@@ -97,7 +102,7 @@ const Navbar = (props) => {
 
     function LogoutButton()
     {
-        return (props.user!=null) ? (<Button buttonType={'link'} label={'Logout'}></Button> ):(<></>);
+        return (props.user!=null) ? (<><Button buttonType={'link'} label={'Welcome '+ props.user.name + ' Logout?'} onPress={handleLogout}></Button></> ):(<></>);
     }
 
     return (

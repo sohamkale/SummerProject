@@ -43,12 +43,14 @@ const s = styles = bootstrapStyleSheet.create();
 
 function DemoCol(props)
 {
+    var x=props.user.profileImage;
+    console.log(x)
     return(
         <View style={[s.profileContainer]}>
             <TouchableOpacity activeOpacity={0.5} >
-                <Image style={[s.image]} source={require('../dpholder.png')}/>
+                <Image style={[s.image]} source={{ uri: props.user.profileImage }}/>
             </TouchableOpacity>
-            <Text style={[s.profileText]}>Mohammad Immam{'\n'}m.immam@ufl.edu{'\n'}Score: 20</Text>
+            <Text style={[s.profileText]}>{props.user.name+'\n'+props.user.email+'\nScore: '+props.user.totScore}</Text>
         </View>
     );
 }

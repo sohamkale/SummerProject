@@ -28,6 +28,7 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
+import {getBackgroundColor} from "react-native/Libraries/LogBox/UI/LogBoxStyle";
 
 
 const styles = StyleSheet.create({
@@ -54,10 +55,14 @@ function App() {
   const [user, setUser] = useState(null);
   return (
       <NavigationContainer>
-        <Navbar/>
+        <Navbar user={user} setUser={setUser}/>
+        <ImageBackground source={require('./components/logobw.png')} style={styles.backgroundImage} imageResizeMode={'repeat'}>
         <Stack.Navigator initialRouteName="Login" headerMode="none">
-          <Stack.Screen name="Login" component={Login} initialParams={{user: user}}/>
+          <Stack.Screen name="Login" component={Login} initialParams={{user: user, setUser: setUser}}/>
+          <Stack.Screen name="Home" component={Home}/>
         </Stack.Navigator>
+
+        </ImageBackground>
       </NavigationContainer>
 
   );

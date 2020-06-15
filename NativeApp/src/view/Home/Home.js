@@ -5,15 +5,15 @@ import Login from '../Login/Login'
 
 function Home(props)
 {
-    return (props.user!=null) ? (
+    return (
         <>
-            <DemoCol />
+            <DemoCol user={props.route.params.user}/>
             <ScrollView
                 contentInsetAdjustmentBehavior="automatic"
                 style={styles.scrollView}>
             </ScrollView>
             </>
-    ) : (<Login user={props.user} setUser={props.setUser}/>);
+    );
 }
 
 export default Home;
