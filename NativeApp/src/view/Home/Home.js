@@ -1,19 +1,74 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import DemoCol from '../../components/DemoCol/DemoCol';
-import {SafeAreaView, ScrollView} from 'react-native';
-import Login from '../Login/Login'
+import {ScrollView, View, Text, Image, TouchableOpacity} from 'react-native';
+import BootstrapStyleSheet from "react-native-bootstrap-styles";
 
-function Home(props)
-{
-    return (
-        <>
-            <DemoCol user={props.route.params.user}/>
-            <ScrollView
+/*App File imports*/
+import Emortion from '../../components/Emortion/PostBox/Emortion'
+import fire from "../../config/Fire";
+import axios from "axios";
+
+/**STYLES**/
+const
+    BODY_COLOR = '#000022',
+    TEXT_MUTED = '#888888';
+// custom constants
+
+const constants = {
+    BODY_COLOR, TEXT_MUTED,
+};
+
+// custom classes
+const classes = {
+    hr: {
+        borderBottomColor: 'black',
+        borderBottomWidth: 1,
+        flexDirection: 'row',
+        width: 300,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginBottom: 15,
+        alignItems: 'center',
+        opacity: 0.4
+    }
+};
+
+const bootstrapStyleSheet = new BootstrapStyleSheet(constants, classes);
+const s = styles = bootstrapStyleSheet.create();
+
+function Home(props) {
+    const [postsArray, setPostsArray] = useState([]);
+
+    useEffect(() => {
+            GetPosts();
+         }, []);
+
+    function GetPosts()
+    {
+        if(props.route.params.user!=null)
+        {
+            axios.get('http://facetweetit.herokuapp.com/api/posts').then((res) => {
+                if (res.data != null) {
+                    setPostsArray(res.data);
+                } else
+                {}
+            })
+        }
+    }
+        return (
+            <>
+                <ScrollView
                 contentInsetAdjustmentBehavior="automatic"
                 style={styles.scrollView}>
-            </ScrollView>
+                <DemoCol user={props.route.params.user}/>
+                    {
+                        postsArray.map((item, index) => (
+                            <Emortion key={index} emortion={item} user={props.route.params.user}/>
+                        ))
+                    }
+                </ScrollView>
             </>
-    );
-}
+        );
+    }
 
-export default Home;
+    export default Home;

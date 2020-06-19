@@ -12,7 +12,7 @@ const postsController = {
         let currDateTime = new Date();
         var validPosts = [];
         //how many days do you want the post to expire by?
-        var expireDays = 3;
+        var expireDays = 10;
         var three_day = 1000 * 60 * 60 * 24 * expireDays;
 
         console.log("In Server side before getting posts: ");
@@ -82,8 +82,7 @@ const postsController = {
 
     add(req, res) {
         //parse the body from front end-
-        req.body = objectify(req.body);
-
+        //req.body = objectify(req.body);
         //Custom Body
         const userId = req.body.userId;
         const name = req.body.username;
@@ -91,7 +90,8 @@ const postsController = {
         // const numLikes = Number(0);
 
         //this is an array of positions. 
-        const emojiArray = req.body.emojiArray;
+        const emojiArray = null;
+        const emojiObjects = req.body.emojiObjects;
         const secretAnswer = req.body.secretAnswer;
 
         //Calculate expire time from req.body.validity
@@ -120,7 +120,8 @@ const postsController = {
             'likes': [],
             'name': name,
             'message': {
-                'emojiArray': emojiArray
+                'emojiArray': emojiArray,
+                'emojiObjects': emojiObjects
             },
             'secretAnswer': secretAnswer,
             'revealsAt': revealsAt,

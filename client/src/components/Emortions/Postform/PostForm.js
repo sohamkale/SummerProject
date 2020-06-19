@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import EmojiInputBox from './EmojiInputBox'
-import Emoji from "./Emoji"
+import {EmojiInputBox} from "./EmojiInputBox"
+import EmojiPicker from './EmojiPicker'
 import { Button } from 'react-bootstrap'
 import $ from 'jquery'
+import {Picker} from "emoji-mart";
+import axios from 'axios'
 
 const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:5000';
 
 const PostForm = (props) => {
     const [hasArrived, setHasArrived] = useState(false);
+    const [emojis, setEmojis] = useState([]);
+
     console.log(props)
     useEffect(() => {
 
@@ -24,8 +28,6 @@ const PostForm = (props) => {
                 <div className="card-body">
                     <div className="blackburger-font">TELL ME AN EMORTION!</div>
                     <form id='thePost' onSubmit={submit}>
-                        <input readOnly hidden name="userId" value={props.user.userId ? props.user.userId: ""}></input>
-                        <input readOnly hidden name="username" value={props.user.name ? props.user.name: ""}></input>
                         <label htmlFor="type" className='form-check-label'>Type: &nbsp; </label>
                         <select id="postType" name='type' className='form-control-sm'>
                             <option>Timer</option>
@@ -38,13 +40,13 @@ const PostForm = (props) => {
                             <option>2h</option>
                             <option>3h</option>
                         </select>
-                        <EmojiInputBox />
+                        <EmojiInputBox emojis={emojis} setEmojis={setEmojis}/>
                         <center><div className="text-danger"><b id="empty_warning"></b></div></center>
 
                         <div className="form-group row">
-                            <label  className="col-sm-2 col-form-label" style={{fontFamily:'Ink Free', fontWeight: 'bold', fontSize: '12px', backgroundColor:'rgba(173, 216, 230, 0.4)!important'}}><Emoji /></label>
+                            <label  className="col-sm-2 col-form-label" style={{fontFamily:'Ink Free', fontWeight: 'bold', fontSize: '12px', backgroundColor:'rgba(173, 216, 230, 0.4)!important'}}><EmojiPicker appendEmoji={appendEmoji}/></label>
                             <div className="col-sm-6">
-                                <input style={{fontFamily:'Ink Free', fontWeight: 'bold'}} defaultValue="" required id="postSecret" name="secretAnswer" className="form-control"></input>
+                                <input style={{fontFamily:'Ink Free', fontWeight: 'bold'}} defaultValue="" required id="postSecret" placeholder={"Secret Answer to your Emortion"} name="secretAnswer" className="form-control"></input>
                             </div>
                             <Button size="sm" type='submit' className='d-inline' variant="secondary" className="col-sm-2">POST</Button>
                         </div>
@@ -63,41 +65,46 @@ const PostForm = (props) => {
 
         e.preventDefault();
 
+
         document.getElementById("empty_warning").innerHTML="";
 
         if(document.getElementById("maintext").childElementCount<=0)
             document.getElementById("empty_warning").innerHTML="You cannot Post a message without an emoji!";
 
         else{
-            var form = $('#thePost').serializeArray();
-            var emojis = (document.getElementById('maintext').childNodes);
-            var emojiArray = [];
-            emojis.forEach(function (item, index) {
-                if (item.nodeName == "SPAN")
-                    emojiArray.push(item.style.backgroundPosition)
-                else
-                    emojiArray.push(item.getElementsByTagName("SPAN")[0].style.backgroundPosition)
-            });
-            form.push({ name: 'emojiArray', value: emojiArray })
-            $.ajax({
-                url: '/api/posts/add',
-                type: 'POST',
-                data: JSON.stringify(
-                    form
-                ),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (data) {
-                    if (hasArrived) {
-                        EraseAll();
-                        props.getPosts();
-                    }
-                }
-            });
+
+            axios.post('/api/posts/add', {
+                userId: props.user.userId ? props.user.userId: "",
+                username: props.user.name ? props.user.name: "",
+                type: document.getElementById('postType').value,
+                emojiObjects: emojis,
+                secretAnswer: document.getElementById('postSecret').value,
+                validity: document.getElementById('postValidity').value
+            })
+                .then(function (response) {
+                    console.log(response);
+                    EraseAll();
+                    props.getPosts();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         }
     }
 
+    function appendEmoji(emoji, event) {
+        const newList = emojis.concat(emoji);
+
+        setEmojis(newList);
+        /*//var ele = event.target.cloneNode(true);
+        console.log(emoji)
+        var ele = document.createElement('SPAN');
+        //console.log(ele);
+        //document.getElementById('maintext').appendChild(<GetEmoji emoji={emoji}/>);*/
+    }
 }
+
+
 
 function EraseAll()
 {

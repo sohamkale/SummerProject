@@ -5,7 +5,8 @@ const postObjSchema = new mongoose.Schema({
     type: {type: String},
     likes: [],
     message: {
-        emojiArray: [] //empty array at first and will add emoji to it later, making it an array [emoji]
+        emojiArray: [], //empty array at first and will add emoji to it later, making it an array [emoji]
+        emojiObjects: []
     }, //message -> emoji array -> every emoji has x and y coordinates
     secretAnswer: {type: String},
     name: {type: String},
