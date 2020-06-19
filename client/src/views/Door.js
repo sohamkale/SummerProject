@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import axios from "axios";
-import Home from './Home'
+import Home from './Home/Home'
 import {useLocation, useParams } from 'react-router-dom'
-import './Home.css'
-import fire from "../../config/Fire";
-import Profile from "../Profile/Profile";
-import ProfileV from "../Profile/ProfileV";
-import AllNotifications from '../Notifications/AllNotifications';
-import NotFound from "../../components/Shared/NotFound";
+import './Home/Home.css'
+import fire from "../config/Fire";
+import Profile from "./Profile/Profile";
+import ProfileV from "./Profile/ProfileV";
+import NotificationIndex  from './Notifications/NotificationIndex';
 
 function Door(props)
 {
@@ -27,7 +26,7 @@ function Door(props)
             }
             else {
                 //GET POSTS DEPENDING ON WHICH POST YOU ARE IN
-                if(location == "/home")
+                if(location == "/home"||location == "/")
                 {
                     axios.get('/api/posts')
                         .then((res)=>{
@@ -81,16 +80,16 @@ function Door(props)
         return(<center><br/><div className="loader"></div></center>)
     }
 
-    if(location == "/home"||location=='')
+    if(location == "/home"||location=='/')
         return (props.user) ? (<Home user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} socket={props.socket}/>): (<Loading/>)
     else if (location =="/profile")
-        return (props.user) ? (<Profile user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
+        return (props.user) ? (<Profile user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} socket={props.socket}/>): (<Loading/>)
     else if (location.includes("/profile"))
     {
         if(!profileUser)
-            return (props.user) ? (<Profile user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
+            return (props.user) ? (<Profile user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} socket={props.socket} />): (<Loading/>)
         else
-            return (props.user) ? (<ProfileV user={props.user} userv={profileUser} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
+            return (props.user) ? (<ProfileV user={props.user} userv={profileUser} postsArray={postsArray} setPostsArray={setPostsArray} socket={props.socket}/>): (<Loading/>)
         /*else
         {
             axios.get('/api/users/' + paramId)
@@ -105,7 +104,7 @@ function Door(props)
     else if (location.includes("/posts"))
         return (props.user) ? (<Home postClass="d-none" user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} socket={props.socket}/>): (<Loading/>)
     else if (location==("/notifications"))
-        return (props.user) ? (<AllNotifications postClass="d-none" user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} />): (<Loading/>)
+        return (props.user) ? (<NotificationIndex postClass="d-none" user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} socket={props.socket}/>): (<Loading/>)
     else //Not Found Page
     {
         console.log(location)

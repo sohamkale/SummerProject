@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Switch, Redirect  } from 'react-router-dom';
 import DemoCol from '../../components/Demographics/DemoCol'
-import Emortion from "../../components/Emortions/Emortion";
-import Emoticon from "../../components/Emortions/Emoticon";
+import Emortion from "../../components/Emortions/Postbox/Emortion";
+import Emoticon from "../../components/Emortions/Postform/Emoticon";
 import io from 'socket.io-client';
 import axios from 'axios'
 
@@ -56,7 +56,8 @@ const Profile = (props) => {
                     ))}
                 </div>
                 <div className="text-sm-left" style={{fontWeight:'bold',fontFamily:'Ink Free'}}>Answered: {properties.comment.answer}</div>
-                <a href={"/posts/"+properties.comment.postId}>Go To Post</a>
+                <div className="badge badge-primary">Scored: {properties.comment.score}</div><br/>
+                <a className="btn btn-sm btn-breast-cancer" href={"/posts/"+properties.comment.postId}>Go To Post</a>
             </div>
         </div>);
 

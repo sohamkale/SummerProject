@@ -1,15 +1,12 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import { useLocation } from 'react-router-dom'
 import './DemoCol.css'
-import fire from "../../config/Fire";
 import axios from 'axios';
-import $ from 'jquery'
 import {storage} from "../../config/Fire";
-import Emoticon from "../Emortions/Emoticon";
-import {Collapse, Dropdown} from "react-bootstrap";
+
 function DemoCol(props)
 {
-    const [image, setImage] = useState(null);
+    //const [image, setImage] = useState(null);
     const [url, setUrl] = useState(null);
 
     useState(() => {
@@ -67,12 +64,12 @@ function DemoCol(props)
             return (location.toLowerCase()==="/profile")?(
                 <div className="container">
                     <input type="file" onChange={onImageChange} id="imgUpload" style={{display:"none"}}/>
-                    <img width="100%" onClick={changeImage} src={(url === null || url === "null") ? require('./dpholder.png') : url} className="rounded-circle dp" />
+                    <img width="100%" onClick={changeImage} src={(url === null || url === "null") ? require('../Shared/dpholder.png') : url} className="rounded-circle dp" />
                     <div>Click to Change</div>
                     <div  className="overlay rounded-circle">CHANGE</div>
                 </div>
                ):( <div className="container">
-                <img width="100%" src={(props.user.profileImage === null || props.user.profileImage === "null") ? require('./dpholder.png') : props.user.profileImage} className="rounded-circle dp" />
+                <img width="100%" src={(props.user.profileImage === null || props.user.profileImage === "null") ? require('../Shared/dpholder.png') : props.user.profileImage} className="rounded-circle dp" />
             </div>)
     }
     function VerticalDemo()
@@ -84,7 +81,7 @@ function DemoCol(props)
                     <br></br>
                     <center className="blackburger-font">
                         {props.message}
-                        <img width="90%" onClick={imageClick} src={(url === null || url === "null") ? require('./dpholder.png') : url} className="rounded-circle" alt="Cinque Terre"/>
+                        <img width="90%" onClick={imageClick} src={(url === null || url === "null") ? require('../Shared/dpholder.png') : url} className="rounded-circle" alt="Cinque Terre"/>
                         {props.user.name}<br/>
                         Score: {props.user.totScore}
                     </center>
@@ -109,7 +106,7 @@ function DemoCol(props)
         return (location=="/home"||location=="/Home")?
             (
                 <div className='card-body row DemoVer blackburger-font'>
-                    <div className="col-6"><img width="90%" onClick={imageClick} src={(url === null || url === "null") ? require('./dpholder.png') : url} className="rounded-circle" alt="Cinque Terre"/></div>
+                    <div className="col-6"><img width="90%" onClick={imageClick} src={(url === null || url === "null") ? require('../Shared/dpholder.png') : url} className="rounded-circle" alt="Cinque Terre"/></div>
                     <div className="col-6 blackburger-font" style={{fontSize:'12px'}}>
                         <br/>
                         <br/>

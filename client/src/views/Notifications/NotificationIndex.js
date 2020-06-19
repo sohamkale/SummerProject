@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import axios from "axios";
 import './Notifications.css'
 
-function AllNotifications(props) {
+function NotificationIndex (props) {
     const [notifications, setNotifications] = useState([])
 
     useEffect(() => {
@@ -39,4 +39,4 @@ function AllNotifications(props) {
     )
 }
 
-export default AllNotifications;
+export default NotificationIndex;

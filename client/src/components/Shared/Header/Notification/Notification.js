@@ -1,9 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import './NavBar.css'
+import '../NavBar.css'
 import axios from 'axios'
-import fire from "../../config/Fire";
-// import socket from "../../config/socketConfig";
-import io from 'socket.io-client';
 
 function Notification(props) {
     const [notifCounts, setNotifCounts] = useState(0);

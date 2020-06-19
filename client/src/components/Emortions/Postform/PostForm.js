@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react'
 import EmojiInputBox from './EmojiInputBox'
 import Emoji from "./Emoji"
 import { Button } from 'react-bootstrap'
-import fire from "../../config/Fire";
 import $ from 'jquery'
-import axios from 'axios';
 
 const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:5000';
 
@@ -42,9 +40,9 @@ const PostForm = (props) => {
                         </select>
                         <EmojiInputBox />
                         <center><div className="text-danger"><b id="empty_warning"></b></div></center>
-                        <Emoji />
+
                         <div className="form-group row">
-                            <label  className="col-sm-2 col-form-label" style={{fontFamily:'Ink Free', fontWeight: 'bold', fontSize: '12px', backgroundColor:'rgba(173, 216, 230, 0.4)!important'}}>SECRET</label>
+                            <label  className="col-sm-2 col-form-label" style={{fontFamily:'Ink Free', fontWeight: 'bold', fontSize: '12px', backgroundColor:'rgba(173, 216, 230, 0.4)!important'}}><Emoji /></label>
                             <div className="col-sm-6">
                                 <input style={{fontFamily:'Ink Free', fontWeight: 'bold'}} defaultValue="" required id="postSecret" name="secretAnswer" className="form-control"></input>
                             </div>

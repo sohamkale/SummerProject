@@ -158,15 +158,15 @@ const postsController = {
         console.log("answerWords: ");
         console.log(answerWords);
 
-        UserModel.find({"userId": userId}).then(data => {
-            totScore = data[0].totScore;
+        UserModel.findOne({"userId": userId}).then(data => {
+            totScore = data.totScore;
             console.log("totScore: " + totScore);
 
             //NEED TO CHECK IF THE STRING MATCHES WITH THE SECRET ANSWER TO DETERMINE THE SCORE
 
-            PostModel.find({"_id": req.params.id}, (err, data) => {
+            PostModel.findOne({"_id": req.params.id}, (err, data) => {
 
-                var secret = data[0].secretAnswer.toLowerCase();
+                var secret = data.secretAnswer.toLowerCase();
                 //Do regex here//
 
                 var secWords = secret.split(' ');
@@ -190,9 +190,9 @@ const postsController = {
                     res.status('404');
                     res.json({error: err});
                 } else {
-                    if (data[0]) {
-                        for (var i = 0; i < data[0].comments.length; i++) {
-                            if (data[0].comments[i].userId === userId) {
+                    if (data) {
+                        for (var i = 0; i < data.comments.length; i++) {
+                            if (data.comments[i].userId === userId) {
                                 shouldAddComment = false;
                                 break;
                             }
@@ -260,9 +260,9 @@ const postsController = {
         //req.params.userId is the userId
         var userAnswered = false;
 
-        PostModel.find({"_id": req.body._id}).then(data => {
-            if (data[0].comments) {
-                data[0].comments.map((comment => {
+        PostModel.findOne({"_id": req.body._id}).then(data => {
+            if (data.comments) {
+                data.comments.map((comment => {
                     if (comment.userId === req.params.userId) {
                         userAnswered = true;
                     }
@@ -278,9 +278,9 @@ const postsController = {
         //req.body._id will contain the id of the post in question.
         //req.params.userId is the userId
 
-        PostModel.find({"_id": req.body._id}).then((data) => {
-            if (data[0]) {
-                if (data[0].likes.includes(req.params.userId)) {
+        PostModel.findOne({"_id": req.body._id}).then((data) => {
+            if (data) {
+                if (data.likes.includes(req.params.userId)) {
                     PostModel.findOneAndUpdate({"_id": req.body._id}, {$pull: {likes: req.params.userId}}, null, (err, data) => {
                         if (err) {
                             res.status('404');
@@ -311,6 +311,21 @@ const postsController = {
                             newNotif.save().then(() => console.log('done sending notification')).catch(err => console.log(err));
                             res.status('200');
                             res.json(data);
+
+                            UserModel.findOne({"userId": data.userId}, (err, data) => {
+                                if(err){
+                                    console.log(err);
+                                }else{
+                                    let userScore = data.totScore;
+                                    userScore = userScore + 1;
+                                    UserModel.findOneAndUpdate({"userId": data.userId}, {totScore: userScore.toFixed(2)}, null, (err, data)=>{
+                                        if(err) {
+                                            console.log(err);
+                                        }
+                                    })
+                                }
+                            
+                            })
                         }
                     });
                 }
@@ -333,6 +348,21 @@ const postsController = {
                 console.log(data);
                 res.status('200');
                 res.json(data);
+
+                UserModel.findOne({"userId": data.userId}, (err, data) => {
+                    if(err){
+                        console.log(err);
+                    }else{
+                        let userScore = data.totScore;
+                        userScore = userScore - 1;
+                        UserModel.findOneAndUpdate({"userId": data.userId}, {totScore: userScore.toFixed(2)}, null, (err, data)=>{
+                            if(err) {
+                                console.log(err);
+                            }
+                        })
+                    }
+                
+                })
             }
         });
 
@@ -343,36 +373,53 @@ const postsController = {
         //req.params.userId is the userId
         var shouldUpdate = false;
         var commentIndex=-1;
-        PostModel.find({"_id": req.body.post_id}).then(function (data) {
-            if (data[0].comments) {
-                for (var i = 0; i < data[0].comments.length; i++) {
-                    if (data[0].comments[i]._id == req.body.comment_id) {
+        let userUID;
+        PostModel.findOne({"_id": req.body.post_id}).then(function (data) {
+            if (data.comments) {
+                for (var i = 0; i < data.comments.length; i++) {
+                    if (data.comments[i]._id == req.body.comment_id) {
                         commentIndex=i;
-                        if (data[0].comments[i].likes.includes(req.params.userId)) {
+                        userUID = data.comments[i].userId;
+                        if (data.comments[i].likes.includes(req.params.userId)) {
                             break;
                         } else {
                             shouldUpdate = true;
-                            data[0].comments[i].likes.push(req.params.userId);
+                            data.comments[i].likes.push(req.params.userId);
                             //send notification to the user!!
                             console.log(data)
                             const newNotif = new NotificationModel(
                                 {
-                                    'userId': data[0].comments[commentIndex].userId,
+                                    'userId': data.comments[commentIndex].userId,
                                     'postedById': req.params.id,
                                     'postedByName': req.body.name,
                                     'seen': false,
                                     'message': req.body.name + ' liked your Comment.',
-                                    'postId': data[0]._id,
+                                    'postId': data._id,
                                     'commentId': req.body.comment_id,
                                 }
                             );
+                            
+                            UserModel.findOne({"userId": userUID}, (err, data) => {
+                                if(err){
+                                    console.log(err);
+                                }else{
+                                    let userScore = data.totScore;
+                                    userScore = userScore + 2;
+                                    UserModel.findOneAndUpdate({"userId": userUID}, {totScore: userScore.toFixed(2)}, null, (err, data)=>{
+                                        if(err) {
+                                            console.log(err);
+                                        }
+                                    })
+                                }
+                            
+                            })
                             newNotif.save().then(() => console.log('done sending notification')).catch(err => console.log(err));
                             break;
                         }
                     }
                 }
                 if (shouldUpdate) {
-                    PostModel.findOneAndUpdate({"_id": req.body.post_id}, {$set: {comments: data[0].comments}}, (err, data) => {
+                    PostModel.findOneAndUpdate({"_id": req.body.post_id}, {$set: {comments: data.comments}}, (err, data) => {
                         if (err) {
                             res.status('404');
                             res.json({error: "err"});
@@ -405,19 +452,21 @@ const postsController = {
         //     }
         // });
 
-        PostModel.find({"_id": req.body.post_id}).then(function (data) {
-            if (data[0].comments) {
+        PostModel.findOne({"_id": req.body.post_id}).then(function (data) {
+            let userUID;
+            if (data.comments) {
                 console.log("Inside data[0].comments");
-                for (var i = 0; i < data[0].comments.length; i++) {
-                    if (data[0].comments[i]._id == req.body.comment_id) {
-                        var filteredAry = data[0].comments[i].likes.filter(function (e) {
+                for (var i = 0; i < data.comments.length; i++) {
+                    if (data.comments[i]._id == req.body.comment_id) {
+                        var filteredAry = data.comments[i].likes.filter(function (e) {
                             return e !== req.params.userId
                         })
-                        data[0].comments[i].likes = filteredAry;
+                        userUID = data.comments[i].userId;
+                        data.comments[i].likes = filteredAry;
                         break;
                     }
                 }
-                PostModel.findOneAndUpdate({"_id": req.body.post_id}, {$set: {comments: data[0].comments}}, (err, data) => {
+                PostModel.findOneAndUpdate({"_id": req.body.post_id}, {$set: {comments: data.comments}}, (err, data) => {
                     if (err) {
                         res.status('404');
                         res.json({error: "err"});
@@ -425,6 +474,21 @@ const postsController = {
                         console.log(data);
                         res.status('200');
                         res.json(data);
+
+                        
+                        UserModel.findOne({"userId": userUID}, (err, data) => {
+                            if(err){
+                                console.log(err);
+                            }else{
+                                let userScore = data.totScore;
+                                userScore = userScore - 2;
+                                UserModel.findOneAndUpdate({"userId": userUID}, {$set: {totScore: userScore.toFixed(2)}}, null, (err, data)=>{
+                                    if(err) {
+                                        console.log(err);
+                                    }
+                                })
+                            }
+                        })
                     }
                 });
             } else {

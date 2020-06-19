@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Switch, Redirect  } from 'react-router-dom';
 import DemoCol from '../../components/Demographics/DemoCol'
-import PostForm from '../../components/Emortions/PostForm'
-import Emortion from "../../components/Emortions/Emortion";
+import PostForm from '../../components/Emortions/Postform/PostForm'
+import Emortion from "../../components/Emortions/Postbox/Emortion";
 import io from 'socket.io-client';
 
 import '../Home/Home.css'
-import Emoticon from "../../components/Emortions/Emoticon";
+import Emoticon from "../../components/Emortions/Postform/Emoticon";
 import axios from "axios";
 let socket;
 
@@ -57,7 +57,8 @@ const Profile = (props) => {
                     ))}
                 </div>
                 <div className="text-sm-left" style={{fontWeight:'bold',fontFamily:'Ink Free'}}>Answered: {properties.comment.answer}</div>
-                <a href={"/posts/"+properties.comment.postId}>Go To Post</a>
+                <div className="badge badge-primary">Scored: {properties.comment.score}</div><br/>
+                <a className="btn btn-sm btn-breast-cancer" href={"/posts/"+properties.comment.postId}>Go To Post</a>
             </div>
         </div>);
 
@@ -93,7 +94,7 @@ const Profile = (props) => {
                     </div>
                 </div>
                 <div className="col-lg-3 col-md-3 col-sm-12">
-                    <div className="btn btn-secondary w-100 mb-3">Answers by {props.user.name}</div>
+                    <div className="btn btn-secondary w-100 mb-3">Answers by {props.userv.name}</div>
                     <NoComments/>
                     {comments.map((comment,index)=>(
                         <CommentsByCard user={props.user} key={comment._id} comment={comment}/>

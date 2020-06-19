@@ -1,18 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import "./Comments.css";
 import axios from 'axios';
-import {DislikeButton, LikeButton} from "./thumbs";
+import {DislikeButton, LikeButton} from "../../thumbs";
 
 
 const Comment = (props) => {
+    const [img, setImg] = useState(null);
+
     useEffect(()=>{
-        // console.log(props.comment);
-        // if(props.comment.name)
-        //     setName(props.comment.name);
-        // else
-        //     GetUserName(props.comment.userId);
-       
-    }, [])
+        axios.get(`/api/users/${props.comment.userId}`).then((res)=>{
+            if(res.data.profileImage!=null || res.data.profileImage!="null")
+                setImg(res.data.profileImage)
+        }).catch(function(e){
+            console.log(e)
+        });
+
+    }, [props.comment])
 
     function GetUserName(userId) {
         axios.get('/api/users/' + userId)
@@ -51,7 +54,6 @@ const Comment = (props) => {
         };
 
         axios.post(`/api/posts/dislikeComment/${props.user.userId}`, commentPostObj).then((res)=>{
-            console.log('asdasd')
             props.getComments();
         }).catch(function(e){
             console.log(e)
@@ -64,9 +66,11 @@ const Comment = (props) => {
         return (props.comment.likes.includes(props.user.userId)) ? <DislikeButton function={dislikeComment}/> : <LikeButton function={likeComment}/>;
     }
 
+
+
     return (
         <div>
-            <div className="commenter">{props.comment.name}</div>
+            <div className="commenter"><img src={img} width="30px;" className="rounded-circle"/> {props.comment.name}</div>
             <div className="answer">{props.comment.answer}</div> &nbsp; <LikeAgent/> <span className="likeCount" > {props.comment.likes.length} </span>  <span className="score badge badge-primary">SCORE: {props.comment.score}</span>
         </div>
     );

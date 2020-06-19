@@ -1,5 +1,5 @@
 import React from 'react';
-import "./Emortion.css"
+import "./Postbox/Emortion.css"
 
 function LikeButton(props)
 {

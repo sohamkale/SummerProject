@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import 'emoji-mart/css/emoji-mart.css'
 import './Emoji.css'
 import {Picker} from 'emoji-mart'
@@ -13,7 +13,7 @@ function Emoji() {
         <div>
             <div className="popup" id="popup">
                 <div className="" onClick={myFunction}>
-                    <img src={require('./emoji.png')} width='30px;'></img>
+                    <img src={require('../emoji.png')} width='30px;'></img>
                 </div>
                 <div className='popuptext' id='myPopup'>
                     <div className="col-12"><PickerFunc/></div>
@@ -25,7 +25,7 @@ function Emoji() {
 
     function PickerFunc() {
         return <Picker id="picker" style={{position: "relative", width: "100%", height: "100%"}}
-                       onClick={AppendEmoji} /* include={["flags","foods","search"]}*/ /*exclude={["recent","smileys","foods","Search","people"]}*/ />
+                       onClick={AppendEmoji} /* include={["flags","foods","search"]}*/ exclude={["title"]} />
         /*   if(isMobile){
              return <Picker style={{ width: '90vw', position: 'absolute', top: '2vh', right: '-23vw'}} onClick={AppendEmoji}  /!*include={["flags"]}*!/ exclude={["recent"]} />
            }else if(isTablet){

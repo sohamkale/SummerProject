@@ -2,9 +2,6 @@ import React from 'react'
 import Emortion from "./EmortionH";
 import {Carousel} from "react-bootstrap";
 import './CarouselComponent.css'
-import Emoticon from "./Emoticon";
-import {Collapse, Dropdown} from "react-bootstrap";
-import $ from 'jquery'
 
 function CarouselComponent(props)
 {

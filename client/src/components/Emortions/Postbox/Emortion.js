@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Emoticon from '../Emortions/Emoticon'
-import { emojiIndex } from 'emoji-mart';
+import Emoticon from '../Postform/Emoticon'
 import './Emortion.css'
 import axios from 'axios';
-import fire from './../../config/Fire';
-import { Button, Collapse, Dropdown, Row, Container, Col } from 'react-bootstrap'
-import Comment from "./Comment";
+import { Button, Collapse, Dropdown } from 'react-bootstrap'
+import Comment from "./Answers/Comment";
 import $ from 'jquery'
-import {LikeButton, DislikeButton} from "./thumbs";
+import {LikeButton, DislikeButton} from "../thumbs";
 
 const Emortion = (props) => {
     let emortion = props.emortion
@@ -17,18 +15,27 @@ const Emortion = (props) => {
     // const [name, setName] = useState("anonymous");
     const [open, setOpen] = useState(false);
     const [answered, setAnswered] = useState(false);
+    const [showCount, setShowCount] = useState(8);
+    const [img, setImg] = useState(require('../../Shared/dpholder.png'));
+
     //const [comments, setComments] = useState(props.emortion.comments);
     //const [answer, setAnswer] = useState(null);
 
 
     useEffect(() => {
         didUserAnswer();
+        axios.get(`/api/users/${emortion.userId}`).then((res)=>{
+            if(res.data.profileImage!=null|| res.data.profileImage!="null")
+                setImg(res.data.profileImage)
+        }).catch(function(e){
+            console.log(e)
+        });
         // if(props.emortion.name)
         //     setName(props.emortion.name);
         // else
         //     GetUserName(emortion.userId);
 
-    }, []);
+    }, [props.emortion]);
 
 
     const getComments = (postId) => {
@@ -66,8 +73,6 @@ const Emortion = (props) => {
                     <span className="badge badge-success">REVEALED</span>
                     <p className="card-text"><span className="secret btn btn-light">SECRET: {emortion.secretAnswer}</span></p>
                 </div>
-
-
             );
         else return (
             <div>
@@ -77,19 +82,6 @@ const Emortion = (props) => {
         );
     }
 
-    // function GetUserName(userId) {
-    //     axios.get('/api/users/' + userId)
-    //         .then((res) => {
-    //             if (res.data) {
-    //                 //console.log("data is "+res.data)
-    //                 setName(res.data.name);
-    //             }
-    //             else {
-    //                 //console.log(res)
-    //                 setName("Not Found");
-    //             }
-    //         });
-    // }
 
     function didUserAnswer()
     {
@@ -163,7 +155,8 @@ const Emortion = (props) => {
     function Comments()
     {
         if(answered || emortion.userId==props.user.userId || new Date(emortion.revealsAt) <= new Date()){
-            return (<div>{emortion.comments.map((comment, index) => {
+            return (<div>{
+                emortion.comments.map((comment, index) => {
                 return (
                     // <li className="text-left">{comment.answer}</li>
                     <Comment getComments={getComments} key={index} comment={comment} postId={emortion._id} getPosts={props.getPosts} user={props.user}/>
@@ -179,7 +172,7 @@ const Emortion = (props) => {
             {/* {setReturnNo(returnNo+1)} */}
             <div className="card bg-light">
                 <div className="card-body">
-                    <div className="blackburger-font">Emortion By {emortion.name}</div>
+                    <div className="blackburger-font" style={{fontSize: '100%'}}><img src={img} width="50px;" className="rounded-circle"/> Emortion By {emortion.name}</div>
                     <p className="text-muted">{new Date(emortion.createdAt).toLocaleString()}</p>
                     <div>
                         {emortion.message.emojiArray.map((position, index) => (
