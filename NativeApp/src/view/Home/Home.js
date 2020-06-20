@@ -63,7 +63,7 @@ function Home(props) {
                 <DemoCol user={props.route.params.user}/>
                     {
                         postsArray.map((item, index) => (
-                            <Emortion key={index} emortion={item} user={props.route.params.user}/>
+                           <Emortion key={index} emortion={item} user={props.route.params.user}/>
                         ))
                     }
                 </ScrollView>

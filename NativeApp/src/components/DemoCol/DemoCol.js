@@ -44,7 +44,6 @@ const s = styles = bootstrapStyleSheet.create();
 function DemoCol(props)
 {
     var x=props.user.profileImage;
-    console.log(x)
     return(
         <View style={[s.profileContainer]}>
             <TouchableOpacity activeOpacity={0.5} >

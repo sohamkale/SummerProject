@@ -5,7 +5,6 @@ import HTML from 'react-native-render-html';
 
 
 function Emoticon(position) {
-    console.log(position.position.split(' ')[0]+" "+position.position.split(' ')[1])
     var url = 'https://unpkg.com/emoji-datasource-apple@5.0.1/img/apple/sheets-256/64.png'
     var Style = {
         'emoji':
