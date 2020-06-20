@@ -93,7 +93,7 @@ function Emortion(props) {
     const [img, setImg] = useState(null);
     const [close, setClose] = useState(true);
     const [answered, setAnswered] = useState(false);
-    const [showCount, setShowCount] = useState(8);
+
 
     useEffect(() => {
         didUserAnswer();

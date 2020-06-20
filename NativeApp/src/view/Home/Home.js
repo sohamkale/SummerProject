@@ -39,6 +39,7 @@ const s = styles = bootstrapStyleSheet.create();
 
 function Home(props) {
     const [postsArray, setPostsArray] = useState([]);
+    const [showCount, setShowCount] = useState(8);
 
     useEffect(() => {
             getPosts();
@@ -56,6 +57,15 @@ function Home(props) {
             })
         }
     }
+
+    function ShowMore() {
+        if (showCount + 5 < props.postsArray.length)
+            setShowCount(showCount + 5);
+        else {
+            setShowCount(props.postsArray.length)
+            document.getElementById("showmore").classList.add('d-none');
+        }
+    }
         return (
             <>
                 <ScrollView
@@ -63,7 +73,7 @@ function Home(props) {
                 style={styles.scrollView}>
                 <DemoCol user={props.route.params.user}/>
                     {
-                        postsArray.map((item, index) => (
+                        postsArray.slice(0, showCount).map((item, index) => (
                            <Emortion key={index} emortion={item}  getPosts={getPosts} user={props.route.params.user}/>
                         ))
                     }
