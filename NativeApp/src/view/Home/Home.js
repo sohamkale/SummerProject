@@ -8,6 +8,7 @@ import Emortion from '../../components/Emortion/PostBox/Emortion'
 import fire from "../../config/Fire";
 import axios from "axios";
 
+
 /**STYLES**/
 const
     BODY_COLOR = '#000022',
@@ -40,10 +41,10 @@ function Home(props) {
     const [postsArray, setPostsArray] = useState([]);
 
     useEffect(() => {
-            GetPosts();
+            getPosts();
          }, []);
 
-    function GetPosts()
+    function getPosts()
     {
         if(props.route.params.user!=null)
         {
@@ -63,7 +64,7 @@ function Home(props) {
                 <DemoCol user={props.route.params.user}/>
                     {
                         postsArray.map((item, index) => (
-                           <Emortion key={index} emortion={item} user={props.route.params.user}/>
+                           <Emortion key={index} emortion={item}  getPosts={getPosts} user={props.route.params.user}/>
                         ))
                     }
                 </ScrollView>

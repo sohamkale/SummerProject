@@ -27,8 +27,8 @@ const s = styles = bootstrapStyleSheet.create();
 function LikeButton(props)
 {
     return (
-        <TouchableOpacity activeOpacity={0.5}>
-            <Image style={[s.likeButton]} source={require('./unlike-svg.png')}/>
+        <TouchableOpacity onPress={props.function} activeOpacity={0.5}>
+            <Image style={[s.likeButton,(props.size)?{width: props.size,height:props.size}:{}]} source={require('./unlike-svg.png')}/>
         </TouchableOpacity>
     );
 }
@@ -36,8 +36,8 @@ function LikeButton(props)
 function DislikeButton(props)
 {
     return (
-        <TouchableOpacity activeOpacity={0.5}>
-            <Image style={[s.likeButton]} source={require('./like-svg.png')}/>
+        <TouchableOpacity onPress={props.function} activeOpacity={0.5}>
+            <Image style={[s.likeButton,(props.size)?{width: props.size,height:props.size}:{}]} source={require('./like-svg.png')}/>
         </TouchableOpacity>
     );
 }

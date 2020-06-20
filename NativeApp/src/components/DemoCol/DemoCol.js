@@ -1,6 +1,7 @@
 import React from 'react'
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import BootstrapStyleSheet from 'react-native-bootstrap-styles';
+import { Avatar } from 'react-native-elements'
 
 /**STYLES**/
 const
@@ -20,14 +21,10 @@ const classes = {
       height: 180,
       flexDirection: 'row',
   },
-    image: {
-        width: 150,
-        height: 150,
-        borderRadius: 150 / 2,
-        overflow: "hidden",
+    dp: {
         borderWidth: 3,
         borderColor: "navy",
-        margin:10
+        margin:5
     },
     profileText:{
       margin:15,
@@ -46,9 +43,12 @@ function DemoCol(props)
     var x=props.user.profileImage;
     return(
         <View style={[s.profileContainer]}>
-            <TouchableOpacity activeOpacity={0.5} >
-                <Image style={[s.image]} source={{ uri: props.user.profileImage }}/>
-            </TouchableOpacity>
+                <Avatar
+                    size={150}
+                    containerStyle={s.dp}
+                    rounded
+                    source={{ uri: props.user.profileImage }}
+                />
             <Text style={[s.profileText]}>{props.user.name+'\n'+props.user.email+'\nScore: '+props.user.totScore}</Text>
         </View>
     );
