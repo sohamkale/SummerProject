@@ -44,7 +44,7 @@ function Comment(props)
     const [img, setImg] = useState(null);
 
     useEffect(() => {
-        axios.get(`http://facetweetit.herokuapp.com/api/users/${props.comment.userId}`).then((res) => {
+        axios.get(`https://facetweetit.herokuapp.com/api/users/${props.comment.userId}`).then((res) => {
             setImg(res.data.profileImage);
         }).catch(function (e) {
             console.log(e);
@@ -64,7 +64,7 @@ function Comment(props)
                 name:props.user.name
             };
 
-            axios.post(`http://facetweetit.herokuapp.com/api/posts/likeComment/${props.user.userId}`, commentPostObj).then((res)=>{
+            axios.post(`https://facetweetit.herokuapp.com/api/posts/likeComment/${props.user.userId}`, commentPostObj).then((res)=>{
                 props.getPosts();
             }).catch(function(e){
                 console.log(e)
@@ -78,7 +78,7 @@ function Comment(props)
             post_id: props.postId
         };
 
-        axios.post(`http://facetweetit.herokuapp.com/api/posts/dislikeComment/${props.user.userId}`, commentPostObj).then((res)=>{
+        axios.post(`https://facetweetit.herokuapp.com/api/posts/dislikeComment/${props.user.userId}`, commentPostObj).then((res)=>{
             props.getPosts();
         }).catch(function(e){
             console.log(e)

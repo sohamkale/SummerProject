@@ -97,7 +97,7 @@ function Emortion(props) {
 
     useEffect(() => {
         didUserAnswer();
-        axios.get(`http://facetweetit.herokuapp.com/api/users/${props.emortion.userId}`).then((res) => {
+        axios.get(`https://facetweetit.herokuapp.com/api/users/${props.emortion.userId}`).then((res) => {
             setImg(res.data.profileImage);
         }).catch(function (e) {
             console.log(e);
@@ -126,7 +126,7 @@ function Emortion(props) {
         var postObj = {
             _id: props.emortion._id,
         }
-        axios.post(`http://facetweetit.herokuapp.com/api/posts/diduseranswer/${props.user.userId}`, postObj).then((res) => {
+        axios.post(`https://facetweetit.herokuapp.com/api/posts/diduseranswer/${props.user.userId}`, postObj).then((res) => {
             //props.getPosts();
             setAnswered(res.data);
         }).catch(function (e) {
@@ -146,7 +146,7 @@ function Emortion(props) {
                 name: props.user.name
             };
 
-            axios.post(`http://facetweetit.herokuapp.com/api/posts/like/${props.user.userId}`, likePostObj).then((res) => {
+            axios.post(`https://facetweetit.herokuapp.com/api/posts/like/${props.user.userId}`, likePostObj).then((res) => {
                 props.getPosts();
             }).catch(function (e) {
                 console.log(e)
@@ -161,7 +161,7 @@ function Emortion(props) {
             _id: props.emortion._id,
         };
 
-        axios.post(`http://facetweetit.herokuapp.com/api/posts/dislike/${props.user.userId}`, likePostObj).then((res) => {
+        axios.post(`https://facetweetit.herokuapp.com/api/posts/dislike/${props.user.userId}`, likePostObj).then((res) => {
             props.getPosts();
         }).catch(function (e) {
             console.log(e)

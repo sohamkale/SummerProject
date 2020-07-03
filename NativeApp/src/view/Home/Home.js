@@ -49,7 +49,7 @@ function Home(props) {
     {
         if(props.route.params.user!=null)
         {
-            axios.get('http://facetweetit.herokuapp.com/api/posts').then((res) => {
+            axios.get('https://facetweetit.herokuapp.com/api/posts').then((res) => {
                 if (res.data != null) {
                     setPostsArray(res.data);
                 } else

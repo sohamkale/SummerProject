@@ -66,7 +66,7 @@ function Login(props) {
 
         fire.auth().onAuthStateChanged((user) => {
             if (user) {
-                axios.get('http://facetweetit.herokuapp.com/api/users/'+user.uid).then((res)=>{
+                axios.get('https://facetweetit.herokuapp.com/api/users/'+user.uid).then((res)=>{
                     if(res.data!=null)
                     {
                         props.route.params.setUser(res.data);
@@ -103,7 +103,7 @@ function Login(props) {
 
             fire.auth().signInWithEmailAndPassword(email,password).then( u =>{
                 if(u.user.uid!=null)
-                    axios.get('http://facetweetit.herokuapp.com/api/users/'+u.user.uid).then((res)=>{
+                    axios.get('https://facetweetit.herokuapp.com/api/users/'+u.user.uid).then((res)=>{
                         if(res.data!=null)
                             props.route.params.setUser(res.data);
                         }).catch(function(e){

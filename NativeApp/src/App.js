@@ -68,22 +68,6 @@ function App() {
   );
 }
 
-/*const App: () => React$Node = () => {
-  const [user, setUser] = useState(null);
-  return (
-      <NavigationContainer>
-      {/!*<StatusBar barStyle="dark-content" />*!/}
-      <SafeAreaView>
-
-          <Stack.Navigator initialRouteName="Login">
-            <Stack.Screen name="Login" component={Login}
-                options={{ title: 'Login Screen' }}/>
-          </Stack.Navigator>
-      </SafeAreaView>
-    </ImageBackground>
-      </NavigationContainer>
-  );
-};*/
 
 
 export default App;
