@@ -17,7 +17,12 @@ import Navbar from './components/Shared/Header/Navbar';
 import DemoCol from './components/DemoCol/DemoCol'
 import Home from './view/Home/Home'
 import Login from './view/Login/Login'
+import axios from 'axios'
+import fire from './config/Fire';
+import * as firebase from 'firebase';
 
+
+import Button from 'react-native-bootstrap-buttons';
 
 import {
   SafeAreaView,
@@ -53,18 +58,53 @@ const Stack = createStackNavigator();
 
 function App() {
   const [user, setUser] = useState(null);
+  const [test, setTest] = useState('Hello');
+  const [login, setLogin] = useState('User');
+
+  function checkTest()
+  {
+    setTest(test+"1");
+  }
+  function logout()
+  {
+    setLogin('User');
+  }
+  function loginTest()
+  {
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function() {
+
+    }).catch(function(error){
+      console.log(error);
+    })
+
+    fire.auth().signInWithEmailAndPassword('m.immam@ufl.edu','Mynum6835697.').then( u =>{
+      if(u.user.uid!=null)
+        axios.get('http://facetweetit.herokuapp.com/api/users/'+u.user.uid).then((res)=>{
+          if(res.data!=null)
+            {
+              setUser(res.data);
+              setLogin(res.data.name)
+            }
+        }).catch(function(e){
+          console.log(e)
+        });
+    }).catch((err)=>{
+      if(err.message === "The email address is badly formatted."){
+        alert("Please Enter Your E-mail and Password to Sign In");
+      }else {
+        alert(err.message);
+      }
+    })
+  }
+
   return (
-      <NavigationContainer>
-        <Navbar user={user} setUser={setUser}/>
-        <ImageBackground source={require('./components/logobw.png')} style={styles.backgroundImage} imageResizeMode={'repeat'}>
-        <Stack.Navigator initialRouteName="Login" headerMode="none">
-          <Stack.Screen name="Login" component={Login} initialParams={{user: user, setUser: setUser}}/>
-          <Stack.Screen name="Home" component={Home}/>
-        </Stack.Navigator>
-
-        </ImageBackground>
-      </NavigationContainer>
-
+      <View>
+        <Text>{test}</Text>
+        <Text>{login}</Text>
+        <Button label={"Change"} onPress={checkTest}></Button>
+        <Button label={"login"} onPress={loginTest}></Button>
+        <Button label={"logout"} onPress={logout}></Button>
+      </View>
   );
 }
 
