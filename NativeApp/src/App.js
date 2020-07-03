@@ -60,6 +60,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [test, setTest] = useState('Hello');
   const [login, setLogin] = useState('User');
+  const [status, setStatus] = useState('NA');
 
   function checkTest()
   {
@@ -68,6 +69,7 @@ function App() {
   function logout()
   {
     setLogin('User');
+    setStatus('Out')
   }
   function loginTest()
   {
@@ -82,9 +84,14 @@ function App() {
         axios.get('http://facetweetit.herokuapp.com/api/users/'+u.user.uid).then((res)=>{
           if(res.data!=null)
             {
+              setStatus('done')
               setUser(res.data);
               setLogin(res.data.name)
             }
+          else
+          {
+            setStatus('data null')
+          }
         }).catch(function(e){
           console.log(e)
         });
@@ -101,6 +108,7 @@ function App() {
       <View>
         <Text>{test}</Text>
         <Text>{login}</Text>
+        <Text>{status}</Text>
         <Button label={"Change"} onPress={checkTest}></Button>
         <Button label={"login"} onPress={loginTest}></Button>
         <Button label={"logout"} onPress={logout}></Button>
