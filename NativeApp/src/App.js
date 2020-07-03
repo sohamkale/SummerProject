@@ -81,7 +81,9 @@ function App() {
 
     fire.auth().signInWithEmailAndPassword('m.immam@ufl.edu','Mynum6835697.').then( u =>{
       if(u.user.uid!=null)
-        axios.get('http://facetweetit.herokuapp.com/api/users/'+u.user.uid).then((res)=>{
+      {
+        setStatus('fireloggedIn')
+        axios.get('https://facetweetit.herokuapp.com/api/users/'+u.user.uid).then((res)=>{
           if(res.data!=null)
             {
               setStatus('done')
@@ -94,7 +96,7 @@ function App() {
           }
         }).catch(function(e){
           console.log(e)
-        });
+        });}
     }).catch((err)=>{
       if(err.message === "The email address is badly formatted."){
         alert("Please Enter Your E-mail and Password to Sign In");
