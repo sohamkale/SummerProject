@@ -22,10 +22,6 @@ const Signup = (props) => {
     }, [ENDPOINT]);
 
     const signup = (e) => {
-        if(!validPhone)
-        {
-            return alert("Please make sure your phone number is only numbers and between 10 and 13 digits");
-        }
         if(!firstName)
         {
             return alert("Please fill out your First Name");
@@ -52,14 +48,10 @@ const Signup = (props) => {
                 currLevel: "0",
                 friends: []
             }
-            console.log("Before posting: ");
-            console.log(newUser);
             axios.post(API_BASE + "/api/users/add", newUser)
             .then((res)=>{
-                console.log(res.data);
-                window.location.href='/Login';
+                window.location.href='/FAQ';
             });
-            console.log(u);
            
         }).catch((err)=>{
             if(err.message === "The email address is badly formatted."){
@@ -67,14 +59,11 @@ const Signup = (props) => {
             }else {
                 alert(err.message);
             }
-            console.log(err);
         })
     }
 
     const validatePhone = (phoneNumber) => {
         const regex = /^\d{10,13}$/;
-        console.log(phoneNumber.target.value)
-        console.log(typeof phoneNumber.target.value)
         setPhoneNum(phoneNumber.target.value)
         return regex.test(phoneNumber.target.value)
           ? setValidPhone(true)
@@ -97,9 +86,6 @@ const Signup = (props) => {
         setLastName(e.target.value);
     }
 
-    const handlePhoneNumChange = (e) => {
-        setPhoneNum(e.target.value);
-    }
 
     return(     
         <SignupComp
@@ -107,12 +93,10 @@ const Signup = (props) => {
         handleFirstNameChange={handleFirstNameChange}
         handleLastNameChange={handleLastNameChange}
         handlePasswordChange={handlePasswordChange}
-        handlePhoneNumChange={handlePhoneNumChange}
         email={email}
         password={password}
         firstName={firstName}
         lastName={lastName}
-        phoneNum={phoneNum}
         validatePhone={validatePhone}
         validPhone={validPhone} 
         signup={signup}/>

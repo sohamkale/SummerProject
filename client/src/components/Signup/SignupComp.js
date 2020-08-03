@@ -19,9 +19,6 @@ const SignupComp = (props) => {
                 <input name="lastName" onChange={props.handleLastNameChange} value={props.lastName} id="lastName" type="text" placeholder="Last Name" className="input"/>
                 </Col>
                 <Col sm={12}>
-                <input name="phoneNum" onChange={(e) => props.validatePhone(e)} value={props.phoneNum} id="phoneNum" type="text" placeholder="Phone Number" className="input"/>
-                </Col>
-                <Col sm={12}>
                 <input name="email" id="email" type="email" onChange={props.handleEmailChange} value={props.email} placeholder="Email" className="input" />
                 </Col>
                 <Col sm={12}>

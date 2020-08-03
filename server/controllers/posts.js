@@ -15,8 +15,6 @@ const postsController = {
         var expireDays = 300;
         var three_day = 1000 * 60 * 60 * 24 * expireDays;
 
-        console.log("In Server side before getting posts: ");
-        console.log();
         PostModel.find().sort({createdAt: -1}).then(
             posts => {
                 posts.map((post) => {
@@ -33,11 +31,9 @@ const postsController = {
         let currDateTime = new Date();
         var validPosts = [];
         //how many days do you want the post to expire by?
-        var expireDays = 3;
+        var expireDays = 300;
         var three_day = 1000 * 60 * 60 * 24 * expireDays;
 
-        console.log("In Server side before getting posts: ");
-        console.log();
         PostModel.find().sort({userId:1,createdAt:-1}).then(
             posts => {
                 posts.map((post) => {

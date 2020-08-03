@@ -8,6 +8,7 @@ import axios from 'axios'
 
 import '../Home/Home.css'
 import {Collapse, Dropdown} from "react-bootstrap";
+import {Emoji} from "emoji-mart";
 let socket;
 
 
@@ -45,15 +46,34 @@ const Profile = (props) => {
         socket.emit('addPosts', {currUser,userId:props.user.userId}, () => props.setPostsArray([]));
     }
 
+    /*function RenderEmojis(properties)
+    {
+        if (properties.comment.message.emojiObjects != null & properties.comment.message.emojiObjects.length > 0) {
+            return (
+                properties.comment.message.emojiObjects.map((emojidata, index) => (
+                    <Emoji key={index} emoji={emojidata} size={28}/>
+                ))
+            )
+        } else if (properties.comment.message.emojiArray != null) {
+            return (
+                properties.comment.message.emojiArray.map((position, index) => (
+                    <Emoticon key={index} position={position}/>
+                ))
+            )
+        }
+        return (<></>)
+    }*/
+
     function CommentsByCard(properties)
     {
         return(  <div className="card bg-light mb-2">
             <div className="card-body">
                 <div className="blackburger-font text-sm-left" style={{fontSize:'14px'}}>Emortion: </div>
                 <div>
-                    {properties.comment.message.emojiArray.map((position, index) => (
+                    {/*<RenderEmojis properties={properties}/>*/}
+                   {/* {properties.comment.message.emojiArray.map((position, index) => (
                         <Emoticon key={index} position={position} />
-                    ))}
+                    ))}*/}
                 </div>
                 <div className="text-sm-left" style={{fontWeight:'bold',fontFamily:'Ink Free'}}>Answered: {properties.comment.answer}</div>
                 <div className="badge badge-primary">Scored: {properties.comment.score}</div><br/>

@@ -4,6 +4,7 @@ import {ScrollView, SafeAreaView, Text, StyleSheet, Image, View, TouchableOpacit
 import BootstrapStyleSheet from 'react-native-bootstrap-styles';
 import RNRestart from 'react-native-restart'; // Import package from node modules
 import Button from 'react-native-bootstrap-buttons';
+import Notification from './Notification/notification'
 
 import fire from '../../../config/Fire'
 import axios from 'axios';``
@@ -44,6 +45,16 @@ const classes = {
     },
     navbar:{
         height:65
+    },
+    notifTray:{
+        backgroundColor:'navajowhite',
+        height:150,
+        borderColor:'goldenrod',
+        borderWidth:2,
+        color:'darkgoldenrod'
+    },
+    notifTrayText:{
+        color:'darkgoldenrod'
     }
 };
 
@@ -59,6 +70,8 @@ const Navbar = (props) => {
 
 
     const [open, setOpen] = useState(false);
+    const [notifOpen,setNotifOpen]=useState(false);
+    const [notifications, setNotifications] = useState([]);
 
     function Collapsable()
     {
@@ -105,15 +118,34 @@ const Navbar = (props) => {
         return (props.user!=null) ? (<><Button buttonType={'link'} label={'Welcome '+ props.user.name + ' Logout?'} onPress={handleLogout}></Button></> ):(<></>);
     }
 
+    function HandleNotifOpen() {
+        setNotifOpen(!notifOpen);
+    }
+
+    function NotificationTray() {
+        if (notifOpen) {
+            return (<View style={s.notifTray}>
+                {
+                    notifications.map((notif) =>
+                            <Text style= {s.notifTrayText}
+                               key={notif._id}> {'\u2022 '+notif.message}
+                            </Text>
+                    )}
+            </View>)
+        }
+        else return(<></>)
+    }
+
     return (
         <View>
             <View style={[s.bgDark, s.navbar]}>
                 <View style={s.container}>
-                    {/*<Text style={[s.text, s.textWhite]}>Hello Card!</Text>*/}
                     <Image style={[s.logo]} source={require('../../logo.png')}/>
+                    <Notification user={props.user} handleOpen={HandleNotifOpen} notifications={notifications} setNotifications={setNotifications}/>
                     <HamburgerButton/>
                 </View>
             </View>
+            <NotificationTray/>
             <Collapsable/>
         </View>
     );

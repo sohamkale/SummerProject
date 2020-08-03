@@ -52,9 +52,10 @@ const Profile = (props) => {
             <div className="card-body">
                 <div className="blackburger-font text-sm-left" style={{fontSize:'14px'}}>Emortion: </div>
                 <div>
-                    {properties.comment.message.emojiArray.map((position, index) => (
+                    {/*<RenderEmojis properties={properties}/>*/}
+                    {/* {properties.comment.message.emojiArray.map((position, index) => (
                         <Emoticon key={index} position={position} />
-                    ))}
+                    ))}*/}
                 </div>
                 <div className="text-sm-left" style={{fontWeight:'bold',fontFamily:'Ink Free'}}>Answered: {properties.comment.answer}</div>
                 <div className="badge badge-primary">Scored: {properties.comment.score}</div><br/>

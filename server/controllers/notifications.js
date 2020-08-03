@@ -33,11 +33,9 @@ const notificationController = {
         NotificationModel.findOneAndUpdate({'_id': new mongoose.Types.ObjectId(req.params._id)},{'seen':true},null,(err, data)=>{
             if(err)
             {
-                console.log(err)
                 res.status('404').json(err.message);
             }
             else{
-                console.log(data);
                 res.json(data);
             }
         });

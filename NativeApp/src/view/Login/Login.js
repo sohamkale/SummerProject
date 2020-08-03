@@ -129,6 +129,7 @@ function Login(props) {
                 <View style={[s.messageBox,s.bgDark]}>
                     <View styles={[s.form]}>
                         <TextInput
+                            autoFocus={true}
                             selectTextOnFocus={true}
                             textContentType={'emailAddress'}
                             style={s.input}
@@ -141,6 +142,7 @@ function Login(props) {
                         <TextInput
                             selectTextOnFocus={true}
                             textContentType={'password'}
+                            secureTextEntry={true}
                             style={s.input}
                             onChangeText={text => setPassword(text)}
                             value={password}/>

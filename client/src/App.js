@@ -6,6 +6,7 @@ import NavBar from "./components/Shared/Header/NavBar";
 import LoginApp from "./views/Login/LoginApp";
 import Signup from "./views/Signup/Signup";
 import Feedback from './views/Feedback/Feedback'
+import FAQ from './views/FAQ/FAQ'
 import ResetPassword from './views/ResetPassword/ResetPassword'
 import './font.css'
 import Users from "./views/Users/Users";
@@ -50,6 +51,7 @@ const App = (props) => {
                     <Route exact path="/Users" render={(props) => <Users user={user}  socket={socket}/>} />
                     <Route exact path="/Notifications" render={(props) => <Door user={user}  socket={socket}/>}/>
                     <Route exact path="/ResetPass" render={(props) => <ResetPassword user={user}  socket={socket}/>}/>
+                    <Route exact path="/FAQ" render={(props) => <FAQ/>}/>
                     <Route exact path="/" render={(props) => <Door {...props} user={user} socket={socket}/>}/>
                     <Route path="/404" component={NotFound}/>
                     <Redirect to="/404"/>

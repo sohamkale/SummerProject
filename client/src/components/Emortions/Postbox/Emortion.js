@@ -19,10 +19,6 @@ const Emortion = (props) => {
     const [showCount, setShowCount] = useState(8);
     const [img, setImg] = useState(require('../../Shared/dpholder.png'));
 
-    //const [comments, setComments] = useState(props.emortion.comments);
-    //const [answer, setAnswer] = useState(null);
-
-
     useEffect(() => {
         didUserAnswer();
         axios.get(`/api/users/${emortion.userId}`).then((res) => {

@@ -47,7 +47,6 @@ function Comment(props)
         axios.get(`https://facetweetit.herokuapp.com/api/users/${props.comment.userId}`).then((res) => {
             setImg(res.data.profileImage);
         }).catch(function (e) {
-            console.log(e);
         });
     }, [props.comment]);
 
@@ -67,7 +66,6 @@ function Comment(props)
             axios.post(`https://facetweetit.herokuapp.com/api/posts/likeComment/${props.user.userId}`, commentPostObj).then((res)=>{
                 props.getPosts();
             }).catch(function(e){
-                console.log(e)
             });
         }
     }

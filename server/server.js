@@ -8,11 +8,10 @@ let PostModel = require("./models/post.model");
 let User = require('./models/user.model');
 const commonRoom = "commonRoom";
 
-var expireDays =3 ;
+var expireDays =365;
 var three_day = 1000 * 60 * 60 * 24* expireDays;
 // Use env port or default
 const port = process.env.PORT || 5000;
-
 const connection = mongoose.connection;
 connection.once('open', () => {
     console.log("MongoDB connection established successfully!");
@@ -65,7 +64,8 @@ io.on('connection', (socket) =>{
 
     });
     
-    socket.on('addPosts', ({currUser,userId,OnePost}, callback) => {
+    socket.on('refresh', ({currUser,userId,OnePost}, callback) => {
+        console.log('jjjjjjkkk');
         let array = [];
         let currDateTime = new Date();
         if(OnePost)
@@ -118,7 +118,7 @@ io.on('connection', (socket) =>{
                 io.in(commonRoom).clients((err , clients) => {
                     clients.map((client) => {
                         console.log(client);
-                        io.to(client).emit('notification', { message: "You have a notification" });// clients will be array of socket ids , currently available in given room
+                        io.to(client).emit('notification', { message: "You have an update" });// clients will be array of socket ids , currently available in given room
         
                     })
                 });

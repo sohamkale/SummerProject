@@ -9,6 +9,7 @@ const notificationController = require('../controllers/notifications')
 router.get('/users/removenull', usersController.removenull);
 
 router.get('/users', usersController.all);
+router.get('/users/top', usersController.top);
 router.post('/users/add', usersController.add);
 router.get('/users/:id', usersController.find);
 router.post('/users/addProfileImage/:userId', usersController.addProfileImage);

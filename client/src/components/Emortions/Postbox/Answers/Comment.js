@@ -16,19 +16,7 @@ const Comment = (props) => {
         });
 
     }, [props.comment])
-
-    function GetUserName(userId) {
-        axios.get('/api/users/' + userId)
-            .then((res) => {
-                if (res.data) {
-                    //console.log("data is "+res.data)
-                   // setName(res.data);
-                }
-                else{
-                   // setName("Anonymous");
-                }
-            });
-    }
+    
 
     const likeComment = () =>{
         if(props.comment.userId!=props.user.userId)

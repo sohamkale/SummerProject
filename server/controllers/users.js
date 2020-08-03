@@ -4,10 +4,13 @@ let User = require('../models/user.model');
 
 const usersController = {
     all(req, res) {
-    console.log("In Server side before getting: ");
-    console.log();
     User.find().then(users => res.json(users)).catch(err => res.status('400').json('Error: ' + err));
 },
+
+    top(req,res)
+    {
+        User.find().sort({totScore: -1}).limit(3).then(users => res.json(users)).catch(err => res.status('400').json('Error: ' + err));
+    },
 
     removenull(req,res){
         User.find({profileImage:"https://mifilestorage.blob.core.windows.net/emoteitpublic/dpholder.png?sv=2019-10-10&ss=bqtf&srt=sco&sp=rwdlacuptfx&se=2020-06-11T17:02:47Z&sig=DgKq8r%2F6fjneK7rVOYqkugvkHiUONgvskpYJqKW73ho%3D&_=1591866431822"}).then(

@@ -60,14 +60,19 @@ const Navbarcomp = (props) => {
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
-                <li className="nav-item active">
+              {/*  <li className="nav-item active">
                     <a className="nav-link" href="/Home">Den <span className="sr-only">(current)</span></a>
-                </li>
+                </li>*/}
+                {props.user &&
                 <li className="nav-item active">
                     <a className="nav-link" href="/Users">Users <span className="sr-only">(current)</span></a>
                 </li>
+                }
                 <li className="nav-item active">
                     <a className="nav-link" href="/Feedback">Feedback <span className="sr-only">(current)</span></a>
+                </li>
+                <li className="nav-item active">
+                    <a className="nav-link" href="/FAQ">FAQ<span className="sr-only">(current)</span></a>
                 </li>
             </ul>
 

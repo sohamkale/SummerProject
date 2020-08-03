@@ -3,8 +3,10 @@ import fire from "../../config/Fire";
 import * as firebase from 'firebase';
  import "./Login.css";
 import Signin from "../../components/SignIn/Signin";
+import TopThree from "../../components/Top3/TopThree"
 import { Redirect } from "react-router-dom";
 import Home from '../Home/Home'
+import Disclaimer from "../../components/Disclaimer/Disclaimer";
 // import Footer from "../../components/Footer/Footer";
 
 const Login = (props) => {
@@ -18,8 +20,7 @@ const Login = (props) => {
 
     const login = (e) => {
         e.preventDefault();
-        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(function() {
-            
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function() {
         }).catch(function(error){
             console.log(error);
         })
@@ -45,6 +46,7 @@ const Login = (props) => {
 
     return (
         <div>
+            <TopThree/>
             <Signin
             email={email}
             password={password}
@@ -52,10 +54,11 @@ const Login = (props) => {
             handlePasswordChange={handlePasswordChange}
             login={login}
             logout={logout}/>
+
+            <Disclaimer/>
         </div>
     );
 
 
 }
-
 export default Login;
