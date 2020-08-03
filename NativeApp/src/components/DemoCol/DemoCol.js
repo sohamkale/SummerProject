@@ -28,8 +28,8 @@ const classes = {
     },
     profileText:{
       margin:15,
-        fontWeight:'bold',
-        fontSize:20,
+        fontFamily:'BlackBurger',
+        fontSize:18,
         marginTop:40
     }
 };
@@ -49,7 +49,7 @@ function DemoCol(props)
                     rounded
                     source={{ uri: props.user.profileImage }}
                 />
-            <Text style={[s.profileText]}>{props.user.name+'\n'+props.user.email+'\nScore: '+props.user.totScore}</Text>
+            <Text style={[s.profileText]}>{'WELCOME TO THE DEN\n'+props.user.name+'\nScore: '+props.user.totScore}</Text>
         </View>
     );
 }

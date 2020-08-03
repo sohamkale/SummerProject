@@ -240,6 +240,118 @@ const postsController = {
         });
     },
 
+    addCommentsa(req, res) {
+        const answer = req.body.answer;
+        const userId = req.body.userId;
+        const _id = new mongoose.Types.ObjectId();
+        const name = req.body.name;
+        var score = 0, totScore = 0;
+        var shouldAddComment = true;
+        if (req.body.numLikes != null || req.body.numLikes != "") {
+            numLikes = req.body.numLikes;
+        } else {
+            numLikes = 0;
+        }
+
+        if (req.body.score != null || req.body.score != "") {
+            score = req.body.score;
+        } else {
+            score = 1; //1 point for posting the comment
+        }
+
+        var removePronouns = /I |you |he |she |it |they |me |you |him |her |it |my |mine |your |yours |his |her |hers |its |who |whom |whose |what |which |another |each |everything |nobody |either |someone |who |whom |whose |that |which |myself |yourself |himself |herself |itself |this |that /ig;
+        var removeAuxVerbs = /do |does |did |has |have |had |is |am |are |was |were |be |being |been |may |must |might |should |could |would |shall |will |can /ig;
+        var ans = answer.toLowerCase();
+        var answerWords = ans.split(' ');
+
+        UserModel.findOne({"userId": userId}).then(data => {
+            totScore = data.totScore;
+
+            //NEED TO CHECK IF THE STRING MATCHES WITH THE SECRET ANSWER TO DETERMINE THE SCORE
+
+            PostModel.findOne({"_id": req.params.id}, (err, data) => {
+
+                var secret = data.secretAnswer.toLowerCase();
+                //Do regex here//
+
+                var secWords = secret.split(' ');
+                var count = 0;
+                for (var i = 0; i < secWords.length; i++) {
+                    if (answerWords.includes(secWords[i])) {
+                        count++;
+                    }
+                }
+
+                score = Number.parseFloat((count / secWords.length) * 10).toFixed(2)
+                var result = parseFloat(score) + parseFloat(totScore);
+                result = result.toFixed(2);
+
+                if (err) {
+                    res.status('404');
+                    res.json({error: err});
+                } else {
+                    if (data) {
+                        for (var i = 0; i < data.comments.length; i++) {
+                            if (data.comments[i].userId === userId) {
+                                shouldAddComment = false;
+                                break;
+                            }
+                        }
+                    }
+                    if (shouldAddComment) {
+                        PostModel.findOneAndUpdate({"_id": req.params.id}, {
+                            $push: {
+                                comments: {
+                                    _id: _id,
+                                    answer: answer,
+                                    userId: userId,
+                                    likes: [],
+                                    score: score,
+                                    name: name
+                                }
+                            }
+                        }, {new: true}, (err, data) => {
+                            if (err) {
+                                res.status('404');
+                                res.json({error: 'No data with the specified id was found!'});
+                            } else {
+                                //send notification to the user!!
+                                const newNotif = new NotificationModel(
+                                    {
+                                        'userId': data.userId,
+                                        'postedById': userId,
+                                        'postedByName': name,
+                                        'seen': false,
+                                        'message': name + ' answered your Emortion and scored ' + score,
+                                        'postId': data._id,
+                                        'commentId': _id,
+                                    }
+                                );
+                                newNotif.save().then().catch(err => console.log(err));
+                                //res.json(data);
+                            }
+                        });
+
+                        UserModel.findOneAndUpdate({"userId": userId}, {$set: {totScore: result}}, (err, data) => {
+                            if (err) {
+                                res.status('404');
+                                res.json({error: 'No data with the specified id was found!'});
+                            } else {
+
+                                res.json("Score updated");
+                            }
+                        });
+                    } else if (!shouldAddComment) {
+                        res.json({error: 'Error: One user can post only one comment per emortion!!!'})
+                    }
+                }
+            });
+        }).catch(err => {
+            res.status('400').json('Error: ' + err)
+            console.log('err ' + err.message)
+        });
+    },
+
     didUserAnswer(req, res) {
         //req.body._id will contain the id of the post in question.
         //req.params.userId is the userId

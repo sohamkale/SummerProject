@@ -24,6 +24,7 @@ router.get('/postsByUser/:userId', postsController.allPostsByUserId);
 
 router.post('/posts/add', postsController.add);
 router.post('/posts/answer/:id', postsController.addComments);
+router.post('/posts/answera/:id', postsController.addCommentsa);
 router.post('/posts/diduseranswer/:userId', postsController.didUserAnswer);
 router.post('/posts/like/:userId', postsController.likePosts);
 router.post('/posts/dislike/:userId', postsController.dislikePosts);

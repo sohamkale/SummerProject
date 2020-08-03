@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {TouchableOpacity, TouchableHighlight, View, Image, Text} from 'react-native';
+import {TouchableOpacity, TouchableHighlight, View, Image, Text, TextInput} from 'react-native';
 import {Avatar, Badge, Icon, withBadge} from 'react-native-elements'
 import {ScrollView} from 'react-native';
 import BootstrapStyleSheet from 'react-native-bootstrap-styles';
@@ -88,6 +88,13 @@ const classes = {
         fontSize: 15,
     },
 
+    inputBox:{
+        margin:5,
+        borderColor: 'grey',
+        borderWidth: 1,
+        fontFamily: 'cavolini'
+    }
+
 };
 
 const bootstrapStyleSheet = new BootstrapStyleSheet(constants, classes);
@@ -99,6 +106,7 @@ function Emortion(props) {
     const [img, setImg] = useState(null);
     const [close, setClose] = useState(true);
     const [answered, setAnswered] = useState(false);
+    const [commentToSend, setCommentToSend] = useState('');
 
 
     useEffect(() => {
@@ -192,10 +200,64 @@ function Emortion(props) {
         }
     }
 
+    function SendComment()
+    {
+        if(commentToSend!=null || commentToSend!='')
+        {
+            axios.post('https://facetweetit.herokuapp.com/api/posts/answer/'+props.emortion._id, {
+                firstName: 'Fred',
+                lastName: 'Flintstone'
+            })
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+    }
+
+    function AnswerAgent() {
+        if (props.user.userId != props.emortion.userId & new Date(props.emortion.revealsAt) >= new Date() & !answered)
+            return (<View>
+                <TextInput style={s.inputBox} numberOfLines={1} placeholder={"What do you the emorter is saying?"} onChangeText={text => setCommentToSend(text)}/>
+                <View style={[s.btn, s.btnInfo]}>
+                    <Text style={[s.btnText, s.textWhite]}>Evaluate</Text>
+                </View>
+            </View>)
+        else if (props.user.userId == props.emortion.userId)
+            return (<View style={s.center}><Text style={[{color:'green', fontSize:15}]}>Cannot answer own posts!</Text></View>)
+        else if (new Date(props.emortion.revealsAt) < new Date())
+            return (<View style={s.center}><Text style={[{color:'green', fontSize:15}]}>Answer revealed!</Text></View>);
+        else if (answered)
+            return (<View style={s.center}><Text style={[{color:'green', fontSize:15}]}>You've already answered this post!</Text></View>);
+
+      /*  if (props.user.userId != emortion.userId & new Date(emortion.revealsAt) >= new Date() & !answered)
+            return (<div>
+            <form id={'answerForm' + emortion._id} onSubmit={SendComment}>
+                <input readOnly hidden name="postId" value={props.emortion._id}></input>
+                <input readOnly hidden name="userId" value={props.user.userId}></input>
+                <input readOnly hidden name="name" value={props.user.name}></input>
+                <input defaultValue="" required name="answer" className="form-control answer"
+                       placeholder="What do you think the Emorter is saying?"></input>
+                <span><Button type="submit" variant="info">Evaluate</Button></span>
+            </form>
+        </div>)
+        else if (props.user.userId == emortion.userId)
+            return (<center><b className="text-success">Cannot answer own posts!</b></center>)
+        else if (new Date(emortion.revealsAt) < new Date())
+            return (<center><b className="text-success">Answer revealed!</b></center>);
+        else if (answered)
+            return (<center><b className="text-success">You've already answered this post!</b></center>);
+        else return (<div></div>)*/
+      else return(<Text>Nothing</Text>)
+    }
+
+
     function Comments() {
         if (answered || props.emortion.userId == props.user.userId || new Date(props.emortion.revealsAt) <= new Date()) {
             return (<View>
-                <Text style={[{color:'green', marginLeft:"auto", marginRight:"auto"}]}>Answer Revealed!</Text>
+                {/*<Text style={[{color:'green', marginLeft:"auto", marginRight:"auto"}]}>Answer Revealed!</Text>*/}
                 {props.emortion.comments.map((comment, index) => {
                     return (
                         <Comment key={index} comment={comment} getPosts={getComments} user={props.user}
@@ -206,7 +268,7 @@ function Emortion(props) {
         } else {
             return (
                 <View style={[s.center]}>
-                    <Text style={{color:'goldenrod'}}>You haven't answered this emortion!</Text>
+                    <Text style={{color:'goldenrod', fontSize:15}}>You haven't answered this emortion!</Text>
                 </View>);
         }
     }
@@ -253,6 +315,7 @@ function Emortion(props) {
                                     </View>
                                 </CollapseHeader>
                                 <CollapseBody>
+                                    <AnswerAgent/>
                                     <Comments/>
                                 </CollapseBody>
                             </Collapse>
