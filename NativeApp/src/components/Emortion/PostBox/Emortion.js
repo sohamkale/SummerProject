@@ -5,7 +5,8 @@ import {ScrollView} from 'react-native';
 import BootstrapStyleSheet from 'react-native-bootstrap-styles';
 import axios from 'axios';
 import {Emoji} from 'emoji-mart-native';
-import Collapsible from 'react-native-collapsible';
+import {Collapse,CollapseHeader, CollapseBody, AccordionList} from 'accordion-collapse-react-native';
+//import Collapsible from 'react-native-collapsible';
 
 
 /**importing required files**/
@@ -44,19 +45,22 @@ const classes = {
         flexDirection: 'row',
     },
     title: {
-        fontWeight: 'bold',
+
+        fontFamily: 'BlackBurger',
         margin: 15,
-        fontSize: 18,
+        fontSize: 18
     },
     time: {
         color: 'grey',
         fontSize: 10,
     },
     secret: {
-        fontWeight: 'bold',
         margin: 15,
+        marginLeft:'auto',
+        marginRight:'auto',
         fontSize: 20,
         backgroundColor: 'rgba(	173, 216, 230, 0.4 )',
+        fontFamily: 'cavolini'
     },
     likes: {
         fontSize: 18,
@@ -191,6 +195,7 @@ function Emortion(props) {
     function Comments() {
         if (answered || props.emortion.userId == props.user.userId || new Date(props.emortion.revealsAt) <= new Date()) {
             return (<View>
+                <Text style={[{color:'green', marginLeft:"auto", marginRight:"auto"}]}>Answer Revealed!</Text>
                 {props.emortion.comments.map((comment, index) => {
                     return (
                         <Comment key={index} comment={comment} getPosts={getComments} user={props.user}
@@ -200,8 +205,8 @@ function Emortion(props) {
             </View>)
         } else {
             return (
-                <View style={s.center}>
-                    <Badge status="error" value="You haven't answered this emortion!"/>
+                <View style={[s.center]}>
+                    <Text style={{color:'goldenrod'}}>You haven't answered this emortion!</Text>
                 </View>);
         }
     }
@@ -212,11 +217,8 @@ function Emortion(props) {
         handleCollapse(false);
     }
 
-    function handleCollapse(overwrite) {
-        if (overwrite != null)
+    function handleCollapse() {
             setClose(!close);
-        else
-            setClose(overwrite);
     }
 
     if (props.emortion.message.emojiObjects != null & props.emortion.message.emojiObjects.length > 0) {
@@ -243,17 +245,24 @@ function Emortion(props) {
                         <LikeAgent/>
                         <Text style={s.likes}>{props.emortion.likes.length}</Text>
                         <View style={[s.row, s.ansBtn]}>
-                            <TouchableHighlight onPress={handleCollapse} style={[s.btnTouchable]}>
-                                <View style={[s.btn, s.btnOutlineInfo]}>
-                                    <Text style={[s.btnText, s.textInfo]}>Answers</Text>
-                                </View>
-                            </TouchableHighlight>
+
+                            <Collapse>
+                                <CollapseHeader>
+                                    <View style={[s.btn, s.btnOutlineInfo]}>
+                                        <Text style={[s.btnText, s.textInfo]}>Answers</Text>
+                                    </View>
+                                </CollapseHeader>
+                                <CollapseBody>
+                                    <Comments/>
+                                </CollapseBody>
+                            </Collapse>
                         </View>
                     </View>
                 </View>
-                <Collapsible collapsed={close}>
-                    <Comments/>
-                </Collapsible>
+
+             {/*   <Collapsible collapsed={close}>
+
+                </Collapsible>*/}
             </>
         );
     } else {

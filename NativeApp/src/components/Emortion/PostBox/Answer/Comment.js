@@ -28,10 +28,15 @@ const classes = {
         flex: 1,
     },
     commentTitle: {
-        fontWeight: 'bold',
+        fontFamily: 'BlackBurger',
         margin: 13,
         fontSize: 15,
     },
+    comment:{
+        fontFamily:'cavolini',
+        fontSize: 18,
+        margin:12
+    }
 };
 
 const bootstrapStyleSheet = new BootstrapStyleSheet(constants, classes);
@@ -97,7 +102,7 @@ function Comment(props)
             </View>
             <View style={[s.center]}>
                 <LikeAgent/>
-                <Text style={s.commentTitle}>{props.comment.answer}</Text>
+                <Text style={s.comment}>{props.comment.answer}</Text>
             </View>
             <Badge value={`Scored: ${props.comment.score}`} status="primary" />
         </View>
