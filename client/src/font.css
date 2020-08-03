@@ -18,3 +18,9 @@
     font-size: 20px;
     text-transform: uppercase;
 }
+
+@font-face {
+    font-family: longisland;
+    src: url('./CAVOLINI.TTF');
+}
+

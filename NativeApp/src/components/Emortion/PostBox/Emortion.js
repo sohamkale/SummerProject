@@ -55,7 +55,8 @@ const classes = {
     secret: {
         fontWeight: 'bold',
         margin: 15,
-        fontSize: 20
+        fontSize: 20,
+        backgroundColor: 'rgba(	173, 216, 230, 0.4 )',
     },
     likes: {
         fontSize: 18,
@@ -82,6 +83,7 @@ const classes = {
         margin: 13,
         fontSize: 15,
     },
+
 };
 
 const bootstrapStyleSheet = new BootstrapStyleSheet(constants, classes);

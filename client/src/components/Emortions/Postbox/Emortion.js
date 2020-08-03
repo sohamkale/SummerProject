@@ -68,7 +68,7 @@ const Emortion = (props) => {
                 <div>
                     <span className="badge badge-success">REVEALED</span>
                     <p className="card-text"><span
-                        className="secret btn btn-light">SECRET: {emortion.secretAnswer}</span></p>
+                        className="secret btn btn-light">Secret: {emortion.secretAnswer}</span></p>
                 </div>
             );
         else return (
