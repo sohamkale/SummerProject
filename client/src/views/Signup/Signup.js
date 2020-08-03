@@ -15,11 +15,9 @@ const Signup = (props) => {
     const [validPhone, setValidPhone] = useState(null);
     const ENDPOINT = "http://localhost:5000";
    
-    useEffect(() => {
-        
-        
-        // console.log(socket);
-    }, [ENDPOINT]);
+   /* useEffect(() => {
+
+    }, [ENDPOINT]);*/
 
     const signup = (e) => {
         if(!firstName)

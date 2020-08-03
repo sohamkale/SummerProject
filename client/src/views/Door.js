@@ -107,7 +107,6 @@ function Door(props)
         return (props.user) ? (<NotificationIndex postClass="d-none" user={props.user} postsArray={postsArray} setPostsArray={setPostsArray} socket={props.socket}/>): (<Loading/>)
     else //Not Found Page
     {
-        console.log(location)
         return <Loading/>
     }
 }

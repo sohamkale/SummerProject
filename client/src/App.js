@@ -31,7 +31,6 @@ const App = (props) => {
             let currUserUid = user.userId;
             socket.emit('join', {currUser, room, currUserUid});
             socket.on('joinedRoom', message => {
-                console.log(message);
                 // alert(message.text);
             });
         }

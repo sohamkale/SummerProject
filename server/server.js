@@ -29,7 +29,6 @@ io.on('connection', (socket) =>{
         socket.join(room);
          io.in(commonRoom).clients((err , clients) => {
                 clients.map((client) => {
-                    console.log(client);
                     //io.to(client).emit('notification', { message: "You have a notification" });// clients will be array of socket ids , currently available in given room
     
                 })
@@ -38,7 +37,6 @@ io.on('connection', (socket) =>{
         socket.emit('joinedRoom', { user: 'admin', text: `${currUser}, welcome to room ${room}.`});
         socket.broadcast.to(room).emit('joinedRoom', { user: 'admin', text: `${currUser} has joined!` });
         // io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) }); //not required
-        console.log(currUser);
     }) 
     
     socket.on('addComment', (id, callback) => {
@@ -65,7 +63,6 @@ io.on('connection', (socket) =>{
     });
     
     socket.on('refresh', ({currUser,userId,OnePost}, callback) => {
-        console.log('jjjjjjkkk');
         let array = [];
         let currDateTime = new Date();
         if(OnePost)
@@ -80,7 +77,6 @@ io.on('connection', (socket) =>{
                 io.to(commonRoom).emit('message', { user: currUser, posts: array });
                 io.in(commonRoom).clients((err , clients) => {
                     clients.map((client) => {
-                        console.log(client);
                         io.to(client).emit('notification', { message: "You have a notification" });// clients will be array of socket ids , currently available in given room
         
                     })
@@ -99,7 +95,6 @@ io.on('connection', (socket) =>{
                 io.to(commonRoom).emit('message', { user: currUser, posts: array });
                 io.in(commonRoom).clients((err , clients) => {
                     clients.map((client) => {
-                        console.log(client);
                         io.to(client).emit('notification', { message: "You have a notification" });// clients will be array of socket ids , currently available in given room
         
                     })
@@ -117,7 +112,6 @@ io.on('connection', (socket) =>{
                 io.to(commonRoom).emit('message', { user: currUser, posts: array });
                 io.in(commonRoom).clients((err , clients) => {
                     clients.map((client) => {
-                        console.log(client);
                         io.to(client).emit('notification', { message: "You have an update" });// clients will be array of socket ids , currently available in given room
         
                     })

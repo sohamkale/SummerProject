@@ -17,7 +17,6 @@ const usersController = {
             users=> {users.forEach(
                 (item,index)=>{
                     item.profileImage="https://mifilestorage.blob.core.windows.net/emoteitpublic/dpholder.png";
-                    console.log(item.name)
                     User.updateOne({_id:item._id},item);
                 }
             );
@@ -33,8 +32,6 @@ add(req, res) {
     const currLevel = Number(req.body.currLevel);
     const friendsList = req.body.friends;
     const profileImage = "https://mifilestorage.blob.core.windows.net/emoteitpublic/dpholder.png";
-    console.log("In Server side before posting: ");
-    console.log(userId + " " + name + " " + email + " " + currLevel + " " + friendsList);
     const newUser = new User({
         'userId': userId,
         'name': name,
@@ -55,15 +52,12 @@ find(req, res) {
 
 addProfileImage(req, res){
     const profileImageUrl = req.body.url;
-    console.log(profileImageUrl);
 
     User.findOneAndUpdate({"userId": req.params.userId}, {profileImage: profileImageUrl}, null,  (err, data) => {
         if (err) {
-            console.log('3')
             res.status('404');
             res.json({error: 'No data with the specified id was found!'});
         } else {
-            console.log(data);
             res.json(data);
         }
     });

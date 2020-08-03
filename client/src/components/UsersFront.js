@@ -12,22 +12,16 @@ const UsersFront = (props) => {
         axios.get('/api/users/')
             .then((res)=>{
                 if(res.data.length > 0){
-                    console.log("users");
-                   console.log(res.data);
                     res.data.map(user => array.push(user.email))
                 }
-                console.log(array);
                 setUsers(array);
                 // window.location.href='/Login';
             });
             axios.get(API_BASE + "/api/posts/")
             .then((res)=>{
                 if(res.data.length > 0){
-                    console.log("posts");
-                    console.log(res.data);
                     res.data.map(post => postsArray.push(post._id))
                 }
-                console.log(postsArray);
                 setPosts(postsArray);
                 // window.location.href='/Login';
             });

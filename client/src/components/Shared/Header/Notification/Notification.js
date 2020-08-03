@@ -45,7 +45,6 @@ function Notification(props) {
                             setNotifCounts(res.data.length);
                             setNotifications(res.data);
                         });
-                    console.log(message.message);
                 });
             }
 

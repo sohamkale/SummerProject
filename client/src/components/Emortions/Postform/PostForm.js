@@ -12,7 +12,6 @@ const PostForm = (props) => {
     const [hasArrived, setHasArrived] = useState(false);
     const [emojis, setEmojis] = useState([]);
 
-    console.log(props)
     useEffect(() => {
 
     }, []);
@@ -82,7 +81,6 @@ const PostForm = (props) => {
                 validity: document.getElementById('postValidity').value
             })
                 .then(function (response) {
-                    console.log(response);
                     EraseAll();
                     props.getPosts();
                 })

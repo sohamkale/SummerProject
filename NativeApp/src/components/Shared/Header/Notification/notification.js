@@ -66,7 +66,6 @@ function Notification(props) {
                                       })*/
                             props.setNotifications(res.data);
                         });
-                    console.log(message.message);
                 });
             }
 

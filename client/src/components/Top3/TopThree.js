@@ -10,7 +10,6 @@ function TopThree()
             if(res.data)
             {
                 setThree(res.data);
-                console.log(res.data)
             }
         }).catch(function(e){
             console.log(e)

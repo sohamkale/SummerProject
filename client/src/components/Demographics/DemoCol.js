@@ -20,7 +20,6 @@ function DemoCol(props)
     }
        
     const onImageChange = (e) => {
-        console.log(e.target.files[0]);
         // props.skillsArray.map((skillObj) => {
         //     if(skillObj.id === e.target.id){
         //       skillObj.imgName = e.target.files[0].name;
@@ -48,7 +47,6 @@ function DemoCol(props)
                         "url": url
                     }
                     axios.post(`/api/users/addProfileImage/${props.user.userId}`, newImage).then((data)=>{
-                        console.log(data);
                     })
                 })
             });

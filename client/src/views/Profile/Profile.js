@@ -27,7 +27,6 @@ const Profile = (props) => {
         setsocketIO(socket);
         socket.emit('join', {currUser, room});
         socket.on('joinedRoom', message => {
-            console.log(message);
             // alert(message.text);
         });
         socket.on('message', message => {

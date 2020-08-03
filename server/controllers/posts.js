@@ -55,7 +55,6 @@ const postsController = {
 
         PostModel.find({'userId': req.params.userId}).sort({createdAt: -1}).then(
             posts => {
-                console.log(posts)
                 posts.map((post) => {
                     /*  if(new Date() - post.createdAt < three_day){
 
@@ -152,12 +151,9 @@ const postsController = {
         var removeAuxVerbs = /do |does |did |has |have |had |is |am |are |was |were |be |being |been |may |must |might |should |could |would |shall |will |can /ig;
         var ans = answer.toLowerCase();
         var answerWords = ans.split(' ');
-        console.log("answerWords: ");
-        console.log(answerWords);
 
         UserModel.findOne({"userId": userId}).then(data => {
             totScore = data.totScore;
-            console.log("totScore: " + totScore);
 
             //NEED TO CHECK IF THE STRING MATCHES WITH THE SECRET ANSWER TO DETERMINE THE SCORE
 
@@ -167,8 +163,6 @@ const postsController = {
                 //Do regex here//
 
                 var secWords = secret.split(' ');
-                console.log("secretWords: ");
-                console.log(secWords);
                 var count = 0;
                 for (var i = 0; i < secWords.length; i++) {
                     if (answerWords.includes(secWords[i])) {
@@ -177,13 +171,10 @@ const postsController = {
                 }
 
                 score = Number.parseFloat((count / secWords.length) * 10).toFixed(2)
-                console.log(score);
                 var result = parseFloat(score) + parseFloat(totScore);
                 result = result.toFixed(2);
-                console.log(result);
 
                 if (err) {
-                    console.log('1')
                     res.status('404');
                     res.json({error: err});
                 } else {
@@ -209,7 +200,6 @@ const postsController = {
                             }
                         }, {new: true}, (err, data) => {
                             if (err) {
-                                console.log('2')
                                 res.status('404');
                                 res.json({error: 'No data with the specified id was found!'});
                             } else {
@@ -225,14 +215,13 @@ const postsController = {
                                         'commentId': _id,
                                     }
                                 );
-                                newNotif.save().then(() => console.log('done sending notification')).catch(err => console.log(err));
+                                newNotif.save().then().catch(err => console.log(err));
                                 //res.json(data);
                             }
                         });
 
                         UserModel.findOneAndUpdate({"userId": userId}, {$set: {totScore: result}}, (err, data) => {
                             if (err) {
-                                console.log('3')
                                 res.status('404');
                                 res.json({error: 'No data with the specified id was found!'});
                             } else {
@@ -241,7 +230,6 @@ const postsController = {
                             }
                         });
                     } else if (!shouldAddComment) {
-                        console.log('4')
                         res.json({error: 'Error: One user can post only one comment per emortion!!!'})
                     }
                 }
@@ -305,7 +293,7 @@ const postsController = {
                                     //'commentId': _id,
                                 }
                             );
-                            newNotif.save().then(() => console.log('done sending notification')).catch(err => console.log(err));
+                            newNotif.save().then().catch(err => console.log(err));
                             res.status('200');
                             res.json(data);
 
@@ -342,7 +330,6 @@ const postsController = {
                 res.status('404');
                 res.json({error: err});
             } else {
-                console.log(data);
                 res.status('200');
                 res.json(data);
 
@@ -410,7 +397,7 @@ const postsController = {
                                 }
                             
                             })
-                            newNotif.save().then(() => console.log('done sending notification')).catch(err => console.log(err));
+                            newNotif.save().then().catch(err => console.log(err));
                             break;
                         }
                     }
@@ -452,7 +439,6 @@ const postsController = {
         PostModel.findOne({"_id": req.body.post_id}).then(function (data) {
             let userUID;
             if (data.comments) {
-                console.log("Inside data[0].comments");
                 for (var i = 0; i < data.comments.length; i++) {
                     if (data.comments[i]._id == req.body.comment_id) {
                         var filteredAry = data.comments[i].likes.filter(function (e) {
@@ -468,7 +454,6 @@ const postsController = {
                         res.status('404');
                         res.json({error: "err"});
                     } else {
-                        console.log(data);
                         res.status('200');
                         res.json(data);
 
@@ -509,7 +494,6 @@ const postsController = {
                 }
             }
         ], function (err, comment) {
-            console.log(comment);
             res.json(comment);
         });
     },
@@ -531,7 +515,6 @@ const postsController = {
                 }
             }
         ], function (err, comment) {
-            console.log(comment);
             res.json(comment);
         });
     }
