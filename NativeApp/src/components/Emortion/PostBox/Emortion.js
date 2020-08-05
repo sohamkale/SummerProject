@@ -12,6 +12,7 @@ import {Collapse,CollapseHeader, CollapseBody, AccordionList} from 'accordion-co
 /**importing required files**/
 import {LikeButton, DislikeButton} from '../thumbs';
 import Comment from './Answer/Comment';
+import Button from "react-native-bootstrap-buttons";
 
 /** SECTION : STYLES**/
 const
@@ -73,6 +74,8 @@ const classes = {
     },
 
     ansBtn: {
+        marginLeft:'auto',marginRight:'auto',
+        marginBottom:10,
         justifyContent: 'center',
         width: 250
     },
@@ -106,7 +109,6 @@ function Emortion(props) {
     const [img, setImg] = useState(null);
     const [close, setClose] = useState(true);
     const [answered, setAnswered] = useState(false);
-    const [commentToSend, setCommentToSend] = useState('');
 
 
     useEffect(() => {
@@ -200,16 +202,17 @@ function Emortion(props) {
         }
     }
 
-    function SendComment()
+    function SendComment(answer)
     {
-        if(commentToSend!=null || commentToSend!='')
+        if(answer!=null || answer!='')
         {
-            axios.post('https://facetweetit.herokuapp.com/api/posts/answer/'+props.emortion._id, {
-                firstName: 'Fred',
-                lastName: 'Flintstone'
+            axios.post('https://facetweetit.herokuapp.com/api/posts/answera/'+props.emortion._id, {
+                answer: answer,
+                userId: props.user.userId,
+                name: props.user.name
             })
-                .then(function (response) {
-                    console.log(response);
+                .then(function (res) {
+                    props.getPosts();
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -217,13 +220,16 @@ function Emortion(props) {
         }
     }
 
-    function AnswerAgent() {
+    function AnswerAgent({sendComment}) {
+        const [commentToSend, setCommentToSend] = useState('');
         if (props.user.userId != props.emortion.userId & new Date(props.emortion.revealsAt) >= new Date() & !answered)
             return (<View>
-                <TextInput style={s.inputBox} numberOfLines={1} placeholder={"What do you the emorter is saying?"} onChangeText={text => setCommentToSend(text)}/>
+                <TextInput editable style={s.inputBox} autoFocus={true} selectTextOnFocus={true} placeholder={"What do you the emorter is saying?"}  onChangeText={text => setCommentToSend(text)} value={commentToSend}/>
+                    <Button labelStyle={{marginLeft:'auto', marginRight:'auto'}} buttonType="info" label="Evaluate" onPress={()=>sendComment(commentToSend)}/>
+                {/*
                 <View style={[s.btn, s.btnInfo]}>
                     <Text style={[s.btnText, s.textWhite]}>Evaluate</Text>
-                </View>
+                </View>*/}
             </View>)
         else if (props.user.userId == props.emortion.userId)
             return (<View style={s.center}><Text style={[{color:'green', fontSize:15}]}>Cannot answer own posts!</Text></View>)
@@ -231,25 +237,6 @@ function Emortion(props) {
             return (<View style={s.center}><Text style={[{color:'green', fontSize:15}]}>Answer revealed!</Text></View>);
         else if (answered)
             return (<View style={s.center}><Text style={[{color:'green', fontSize:15}]}>You've already answered this post!</Text></View>);
-
-      /*  if (props.user.userId != emortion.userId & new Date(emortion.revealsAt) >= new Date() & !answered)
-            return (<div>
-            <form id={'answerForm' + emortion._id} onSubmit={SendComment}>
-                <input readOnly hidden name="postId" value={props.emortion._id}></input>
-                <input readOnly hidden name="userId" value={props.user.userId}></input>
-                <input readOnly hidden name="name" value={props.user.name}></input>
-                <input defaultValue="" required name="answer" className="form-control answer"
-                       placeholder="What do you think the Emorter is saying?"></input>
-                <span><Button type="submit" variant="info">Evaluate</Button></span>
-            </form>
-        </div>)
-        else if (props.user.userId == emortion.userId)
-            return (<center><b className="text-success">Cannot answer own posts!</b></center>)
-        else if (new Date(emortion.revealsAt) < new Date())
-            return (<center><b className="text-success">Answer revealed!</b></center>);
-        else if (answered)
-            return (<center><b className="text-success">You've already answered this post!</b></center>);
-        else return (<div></div>)*/
       else return(<Text>Nothing</Text>)
     }
 
@@ -303,9 +290,11 @@ function Emortion(props) {
                     </View>
                     <RenderEmoji/>
                     <Secret/>
-                    <View style={s.row}>
+                    <View style={[s.row]}>
+
                         <LikeAgent/>
                         <Text style={s.likes}>{props.emortion.likes.length}</Text>
+                    </View>
                         <View style={[s.row, s.ansBtn]}>
 
                             <Collapse>
@@ -315,17 +304,14 @@ function Emortion(props) {
                                     </View>
                                 </CollapseHeader>
                                 <CollapseBody>
-                                    <AnswerAgent/>
+                                    <AnswerAgent sendComment={SendComment}/>
                                     <Comments/>
                                 </CollapseBody>
                             </Collapse>
                         </View>
-                    </View>
+
                 </View>
 
-             {/*   <Collapsible collapsed={close}>
-
-                </Collapsible>*/}
             </>
         );
     } else {

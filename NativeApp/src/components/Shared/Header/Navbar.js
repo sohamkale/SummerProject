@@ -1,13 +1,26 @@
 // @flow
 import React, {useState, useEffect} from 'react';
-import {ScrollView, SafeAreaView, Text, StyleSheet, Image, View, TouchableOpacity} from 'react-native';
+import {
+    ScrollView,
+    SafeAreaView,
+    Text,
+    StyleSheet,
+    Image,
+    View,
+    TouchableOpacity,
+    TouchableHighlight,
+    Linking
+} from 'react-native';
 import BootstrapStyleSheet from 'react-native-bootstrap-styles';
-import RNRestart from 'react-native-restart'; // Import package from node modules
+import RNRestart from 'react-native-restart';
+// Import package from node modules
+// any js module
+import * as RootNavigation from '../../../RootNavigation';
 import Button from 'react-native-bootstrap-buttons';
-import Notification from './Notification/notification'
 
 import fire from '../../../config/Fire'
 import axios from 'axios';``
+import {Avatar,Badge} from 'react-native-elements'
 
 /**STYLES**/
 const
@@ -41,21 +54,24 @@ const classes = {
         margin: 20
     },
     hamburgertouch:{
-        marginLeft: 'auto'
     },
     navbar:{
         height:65
     },
     notifTray:{
         backgroundColor:'navajowhite',
-        height:150,
         borderColor:'goldenrod',
         borderWidth:2,
         color:'darkgoldenrod'
     },
     notifTrayText:{
         color:'darkgoldenrod'
-    }
+    },
+    notif:{
+        margin: 10,
+        resizeMode: 'stretch',
+        marginLeft:'auto',
+    },
 };
 
 const bootstrapStyleSheet = new BootstrapStyleSheet(constants, classes);
@@ -66,12 +82,56 @@ const s = styles = bootstrapStyleSheet.create();
 const Navbar = (props) => {
     /**FUNCTIONS**/
     function handleHamburger()
-    {setOpen(!open);}
+    {
+        /*RootNavigation.toggleDrawer();*/
+        setOpen(!open);
+    }
 
+    function NavigateToPage(name, props)
+    {
+        setOpen(false);
+        RootNavigation.navigate(name,props);
+    }
+
+    function OpenUrl(url)
+    {
+        Linking.openURL(url).catch((err) => console.error('An error occurred', err));
+    }
 
     const [open, setOpen] = useState(false);
     const [notifOpen,setNotifOpen]=useState(false);
     const [notifications, setNotifications] = useState([]);
+
+    useEffect(() => {
+        if (props.user) {
+            // alert("IN notification");
+            axios.get('https://facetweetit.herokuapp.com/api/notifications/' + props.user.userId)
+                .then((res) => {
+                    setNotifications(res.data);
+                });
+
+            /*  if (props.socket) {
+                  props.socket.on('notification', message => {
+                      // alert(message.message);
+                      axios.get('/api/notifications/' + props.user.userId)
+                          .then((res) => {
+                              /!*          //setNotifications(res.data);
+                                        var arr=[];
+                                        var count =0;
+                                        res.data.forEach((item,index)=>{
+                                            if(!item.seen)
+                                            {
+                                                count++;
+                                                arr.push(item);
+                                            }
+                                        })*!/
+                              props.setNotifications(res.data);
+                          });
+                  });
+              }*/
+
+        }
+    }, [props.user]);
 
     function Collapsable()
     {
@@ -79,9 +139,10 @@ const Navbar = (props) => {
         {
             return(
             <View style={s.bgDark}>
-                <Button buttonType="link" label="Den" />
-                <Button buttonType="link" label="Users" />
-                <Button buttonType="link" label="Feedback" />
+                {/*<Button buttonType="link" label="Den" />*/}
+                <Button buttonType="link" label="Users" onPress={()=>NavigateToPage('Users',{user: props.user})}/>
+                <Button buttonType="link" label="Feedback" onPress={()=>OpenUrl("http://www.emoteit.me/Feedback")}/>
+                <Button buttonType="link" label="FAQ" onPress={()=>OpenUrl("http://www.emoteit.me/FAQ")}/>
                 <LogoutButton/>
             </View>
         );
@@ -118,31 +179,78 @@ const Navbar = (props) => {
         return (props.user!=null) ? (<><Button buttonType={'link'} label={'Welcome '+ props.user.name + ' Logout?'} onPress={handleLogout}></Button></> ):(<></>);
     }
 
-    function HandleNotifOpen() {
-        setNotifOpen(!notifOpen);
-    }
+
 
     function NotificationTray() {
         if (notifOpen) {
             return (<View style={s.notifTray}>
                 {
                     notifications.map((notif) =>
+                        <>
                             <Text style= {s.notifTrayText}
                                key={notif._id}> {'\u2022 '+notif.message}
                             </Text>
+                            <View style={{width:30, margin:2}}><Button buttonType={"danger"} label={"X"} onPress={()=>notificationSeen(notif)}/></View></>
                     )}
             </View>)
         }
         else return(<></>)
+    }
+    function RenderBadge()
+    {
+        return (notifications.length>0)?(
+            <Badge
+                value={notifications.length}
+                status="error"
+                containerStyle={{ position: 'absolute', top: -4, right: -4 }}
+            />
+        ):(<></>)
+    }
+
+    function notificationSeen(notif) {
+        // alert("notification seen");
+
+        axios.post('https://facetweetit.herokuapp.com/api/notifications/' + notif._id)
+            .then((res) => {
+                axios.get('https://facetweetit.herokuapp.com/api/notifications/' + props.user.userId)
+                    .then((res) => {
+                        /*    //setNotifications(res.data);
+                            var arr=[];
+                            var count =0;
+                            res.data.forEach((item,index)=>{
+                                if(!item.seen)
+                                {
+                                    count++;
+                                    arr.push(item);
+                                }
+                            })*/
+                        setNotifications(res.data);
+                    });
+            });
+    }
+
+    function HandleNotifOpen() {
+        setNotifOpen(!notifOpen);
     }
 
     return (
         <View>
             <View style={[s.bgDark, s.navbar]}>
                 <View style={s.container}>
-                    <Image style={[s.logo]} source={require('../../logo.png')}/>
-                    <Notification user={props.user} handleOpen={HandleNotifOpen} notifications={notifications} setNotifications={setNotifications}/>
                     <HamburgerButton/>
+                    <TouchableHighlight onPress={()=> {if(props.user) NavigateToPage('Home',{user: props.user})}}>
+                    <Image style={[s.logo]} source={require('../../logo.png')}/>
+                    </TouchableHighlight>
+                    <View  style={[s.notif, s.center]}>
+                        <Avatar
+                            onPress={HandleNotifOpen}
+                            rounded
+                            source={require('./Notification/notification.png')}
+                            size="small"
+                        />
+                        <RenderBadge/>
+                    </View>
+                    {/*<Notification user={props.user} handleOpen={HandleNotifOpen} notifications={notifications} setNotifications={setNotifications}/>*/}
                 </View>
             </View>
             <NotificationTray/>

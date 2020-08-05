@@ -1,11 +1,13 @@
+/*
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 
-import {Avatar,Badge} from 'react-native-elements'
+
 import{View,Text} from 'react-native'
 import BootstrapStyleSheet from "react-native-bootstrap-styles";
 
-/**STYLES**/
+
+/!**STYLES**!/
 const
     BODY_COLOR = '#000022',
     TEXT_MUTED = '#888888';
@@ -17,60 +19,32 @@ const constants = {
 
 // custom classes
 const classes = {
-    notif:{
-        margin: 10,
-        resizeMode: 'stretch',
-        marginLeft:'auto',
+
+
+    notifTray:{
+        backgroundColor:'navajowhite',
+        height:150,
+        borderColor:'goldenrod',
+        borderWidth:2,
+        color:'darkgoldenrod'
     },
+    notifTrayText:{
+        color:'darkgoldenrod'
+    },
+    center:{
+        marginLeft:'auto',
+        marginRight:'auto'
+    }
 
 
 };
 
 const bootstrapStyleSheet = new BootstrapStyleSheet(constants, classes);
 const s = styles = bootstrapStyleSheet.create();
+*/
 
 function Notification(props) {
 
-    useEffect(() => {
-        if (props.user) {
-            // alert("IN notification");
-            axios.get('https://facetweetit.herokuapp.com/api/notifications/' + props.user.userId)
-                .then((res) => {
-                    /*     //setNotifications(res.data);
-                         var arr=[];
-                         var count =0;
-                         res.data.forEach((item,index)=>{
-                             if(!item.seen)
-                             {
-                                 count++;
-                                 arr.push(item);
-                             }
-                         })*/
-                    props.setNotifications(res.data);
-                });
-
-            if (props.socket) {
-                props.socket.on('notification', message => {
-                    // alert(message.message);
-                    axios.get('/api/notifications/' + props.user.userId)
-                        .then((res) => {
-                            /*          //setNotifications(res.data);
-                                      var arr=[];
-                                      var count =0;
-                                      res.data.forEach((item,index)=>{
-                                          if(!item.seen)
-                                          {
-                                              count++;
-                                              arr.push(item);
-                                          }
-                                      })*/
-                            props.setNotifications(res.data);
-                        });
-                });
-            }
-
-        }
-    }, []);
 
     function notificationSeen(notif) {
         // alert("notification seen");
@@ -98,28 +72,34 @@ function Notification(props) {
     if (props.user)
         return (
             // Avatar with mini badge
-            <View  style={s.notif}>
-                <Avatar
-                    onPress={props.handleOpen}
-                    rounded
-                    source={require('./notification.png')}
-                    size="small"
-                />
-            <RenderBadge/>
-            </View>
+            <Collapse>
+                <CollapseHeader>
+                    <View  style={[s.notif, s.center]}>
+                        <Avatar
+                            onPress={props.handleOpen}
+                            rounded
+                            source={require('./notification.png')}
+                            size="small"
+                        />
+                        <RenderBadge/>
+                    </View>
+                </CollapseHeader>
+                <CollapseBody>
+                    <View style={s.notifTray}>
+                        {
+                            notifications.map((notif) =>
+                                <Text style= {s.notifTrayText}
+                                      key={notif._id}> {'\u2022 '+notif.message}
+                                </Text>
+                            )}
+                    </View>
+                </CollapseBody>
+            </Collapse>
+
         )
     else return (<></>);
 
-    function RenderBadge()
-    {
-        return (props.notifications.length>0)?(
-        <Badge
-            value={props.notifications.length}
-            status="error"
-            containerStyle={{ position: 'absolute', top: -4, right: -4 }}
-        />
-    ):(<></>)
-    }
+
 }
 
 

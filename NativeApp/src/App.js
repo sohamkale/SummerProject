@@ -11,12 +11,15 @@
 /**Import written app  files**/
 import 'react-native-gesture-handler';
 import React, {useState} from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
+import { navigationRef } from './RootNavigation';
 import Navbar from './components/Shared/Header/Navbar';
 import DemoCol from './components/DemoCol/DemoCol'
 import Home from './view/Home/Home'
 import Login from './view/Login/Login'
+import Users from './view/Users/Users'
 
 
 import {
@@ -49,18 +52,28 @@ const styles = StyleSheet.create({
   },
 });
 
-const Stack = createStackNavigator();
-
+//const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 function App() {
   const [user, setUser] = useState(null);
+
+  const MyTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: '#FFF7E6'
+    },
+  };
+
   return (
-      <NavigationContainer>
+      <NavigationContainer  ref={navigationRef} theme={MyTheme}>
         <Navbar user={user} setUser={setUser}/>
         <ImageBackground source={require('./components/logobw.png')} style={styles.backgroundImage} imageResizeMode={'repeat'}>
-        <Stack.Navigator initialRouteName="Login" headerMode="none">
-          <Stack.Screen name="Login" component={Login} initialParams={{user: user, setUser: setUser}}/>
-          <Stack.Screen name="Home" component={Home}/>
-        </Stack.Navigator>
+        <Drawer.Navigator initialRouteName="Login" headerMode="none">
+          <Drawer.Screen name="Login" component={Login} initialParams={{user: user, setUser: setUser}}/>
+          <Drawer.Screen name="Home" component={Home}/>
+          <Drawer.Screen name="Users" component={Users} initialParams={{user: user}}/>
+        </Drawer.Navigator>
 
         </ImageBackground>
       </NavigationContainer>

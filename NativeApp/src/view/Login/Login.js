@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {View, TextInput, Text} from 'react-native';
+import {View, TextInput, Text, Linking,ScrollView   } from 'react-native';
 import BootstrapStyleSheet from 'react-native-bootstrap-styles';
 import Button from 'react-native-bootstrap-buttons';
 import * as firebase from 'firebase';
 import fire from '../../config/Fire';
 import axios from 'axios'
 import Home from '../Home/Home'
+import Disclaimer from '../../components/Shared/Disclaimer/Disclaimer'
 
 
 /**STYLES**/
@@ -122,8 +123,13 @@ function Login(props) {
         }
     }
 
+    function HandleSignUp()
+    {
+        Linking.openURL('http://www.emoteit.me/Signup').catch((err) => console.error('An error occurred', err));
+    }
+
         return (
-            <>
+            <ScrollView>
             <Text style={[s.label, s.textDark]}> Ready to EmoteIt? </Text>
             <View style={[s.content]}>
                 <View style={[s.messageBox,s.bgDark]}>
@@ -151,7 +157,7 @@ function Login(props) {
                             <Button buttonType="primary" label="Sign In" onPress={handleSignIn}/>
                         </View>
                         <View style={s.button}>
-                            <Button buttonType="primary" label="Sign Up" />
+                            <Button buttonType="primary" label="Sign Up" onPress={HandleSignUp}/>
                         </View>
 
 
@@ -159,7 +165,8 @@ function Login(props) {
                 </View>
 
             </View>
-                </>);
+                <Disclaimer/>
+                </ScrollView>);
 
 }
 

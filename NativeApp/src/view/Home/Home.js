@@ -5,6 +5,7 @@ import BootstrapStyleSheet from "react-native-bootstrap-styles";
 
 /*App File imports*/
 import Emortion from '../../components/Emortion/PostBox/Emortion'
+import PostForm from '../../components/Emortion/PostForm/PostForm'
 import fire from "../../config/Fire";
 import axios from "axios";
 
@@ -72,6 +73,7 @@ function Home(props) {
                 contentInsetAdjustmentBehavior="automatic"
                 style={styles.scrollView}>
                 <DemoCol user={props.route.params.user}/>
+                    <PostForm user={props.route.params.user} getPosts={getPosts}/>
                     {
                         postsArray.slice(0, showCount).map((item, index) => (
                            <Emortion key={index} emortion={item}  getPosts={getPosts} user={props.route.params.user}/>
