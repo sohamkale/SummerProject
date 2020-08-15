@@ -127,7 +127,7 @@ function Login(props) {
     {
         Linking.openURL('http://www.emoteit.me/Signup').catch((err) => console.error('An error occurred', err));
     }
-
+        if(!props.route.params.user)
         return (
             <ScrollView>
             <Text style={[s.label, s.textDark]}> Ready to EmoteIt? </Text>
@@ -160,13 +160,15 @@ function Login(props) {
                             <Button buttonType="primary" label="Sign Up" onPress={HandleSignUp}/>
                         </View>
 
-
                     </View>
                 </View>
 
             </View>
                 <Disclaimer/>
                 </ScrollView>);
+
+        else
+            props.navigation.navigate("Home",{user: res.data});
 
 }
 
