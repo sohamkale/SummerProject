@@ -63,6 +63,7 @@ const Drawer = createDrawerNavigator();
 
 function App() {
   const [user, setUser] = useState(null);
+  const [notifications, setNotifications] = useState([]);
 
   const MyTheme = {
     ...DefaultTheme,
@@ -74,11 +75,11 @@ function App() {
 
   return (
       <NavigationContainer  ref={navigationRef} theme={MyTheme}>
-        <Navbar user={user} setUser={setUser}/>
+        <Navbar user={user} setUser={setUser} notifications={notifications} setNotifications={setNotifications}/>
         <ImageBackground source={require('./components/logobw.png')} style={styles.backgroundImage} imageResizeMode={'repeat'}>
         <Drawer.Navigator initialRouteName="Login" headerMode="none">
           <Drawer.Screen name="Login" component={Login} initialParams={{user: user, setUser: setUser}}/>
-          <Drawer.Screen name="Home" component={Home} initialParams={{user:user}}/>
+          <Drawer.Screen name="Home" component={Home} initialParams={{user:user, setNotifications: setNotifications}}/>
           <Drawer.Screen name="Users" component={Users} initialParams={{user: user}}/>
         </Drawer.Navigator>
 

@@ -42,12 +42,7 @@ let socket;
 function Home(props) {
     const [postsArray, setPostsArray] = useState([]);
     const [showCount, setShowCount] = useState(8);
-
-
-    useEffect(() => {
-            getPosts();
-         }, []);
-
+    
 
     const [socketIO, setsocketIO] = useState(null);
 
@@ -65,9 +60,11 @@ function Home(props) {
             socket.on('joinedRoom', message => {
                 console.log("connected to room");
             });
+            getPosts();
             if (socket) {
                 socket.on('message', message => {
-                    getPosts();
+                    console.log(message.posts);
+                    setPostsArray(message.posts);
                 });
             }
         }
@@ -75,18 +72,28 @@ function Home(props) {
 
     function getPosts()
     {
-
-        console.log("testing bugsee");
         if(props.route.params.user!=null)
         {
-            axios.get('https://facetweetit.herokuapp.com/api/posts').then((res) => {
+           /* axios.get('https://facetweetit.herokuapp.com/api/posts').then((res) => {
                 if (res.data != null) {
                     setPostsArray(res.data);
                 } else
                 {}
-            })
+            });*/
+
+            if(socket!=null)
+            {
+                let currUser = props.route.params.user.name;
+                socket.emit('refresh', {currUser}, () => setPostsArray([]));
+            }
+
+            axios.get('https://facetweetit.herokuapp.com/api/notifications/' + props.route.params.user.userId)
+                .then((res) => {
+                    props.route.params.setNotifications(res.data);
+                });
         }
     }
+
 
     function ShowMore() {
         if (showCount + 5 < props.postsArray.length)
@@ -103,10 +110,10 @@ function Home(props) {
                 style={styles.scrollView}>
                 <DemoCol user={props.route.params.user}/>
                     <PostForm user={props.route.params.user} getPosts={getPosts}/>
-                    {
+                    { postsArray.length>showCount?
                         postsArray.slice(0, showCount).map((item, index) => (
                            <Emortion key={index} emortion={item}  getPosts={getPosts} user={props.route.params.user}/>
-                        ))
+                        )):<></>
                     }
                 </ScrollView>
             </>

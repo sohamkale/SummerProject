@@ -100,35 +100,14 @@ const Navbar = (props) => {
 
     const [open, setOpen] = useState(false);
     const [notifOpen,setNotifOpen]=useState(false);
-    const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
         if (props.user) {
             // alert("IN notification");
             axios.get('https://facetweetit.herokuapp.com/api/notifications/' + props.user.userId)
                 .then((res) => {
-                    setNotifications(res.data);
+                    props.setNotifications(res.data);
                 });
-
-            /*  if (props.socket) {
-                  props.socket.on('notification', message => {
-                      // alert(message.message);
-                      axios.get('/api/notifications/' + props.user.userId)
-                          .then((res) => {
-                              /!*          //setNotifications(res.data);
-                                        var arr=[];
-                                        var count =0;
-                                        res.data.forEach((item,index)=>{
-                                            if(!item.seen)
-                                            {
-                                                count++;
-                                                arr.push(item);
-                                            }
-                                        })*!/
-                              props.setNotifications(res.data);
-                          });
-                  });
-              }*/
 
         }
     }, [props.user]);
@@ -185,7 +164,7 @@ const Navbar = (props) => {
         if (notifOpen) {
             return (<View style={s.notifTray}>
                 {
-                    notifications.map((notif) =>
+                    props.notifications.map((notif) =>
                         <>
                             <Text style= {s.notifTrayText}
                                key={notif._id}> {'\u2022 '+notif.message}
@@ -198,9 +177,9 @@ const Navbar = (props) => {
     }
     function RenderBadge()
     {
-        return (notifications.length>0)?(
+        return (props.notifications.length>0)?(
             <Badge
-                value={notifications.length}
+                value={props.notifications.length}
                 status="error"
                 containerStyle={{ position: 'absolute', top: -4, right: -4 }}
             />
@@ -224,7 +203,7 @@ const Navbar = (props) => {
                                     arr.push(item);
                                 }
                             })*/
-                        setNotifications(res.data);
+                        props.setNotifications(res.data);
                     });
             });
     }
