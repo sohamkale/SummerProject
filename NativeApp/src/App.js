@@ -10,7 +10,7 @@
 
 /**Import written app  files**/
 import 'react-native-gesture-handler';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -20,6 +20,9 @@ import DemoCol from './components/DemoCol/DemoCol'
 import Home from './view/Home/Home'
 import Login from './view/Login/Login'
 import Users from './view/Users/Users'
+
+
+
 
 
 import {
@@ -32,6 +35,7 @@ import {
   StatusBar,
 } from 'react-native';
 import {getBackgroundColor} from "react-native/Libraries/LogBox/UI/LogBoxStyle";
+import axios from "axios";
 
 
 const styles = StyleSheet.create({
@@ -54,6 +58,9 @@ const styles = StyleSheet.create({
 
 //const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+
+
+
 function App() {
   const [user, setUser] = useState(null);
 
@@ -71,7 +78,7 @@ function App() {
         <ImageBackground source={require('./components/logobw.png')} style={styles.backgroundImage} imageResizeMode={'repeat'}>
         <Drawer.Navigator initialRouteName="Login" headerMode="none">
           <Drawer.Screen name="Login" component={Login} initialParams={{user: user, setUser: setUser}}/>
-          <Drawer.Screen name="Home" component={Home}/>
+          <Drawer.Screen name="Home" component={Home} initialParams={{user:user}}/>
           <Drawer.Screen name="Users" component={Users} initialParams={{user: user}}/>
         </Drawer.Navigator>
 

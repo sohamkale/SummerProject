@@ -9,6 +9,7 @@ import PostForm from '../../components/Emortion/PostForm/PostForm'
 import fire from "../../config/Fire";
 import axios from "axios";
 
+import io from "socket.io-client";
 
 /**STYLES**/
 const
@@ -37,17 +38,45 @@ const classes = {
 
 const bootstrapStyleSheet = new BootstrapStyleSheet(constants, classes);
 const s = styles = bootstrapStyleSheet.create();
-
+let socket;
 function Home(props) {
     const [postsArray, setPostsArray] = useState([]);
     const [showCount, setShowCount] = useState(8);
+
 
     useEffect(() => {
             getPosts();
          }, []);
 
+
+    const [socketIO, setsocketIO] = useState(null);
+
+    const ENDPOINT = "https://facetweetit.herokuapp.com";
+
+    useEffect(() => {
+        if (props.route.params.user) {
+            let room = "commonRoom";
+            socket = io(ENDPOINT);
+            setsocketIO(socket);
+            let currUser = props.route.params.user.name;
+            let currUserUid = props.route.params.user.userId;
+            let usr = props.route.params.user;
+            socket.emit('join', {usr, room, currUserUid});
+            socket.on('joinedRoom', message => {
+                console.log("connected to room");
+            });
+            if (socket) {
+                socket.on('message', message => {
+                    getPosts();
+                });
+            }
+        }
+    }, [ENDPOINT, props.route.params.user]);
+
     function getPosts()
     {
+
+        console.log("testing bugsee");
         if(props.route.params.user!=null)
         {
             axios.get('https://facetweetit.herokuapp.com/api/posts').then((res) => {
