@@ -16,7 +16,7 @@ const usersController = {
         User.find({profileImage:"https://mifilestorage.blob.core.windows.net/emoteitpublic/dpholder.png?sv=2019-10-10&ss=bqtf&srt=sco&sp=rwdlacuptfx&se=2020-06-11T17:02:47Z&sig=DgKq8r%2F6fjneK7rVOYqkugvkHiUONgvskpYJqKW73ho%3D&_=1591866431822"}).then(
             users=> {users.forEach(
                 (item,index)=>{
-                    item.profileImage="https://mifilestorage.blob.core.windows.net/emoteitpublic/dpholder.png";
+                    item.profileImage="null";
                     User.updateOne({_id:item._id},item);
                 }
             );
@@ -31,7 +31,7 @@ add(req, res) {
     const email = req.body.email;
     const currLevel = Number(req.body.currLevel);
     const friendsList = req.body.friends;
-    const profileImage = "https://mifilestorage.blob.core.windows.net/emoteitpublic/dpholder.png";
+    const profileImage = "null";
     const newUser = new User({
         'userId': userId,
         'name': name,

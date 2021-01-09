@@ -35,6 +35,7 @@ const Emortion = (props) => {
     }, [props.emortion]);
 
 
+
     const getComments = (postId) => {
         props.getPosts();
     }
@@ -63,7 +64,7 @@ const Emortion = (props) => {
     }
 
     function Secret() {
-        if (new Date(emortion.revealsAt) <= new Date())
+        if (answered)
             return (
                 <div>
                     <span className="badge badge-success">REVEALED</span>
@@ -74,12 +75,10 @@ const Emortion = (props) => {
         else return (
             <div>
                 <span
-                    className="badge badge-warning">Answer reveals at {new Date(emortion.revealsAt).toLocaleTimeString()}</span>
-                <span className="badge badge-warning">or when answered</span>
+                    className="badge badge-warning">REVEALS WHEN ANSWERED</span>
             </div>
         );
     }
-
 
     function didUserAnswer() {
         var postObj = {
@@ -129,7 +128,7 @@ const Emortion = (props) => {
     }
 
     function AnswerAgent() {
-        if (props.user.userId != emortion.userId & new Date(emortion.revealsAt) >= new Date() & !answered) return (<div>
+        if (props.user.userId != emortion.userId & !answered) return (<div>
             <form id={'answerForm' + emortion._id} onSubmit={SendComment}>
                 <input readOnly hidden name="postId" value={props.emortion._id}></input>
                 <input readOnly hidden name="userId" value={props.user.userId}></input>
@@ -141,8 +140,6 @@ const Emortion = (props) => {
         </div>)
         else if (props.user.userId == emortion.userId)
             return (<center><b className="text-success">Cannot answer own posts!</b></center>)
-        else if (new Date(emortion.revealsAt) < new Date())
-            return (<center><b className="text-success">Answer revealed!</b></center>);
         else if (answered)
             return (<center><b className="text-success">You've already answered this post!</b></center>);
         else return (<div></div>)
@@ -182,13 +179,29 @@ const Emortion = (props) => {
         return (<></>)
     }
 
+    function Hint(hprops)
+    {
+        const [shown, setShown] = useState(false);
+
+        function TakeHint(){
+            setShown(true);
+        }
+
+        if(!hprops.hint)
+            return(<></>);
+
+        if(shown || hprops.revealed || answered)
+            return(<div className={"secret"}>{hprops.hint ?? "No Hint"}</div>);
+        return(<button className="btn btn-outline-info" onClick={TakeHint}>Take Hint</button>);
+    }
+
     //Main
     return (
         <div>
             {/* {setReturnNo(returnNo+1)} */}
             <div className="card bg-light">
                 <div className="card-body">
-                    <div className="blackburger-font" style={{fontSize: '100%'}}><img src={img} width="50px;"
+                    <div className="blackburger-font" style={{fontSize: '100%'}}><img src={(img === null || img === "null") ? require('../../Shared/dpholder.png') : img} width="50px;"
                                                                                       className="rounded-circle"/> Emortion
                         By {emortion.name}</div>
                     <p className="text-muted">{new Date(emortion.createdAt).toLocaleString()}</p>
@@ -196,6 +209,7 @@ const Emortion = (props) => {
                         <RenderEmojis/>
                     </div>
                     {/* {console.log(new Date().toISOString())} */}
+                    <Hint hint={emortion.hint} revealed={emortion.revealed}/>
                     <Secret/>
                     <LikeAgent/> <span className="likeCount">{emortion.likes.length} </span>
                     {/*<span  className='like'></span> {emortion.numLikes}*/}

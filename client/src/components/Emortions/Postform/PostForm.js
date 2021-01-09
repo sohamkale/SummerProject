@@ -27,20 +27,28 @@ const PostForm = (props) => {
                 <div className="card-body">
                     <div className="blackburger-font">TELL ME AN EMORTION!</div>
                     <form id='thePost' onSubmit={submit}>
-                        <label htmlFor="type" className='form-check-label'>Type: &nbsp; </label>
-                        <select id="postType" name='type' className='form-control-sm'>
+                        <label htmlFor="type" className='form-check-label d-none'>Type: &nbsp; </label>
+                        <select id="postType" name='type' className='form-control-sm d-none'>
                             <option>Timer</option>
                         </select>
                     &nbsp;
                     &nbsp;
-                    <label className='form-check-label'>Validity: &nbsp; </label>
-                        <select id="postValidity" name='validity' className='form-control-sm'>
+                    <label className='form-check-label d-none'>Validity: &nbsp; </label>
+                        <select id="postValidity" name='validity' className='form-control-sm d-none'>
                             <option>1h</option>
                             <option>2h</option>
                             <option>3h</option>
                         </select>
                         <EmojiInputBox emojis={emojis} setEmojis={setEmojis}/>
                         <center><div className="text-danger"><b id="empty_warning"></b></div></center>
+                        <div className={"row"}>
+                            <div className={"col-2 col-form-label"}>
+                                <label className="font-weight-bolder">HINT: </label>
+                            </div>
+                            <div className="col-6">
+                                <input style={{fontFamily:'Ink Free', fontWeight: 'bold'}} defaultValue="" id="hint" placeholder={"Provide Hint if desired"} name="hint" className="form-control"></input>
+                            </div>
+                        </div>
 
                         <div className="form-group row">
                             <label  className="col-sm-2 col-form-label" style={{fontFamily:'Ink Free', fontWeight: 'bold', fontSize: '12px', backgroundColor:'rgba(173, 216, 230, 0.4)!important'}}><EmojiPicker appendEmoji={appendEmoji}/></label>
@@ -78,6 +86,7 @@ const PostForm = (props) => {
                 type: document.getElementById('postType').value,
                 emojiObjects: emojis,
                 secretAnswer: document.getElementById('postSecret').value,
+                hint: document.getElementById('hint').value,
                 validity: document.getElementById('postValidity').value
             })
                 .then(function (response) {
@@ -110,6 +119,7 @@ function EraseAll()
         document.getElementById("postType").value="Timer";
         document.getElementById("postValidity").value="1h";
         document.getElementById("postSecret").value="";
+        document.getElementById("hint").value="";
 }
 
 export default PostForm;

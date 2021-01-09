@@ -10,7 +10,7 @@ function DemoCol(props)
     const [url, setUrl] = useState(null);
 
     useState(() => {
-        if(props.user){
+        if(props.user && props.user.profileImage){
             setUrl(props.user.profileImage);
         }
     }, props);

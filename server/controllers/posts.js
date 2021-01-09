@@ -12,7 +12,7 @@ const postsController = {
         let currDateTime = new Date();
         var validPosts = [];
         //how many days do you want the post to expire by?
-        var expireDays = 300;
+        var expireDays = 365;
         var three_day = 1000 * 60 * 60 * 24 * expireDays;
 
         PostModel.find().sort({createdAt: -1}).then(
@@ -82,6 +82,7 @@ const postsController = {
         const userId = req.body.userId;
         const name = req.body.username;
         const type = req.body.type;
+        const hint = req.body.hint;
         // const numLikes = Number(0);
 
         //this is an array of positions. 
@@ -95,6 +96,7 @@ const postsController = {
         let expiryDateTime = new Date();
         let currHours = currDateTime.getHours();
         let expiryHours = expiryDateTime.getHours();
+
         if (validity === '1h') {
             currDateTime.setHours(currHours + Number(1));
         } else if (validity === '2h') {
@@ -114,6 +116,8 @@ const postsController = {
             'type': type,
             'likes': [],
             'name': name,
+            'hint' : hint,
+            'hintRevealed': false,
             'message': {
                 'emojiArray': emojiArray,
                 'emojiObjects': emojiObjects

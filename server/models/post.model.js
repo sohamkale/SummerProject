@@ -10,6 +10,7 @@ const postObjSchema = new mongoose.Schema({
     }, //message -> emoji array -> every emoji has x and y coordinates
     secretAnswer: {type: String},
     name: {type: String},
+    hint:{type: String},
     //@TODO:: we don't need expires at, because we can just query the database on DateTime.now - createdAt < whatever time we set!
     // expiresAt: {type: Date},
     revealsAt: {type: Date},
