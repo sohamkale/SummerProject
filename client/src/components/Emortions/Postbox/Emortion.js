@@ -18,6 +18,7 @@ const Emortion = (props) => {
     const [answered, setAnswered] = useState(false);
     const [showCount, setShowCount] = useState(8);
     const [img, setImg] = useState(require('../../Shared/dpholder.png'));
+    const [hintTaken, setHintTaken] = useState(false);
 
     useEffect(() => {
         didUserAnswer();
@@ -68,6 +69,14 @@ const Emortion = (props) => {
             return (
                 <div>
                     <span className="badge badge-success">REVEALED</span>
+                    <p className="card-text"><span
+                        className="secret btn btn-light">Secret: {emortion.secretAnswer}</span></p>
+                </div>
+            );
+        else if(props.user.userId == emortion.userId)
+            return(
+                <div>
+                    <span className="badge badge-success">OWN POST</span>
                     <p className="card-text"><span
                         className="secret btn btn-light">Secret: {emortion.secretAnswer}</span></p>
                 </div>
@@ -133,6 +142,7 @@ const Emortion = (props) => {
                 <input readOnly hidden name="postId" value={props.emortion._id}></input>
                 <input readOnly hidden name="userId" value={props.user.userId}></input>
                 <input readOnly hidden name="name" value={props.user.name}></input>
+                <input readOnly hidden name="hintTaken" value={hintTaken}></input>
                 <input defaultValue="" required name="answer" className="form-control answer"
                        placeholder="What do you think the Emorter is saying?"></input>
                 <span><Button type="submit" variant="info">Evaluate</Button></span>
@@ -181,16 +191,15 @@ const Emortion = (props) => {
 
     function Hint(hprops)
     {
-        const [shown, setShown] = useState(false);
 
         function TakeHint(){
-            setShown(true);
+            setHintTaken(true);
         }
 
         if(!hprops.hint)
             return(<></>);
 
-        if(shown || hprops.revealed || answered)
+        if(hintTaken || hprops.revealed || answered)
             return(<div className={"secret"}>{hprops.hint ?? "No Hint"}</div>);
         return(<button className="btn btn-outline-info" onClick={TakeHint}>Take Hint</button>);
     }

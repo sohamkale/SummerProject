@@ -85,7 +85,7 @@ function Notification(props) {
                     <div className="notificationBox">
                         {
                             notifications.map((notif) =>
-                                <div class='notifBackground'>
+                                <div key={notif._id} className='notifBackground'>
                                     <a onClick={() => notificationSeen(notif)} href={"/Posts/" + notif.postId}
                                        key={notif._id} className={"notification"}>{notif.message}
                                         <p className="text-muted">{new Date(notif.createdAt).toLocaleString()}</p>

@@ -1,5 +1,9 @@
 //LEFT BY MOHAMMAD FOR SOHAM TO FINISH//
 
+function isNumber(n) {
+    return /^-?[\d.]+(?:e-?\d+)?$/.test(n);
+}
+
 const router = require('express').Router();
 let PostModel = require('../models/post.model');
 let UserModel = require('../models/user.model');
@@ -34,7 +38,7 @@ const postsController = {
         var expireDays = 300;
         var three_day = 1000 * 60 * 60 * 24 * expireDays;
 
-        PostModel.find().sort({userId:1,createdAt:-1}).then(
+        PostModel.find().sort({userId: 1, createdAt: -1}).then(
             posts => {
                 posts.map((post) => {
                     if (new Date() - post.createdAt < three_day) {
@@ -116,7 +120,7 @@ const postsController = {
             'type': type,
             'likes': [],
             'name': name,
-            'hint' : hint,
+            'hint': hint,
             'hintRevealed': false,
             'message': {
                 'emojiArray': emojiArray,
@@ -137,6 +141,7 @@ const postsController = {
         const userId = req.body.userId;
         const _id = new mongoose.Types.ObjectId();
         const name = req.body.name;
+        const hintTaken = req.body.hintTaken;
         var score = 0, totScore = 0;
         var shouldAddComment = true;
         if (req.body.numLikes != null || req.body.numLikes != "") {
@@ -168,11 +173,19 @@ const postsController = {
 
                 var secWords = secret.split(' ');
                 var count = 0;
+
                 for (var i = 0; i < secWords.length; i++) {
                     if (answerWords.includes(secWords[i])) {
                         count++;
                     }
+                    if (isNumber(answerWords) && isNumber(secWords[i]))
+                        count++;
                 }
+
+                if (answer.length == secret.length)
+                    count++;
+                else if (answer.length > secret.length)
+                    count -= 1.5;
 
                 score = Number.parseFloat((count / secWords.length) * 10).toFixed(2)
                 var result = parseFloat(score) + parseFloat(totScore);
@@ -197,6 +210,7 @@ const postsController = {
                                     _id: _id,
                                     answer: answer,
                                     userId: userId,
+                                    hintTaken: hintTaken,
                                     likes: [],
                                     score: score,
                                     name: name
@@ -414,18 +428,18 @@ const postsController = {
                             res.json(data);
 
                             UserModel.findOne({"userId": data.userId}, (err, data) => {
-                                if(err){
+                                if (err) {
                                     console.log(err);
-                                }else{
+                                } else {
                                     let userScore = data.totScore;
                                     userScore = userScore + 1;
-                                    UserModel.findOneAndUpdate({"userId": data.userId}, {totScore: userScore.toFixed(2)}, null, (err, data)=>{
-                                        if(err) {
+                                    UserModel.findOneAndUpdate({"userId": data.userId}, {totScore: userScore.toFixed(2)}, null, (err, data) => {
+                                        if (err) {
                                             console.log(err);
                                         }
                                     })
                                 }
-                            
+
                             })
                         }
                     });
@@ -450,18 +464,18 @@ const postsController = {
                 res.json(data);
 
                 UserModel.findOne({"userId": data.userId}, (err, data) => {
-                    if(err){
+                    if (err) {
                         console.log(err);
-                    }else{
+                    } else {
                         let userScore = data.totScore;
                         userScore = userScore - 1;
-                        UserModel.findOneAndUpdate({"userId": data.userId}, {totScore: userScore.toFixed(2)}, null, (err, data)=>{
-                            if(err) {
+                        UserModel.findOneAndUpdate({"userId": data.userId}, {totScore: userScore.toFixed(2)}, null, (err, data) => {
+                            if (err) {
                                 console.log(err);
                             }
                         })
                     }
-                
+
                 })
             }
         });
@@ -472,13 +486,13 @@ const postsController = {
         //req.body._id will contain the unique id of the comment in question.
         //req.params.userId is the userId
         var shouldUpdate = false;
-        var commentIndex=-1;
+        var commentIndex = -1;
         let userUID;
         PostModel.findOne({"_id": req.body.post_id}).then(function (data) {
             if (data.comments) {
                 for (var i = 0; i < data.comments.length; i++) {
                     if (data.comments[i]._id == req.body.comment_id) {
-                        commentIndex=i;
+                        commentIndex = i;
                         userUID = data.comments[i].userId;
                         if (data.comments[i].likes.includes(req.params.userId)) {
                             break;
@@ -498,20 +512,20 @@ const postsController = {
                                     'commentId': req.body.comment_id,
                                 }
                             );
-                            
+
                             UserModel.findOne({"userId": userUID}, (err, data) => {
-                                if(err){
+                                if (err) {
                                     console.log(err);
-                                }else{
+                                } else {
                                     let userScore = data.totScore;
                                     userScore = userScore + 2;
-                                    UserModel.findOneAndUpdate({"userId": userUID}, {totScore: userScore.toFixed(2)}, null, (err, data)=>{
-                                        if(err) {
+                                    UserModel.findOneAndUpdate({"userId": userUID}, {totScore: userScore.toFixed(2)}, null, (err, data) => {
+                                        if (err) {
                                             console.log(err);
                                         }
                                     })
                                 }
-                            
+
                             })
                             newNotif.save().then().catch(err => console.log(err));
                             break;
@@ -573,15 +587,15 @@ const postsController = {
                         res.status('200');
                         res.json(data);
 
-                        
+
                         UserModel.findOne({"userId": userUID}, (err, data) => {
-                            if(err){
+                            if (err) {
                                 console.log(err);
-                            }else{
+                            } else {
                                 let userScore = data.totScore;
                                 userScore = userScore - 2;
-                                UserModel.findOneAndUpdate({"userId": userUID}, {$set: {totScore: userScore.toFixed(2)}}, null, (err, data)=>{
-                                    if(err) {
+                                UserModel.findOneAndUpdate({"userId": userUID}, {$set: {totScore: userScore.toFixed(2)}}, null, (err, data) => {
+                                    if (err) {
                                         console.log(err);
                                     }
                                 })
