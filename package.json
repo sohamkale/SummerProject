@@ -36,7 +36,7 @@
     "nodemon": "^1.18.10",
     "react-media-hook": "^0.4.7",
     "should": "^13.2.3",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "supertest": "^4.0.2"
   },
   "homepage": "https://github.com/UFWebApps/React_Template_Repo#readme"
